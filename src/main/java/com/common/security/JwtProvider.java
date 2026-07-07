@@ -81,4 +81,12 @@ public class JwtProvider {
 			.getPayload();
 	}
 
+	public String getMember(String token) {
+		return parseClaims(token).getSubject();
+	}
+
+	public String getRole(String token) {
+		return parseClaims(token).get("role", String.class);
+	}
+
 }
