@@ -1,4 +1,4 @@
-package com.common.security;
+package com.studyhub.common.security;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Date;

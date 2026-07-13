@@ -1,4 +1,4 @@
-package com.common.security;
+package com.studyhub.common.security;
 
 import java.io.IOException;
 import java.util.List;
