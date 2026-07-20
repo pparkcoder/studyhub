@@ -36,7 +36,5 @@ out/
 ### VS Code ###
 .vscode/
 
-
-# Application configurations
-#**/application-*.yml
-#**/application-*.properties
+### macOS ###
+.DS_Store
