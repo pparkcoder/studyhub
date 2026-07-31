@@ -9,11 +9,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
-import io.jsonwebtoken.security.SignatureException;
 
 @Component
 public class JwtProvider {
@@ -32,6 +30,9 @@ public class JwtProvider {
 	}
 
 	public String createAccessToken(String memberId, String role) {
+		if (role == null || role.isBlank()) {
+			throw new IllegalArgumentException("role은 필수입니다.");
+		}
 		return createToken(memberId, role, accessTokenExpiration);
 	}
 
@@ -61,19 +62,15 @@ public class JwtProvider {
 	}
 
 	public boolean validateToken(String token) {
-		try{
+		try {
 			parseClaims(token);
 			return true;
-		} catch(ExpiredJwtException e) {
-			return false;
-		} catch(SignatureException e) {
-			return false;
-		} catch (JwtException | IllegalArgumentException e){
+		} catch (JwtException | IllegalArgumentException e) {
 			return false;
 		}
 	}
 
-	private Claims parseClaims(String token){
+	private Claims parseClaims(String token) {
 		return Jwts.parser()
 			.verifyWith(secretKey)
 			.build()
@@ -81,7 +78,7 @@ public class JwtProvider {
 			.getPayload();
 	}
 
-	public String getMember(String token) {
+	public String getMemberId(String token) {
 		return parseClaims(token).getSubject();
 	}
 

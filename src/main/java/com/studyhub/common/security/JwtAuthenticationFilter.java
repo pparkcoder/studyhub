@@ -28,11 +28,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 		FilterChain filterChain) throws ServletException, IOException {
 
 		String token = resolveToken(request);
-		if(token != null && jwtProvider.validateToken(token)) {
-			String memberId = jwtProvider.getMember(token);
+		if (token != null && jwtProvider.validateToken(token)) {
+			String memberId = jwtProvider.getMemberId(token);
 			String role = jwtProvider.getRole(token);
 
-			if(role != null){
+			if (role != null) {
 				List<SimpleGrantedAuthority> authorities = List.of(
 					new SimpleGrantedAuthority("ROLE_" + role));
 
@@ -51,7 +51,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 	private String resolveToken(HttpServletRequest request) {
 		String bearerToken = request.getHeader(AUTHORIZATION_HEADER);
 
-		if(bearerToken != null && bearerToken.startsWith(BEARER_PREFIX)) {
+		if (bearerToken != null && bearerToken.startsWith(BEARER_PREFIX)) {
 			return bearerToken.substring(BEARER_PREFIX.length());
 		}
 
