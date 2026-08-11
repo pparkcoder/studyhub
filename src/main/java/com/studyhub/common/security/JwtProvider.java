@@ -1,6 +1,8 @@
 package com.studyhub.common.security;
 
 import java.nio.charset.StandardCharsets;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Date;
 
 import javax.crypto.SecretKey;
@@ -86,4 +88,10 @@ public class JwtProvider {
 		return parseClaims(token).get("role", String.class);
 	}
 
+	public LocalDateTime getExpiration(String token) {
+		Date expiration = parseClaims(token).getExpiration();
+		return expiration.toInstant()
+			.atZone(ZoneId.systemDefault())
+			.toLocalDateTime();
+	}
 }
