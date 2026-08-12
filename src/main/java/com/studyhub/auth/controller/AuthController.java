@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.studyhub.auth.dto.request.LoginRequest;
+import com.studyhub.auth.dto.request.ReIssueRequest;
 import com.studyhub.auth.dto.response.LoginResponse;
 import com.studyhub.auth.service.AuthService;
 
@@ -21,7 +22,13 @@ public class AuthController {
 	private final AuthService authService;
 
 	@PostMapping("/login")
-	public ResponseEntity<LoginResponse> login(@RequestBody @Valid LoginRequest loginRequest) {
-		return ResponseEntity.ok(authService.login(loginRequest));
+	public ResponseEntity<LoginResponse> login(@RequestBody @Valid LoginRequest request) {
+		return ResponseEntity.ok(authService.login(request));
 	}
+
+	@PostMapping("/token/refresh")
+	public ResponseEntity<LoginResponse> refreshToken(@RequestBody @Valid ReIssueRequest request) {
+		return ResponseEntity.ok(authService.refresh(request));
+	}
+
 }
