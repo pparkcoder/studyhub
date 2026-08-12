@@ -24,15 +24,15 @@ public class SecurityConfig {
 	private final JwtAuthenticationFilter jwtAuthenticationFilter;
 
 	@Bean
-	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+	public SecurityFilterChain securityFilterChain(HttpSecurity http) {
 		http
 			.httpBasic(AbstractHttpConfigurer::disable)
 			.csrf(AbstractHttpConfigurer::disable)
 			.formLogin(AbstractHttpConfigurer::disable)
 			.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 			.authorizeHttpRequests(auth -> auth
-				.requestMatchers("/api/auth/**").permitAll()
-				.requestMatchers("/api/member/signup").permitAll()
+				.requestMatchers("/auth/**").permitAll()
+				.requestMatchers("/member/signup").permitAll()
 				.anyRequest().authenticated()
 			)
 			.exceptionHandling(handling -> handling
