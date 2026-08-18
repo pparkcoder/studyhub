@@ -95,4 +95,8 @@ public class Cafe extends BaseTimeEntity {
 		seat.assignCafe(this);
 	}
 
+	public void addImage(CafeImage image) {
+		this.images.add(image);
+	}
+
 }
