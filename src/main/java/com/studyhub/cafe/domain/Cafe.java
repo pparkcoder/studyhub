@@ -83,7 +83,7 @@ public class Cafe extends BaseTimeEntity {
 			.address(request.getAddress())
 			.region(request.getRegion())
 			.latitude(request.getLatitude())
-			.longitude(request.getLatitude())
+			.longitude(request.getLongitude())
 			.openTime(request.getOpenTime())
 			.closeTime(request.getCloseTime())
 			.ownerId(onwerId)
