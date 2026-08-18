@@ -5,6 +5,7 @@ import java.util.List;
 
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 
@@ -22,19 +23,19 @@ public class CafeRegisterRequest {
 	@NotBlank
 	private String region;
 
-	@NotBlank
+	@NotNull
 	private Double latitude;
 
-	@NotBlank
+	@NotNull
 	private Double longitude;
 
-	@NotBlank
+	@NotNull
 	private LocalTime openTime;
 
-	@NotBlank
+	@NotNull
 	private LocalTime closeTime;
 
-	@NotBlank
+	@NotNull
 	@Min(1)
 	private Integer seatCount;
 

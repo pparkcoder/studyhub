@@ -50,6 +50,9 @@ public class CafeService {
 	}
 
 	private void addImages(Cafe cafe, List<String> imageUrls) {
+		if (imageUrls == null) {
+			return;
+		}
 		for (int i = 0; i < imageUrls.size(); ++i) {
 			CafeImage cafeImage = CafeImage.of(imageUrls.get(i), i);
 			cafe.addImage(cafeImage);
