@@ -34,7 +34,7 @@ public class SecurityConfig {
 			.authorizeHttpRequests(auth -> auth
 				.requestMatchers("/auth/**").permitAll()
 				.requestMatchers("/member/signup").permitAll()
-				.requestMatchers(HttpMethod.POST, "/cafe/signup").hasRole("OWNER")
+				.requestMatchers(HttpMethod.POST, "/cafe").hasRole("OWNER")
 				.anyRequest().authenticated()
 			)
 			.exceptionHandling(handling -> handling
