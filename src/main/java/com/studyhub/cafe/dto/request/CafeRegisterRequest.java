@@ -1,7 +1,9 @@
 package com.studyhub.cafe.dto.request;
 
 import java.time.LocalTime;
+import java.util.List;
 
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
@@ -31,4 +33,10 @@ public class CafeRegisterRequest {
 
 	@NotBlank
 	private LocalTime closeTime;
+
+	@NotBlank
+	@Min(1)
+	private Integer seatCount;
+
+	private List<String> imageUrls;
 }
