@@ -4,9 +4,12 @@ import com.studyhub.common.entity.BaseTimeEntity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -29,6 +32,10 @@ public class CafeImage extends BaseTimeEntity {
 	@Column(name = "sort_order", nullable = false)
 	private Integer sortOrder;
 
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "cafe_id")
+	private Cafe cafe;
+
 	@Builder(access = AccessLevel.PRIVATE)
 	private CafeImage(String imageUrl, Integer sortOrder) {
 		this.imageUrl = imageUrl;
@@ -40,5 +47,9 @@ public class CafeImage extends BaseTimeEntity {
 			.imageUrl(imageUrl)
 			.sortOrder(sortOrder)
 			.build();
+	}
+
+	void assignCafe(Cafe cafe) {
+		this.cafe = cafe;
 	}
 }

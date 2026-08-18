@@ -13,7 +13,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OrderBy;
 import jakarta.persistence.Table;
@@ -59,8 +58,7 @@ public class Cafe extends BaseTimeEntity {
 	@OneToMany(mappedBy = "cafe", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Seat> seats = new ArrayList<>();
 
-	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-	@JoinColumn(name = "cafe_id")
+	@OneToMany(mappedBy = "cafe", cascade = CascadeType.ALL, orphanRemoval = true)
 	@OrderBy("sortOrder ASC")
 	private List<CafeImage> images = new ArrayList<>();
 
@@ -97,6 +95,7 @@ public class Cafe extends BaseTimeEntity {
 
 	public void addImage(CafeImage image) {
 		this.images.add(image);
+		image.assignCafe(this);
 	}
 
 }
