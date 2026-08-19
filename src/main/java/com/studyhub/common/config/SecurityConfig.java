@@ -34,6 +34,7 @@ public class SecurityConfig {
 			.authorizeHttpRequests(auth -> auth
 				.requestMatchers("/auth/**").permitAll()
 				.requestMatchers("/member/signup").permitAll()
+				.requestMatchers(HttpMethod.GET, "/cafe/**").permitAll()
 				.requestMatchers(HttpMethod.POST, "/cafe").hasRole("OWNER")
 				.anyRequest().authenticated()
 			)
