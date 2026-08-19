@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.studyhub.common.exception.BusinessException;
 import com.studyhub.common.exception.MemberErrorCode;
@@ -20,14 +21,17 @@ public class MemberService {
 	private final MemberRepository memberRepository;
 	private final PasswordEncoder passwordEncoder;
 
+	@Transactional(readOnly = true)
 	public Optional<Member> findByUsername(String username) {
 		return memberRepository.findByUsername(username);
 	}
 
+	@Transactional(readOnly = true)
 	public Optional<Member> findById(Long id) {
 		return memberRepository.findById(id);
 	}
 
+	@Transactional
 	public Long signup(SignUpRequest signUpRequest) {
 		if (memberRepository.findByUsername(signUpRequest.getUsername()).isPresent()) {
 			throw new BusinessException(MemberErrorCode.DUPLICATE_USERNAME);

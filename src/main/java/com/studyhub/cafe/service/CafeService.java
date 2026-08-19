@@ -3,6 +3,7 @@ package com.studyhub.cafe.service;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.studyhub.cafe.domain.Cafe;
 import com.studyhub.cafe.domain.CafeImage;
@@ -24,6 +25,7 @@ public class CafeService {
 	private final OwnerValidator ownerValidator;
 	private final CafeRepository cafeRepository;
 
+	@Transactional
 	public Long registerCafe(CafeRegisterRequest request, Long memberId) {
 		validateOwner(memberId);
 		Cafe cafe = Cafe.from(request, memberId);
@@ -61,6 +63,7 @@ public class CafeService {
 		}
 	}
 
+	@Transactional(readOnly = true)
 	public List<CafeSearchResponse> search(CafeSearchRequest request) {
 		List<Cafe> result = cafeRepository.search(request);
 		return result.stream().map(CafeSearchResponse::from).toList();
