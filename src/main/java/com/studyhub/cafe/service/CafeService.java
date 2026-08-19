@@ -8,6 +8,8 @@ import com.studyhub.cafe.domain.Cafe;
 import com.studyhub.cafe.domain.CafeImage;
 import com.studyhub.cafe.domain.Seat;
 import com.studyhub.cafe.dto.request.CafeRegisterRequest;
+import com.studyhub.cafe.dto.request.CafeSearchRequest;
+import com.studyhub.cafe.dto.request.CafeSearchResponse;
 import com.studyhub.cafe.port.OwnerValidator;
 import com.studyhub.cafe.repository.CafeRepository;
 import com.studyhub.common.exception.BusinessException;
@@ -57,5 +59,10 @@ public class CafeService {
 			CafeImage cafeImage = CafeImage.of(imageUrls.get(i), i);
 			cafe.addImage(cafeImage);
 		}
+	}
+
+	public List<CafeSearchResponse> search(CafeSearchRequest request) {
+		List<Cafe> result = cafeRepository.search(request);
+		return result.stream().map(CafeSearchResponse::from).toList();
 	}
 }
