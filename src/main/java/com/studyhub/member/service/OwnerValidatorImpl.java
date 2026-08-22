@@ -12,7 +12,7 @@ import lombok.RequiredArgsConstructor;
 
 @Component
 @RequiredArgsConstructor
-public class MemberOwnerValidator implements OwnerValidator {
+public class OwnerValidatorImpl implements OwnerValidator {
 
 	private final MemberService memberService;
 
