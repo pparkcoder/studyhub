@@ -1,5 +1,7 @@
 package com.studyhub.reservation.domain;
 
+import java.time.LocalDateTime;
+
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
@@ -12,7 +14,11 @@ public enum ReservationDuration {
 	SIX_HOURS(6, "6시간권"),
 	EIGHT_HOURS(8, "8시간권"),
 	TWELVE_HOURS(12, "12시간권");
-	
+
 	private final int hours;
 	private final String description;
+
+	public LocalDateTime calculateEndTime(LocalDateTime startTime) {
+		return startTime.plusHours(hours);
+	}
 }

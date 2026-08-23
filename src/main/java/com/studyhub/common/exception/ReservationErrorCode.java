@@ -12,7 +12,8 @@ public enum ReservationErrorCode implements ErrorCode {
 	SEAT_NOT_FOUND(HttpStatus.NOT_FOUND, "RESERVATION_003", "존재하지 않는 좌석입니다."),
 	SEAT_DISABLED(HttpStatus.CONFLICT, "RESERVATION_004", "사용할 수 없는 좌석입니다."),
 	SEAT_CAFE_MISMATCH(HttpStatus.BAD_REQUEST, "RESERVATION_005", "해당 카페의 좌석이 아닙니다."),
-	ALREADY_RESERVED(HttpStatus.CONFLICT, "RESERVATION_006", "이미 예약된 시간대입니다.");
+	INVALID_START_TIME(HttpStatus.BAD_REQUEST, "RESERVATION_006", "잘못된 시작 시간입니다."),
+	ALREADY_RESERVED(HttpStatus.CONFLICT, "RESERVATION_007", "이미 예약된 시간대입니다.");
 
 	private final HttpStatus httpStatus;
 	private final String code;

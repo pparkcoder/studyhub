@@ -56,7 +56,7 @@ public class Reservation {
 			.cafeId(cafeId)
 			.seatId(seatId)
 			.startTime(startTime)
-			.endTime(startTime.plusHours(duration.getHours()))
+			.endTime(duration.calculateEndTime(startTime))
 			.status(ReservationStatus.RESERVED)
 			.build();
 	}
