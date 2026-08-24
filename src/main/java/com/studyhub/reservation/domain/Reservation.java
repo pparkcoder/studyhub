@@ -61,8 +61,20 @@ public class Reservation {
 			.build();
 	}
 
-	public void cancelReservation() {
+	public void cancel() {
 		this.status = ReservationStatus.CANCELLED;
+	}
+
+	public boolean isOwnedBy(Long memberId) {
+		return this.memberId.equals(memberId);
+	}
+
+	public boolean isCancelled() {
+		return this.status == ReservationStatus.CANCELLED;
+	}
+
+	public boolean isEnded(LocalDateTime now) {
+		return this.endTime.isAfter(now);
 	}
 
 }

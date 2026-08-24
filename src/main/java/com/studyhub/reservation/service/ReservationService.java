@@ -9,6 +9,7 @@ import com.studyhub.common.exception.BusinessException;
 import com.studyhub.common.exception.ReservationErrorCode;
 import com.studyhub.reservation.domain.Reservation;
 import com.studyhub.reservation.domain.ReservationDuration;
+import com.studyhub.reservation.dto.ReservationCreateRequest;
 import com.studyhub.reservation.port.MemberValidator;
 import com.studyhub.reservation.port.SeatLockPort;
 import com.studyhub.reservation.port.SeatValidator;
@@ -26,15 +27,20 @@ public class ReservationService {
 	private final ReservationRepository reservationRepository;
 
 	@Transactional
-	public Long reserve(Long memberId, Long cafeId, Long seatId, LocalDateTime startTime,
-		ReservationDuration duration) {
+	public Long reserve(Long memberId, ReservationCreateRequest request) {
+		Long cafeId = request.getCafeId();
+		Long seatId = request.getSeatId();
+		LocalDateTime startTime = request.getStartTime();
+
+		ReservationDuration duration = request.getDuration();
+
 		validateMember(memberId);
 		validateSeat(cafeId, seatId);
-
-		if (startTime.isBefore(LocalDateTime.now())) {
+		LocalDateTime now = LocalDateTime.now();
+		if (startTime.isBefore(now) || !startTime.toLocalDate().equals(now.toLocalDate())) {
 			throw new BusinessException(ReservationErrorCode.INVALID_START_TIME);
 		}
-		
+
 		seatLockPort.lock(seatId);
 		LocalDateTime endTime = duration.calculateEndTime(startTime);
 		boolean existsOverlapping = reservationRepository.existsOverlapping(seatId, startTime, endTime);
@@ -67,5 +73,22 @@ public class ReservationService {
 		if (errorCode != null) {
 			throw new BusinessException(errorCode);
 		}
+	}
+
+	@Transactional
+	public void cancel(Long memberId, Long reservationId) {
+		Reservation reservation = reservationRepository.findById(reservationId)
+			.orElseThrow(() -> new BusinessException(ReservationErrorCode.RESERVATION_NOT_FOUND));
+
+		if (!reservation.isOwnedBy(memberId)) {
+			throw new BusinessException(ReservationErrorCode.NOT_RESERVATION_OWNER);
+		}
+		if (!reservation.isCancelled()) {
+			throw new BusinessException(ReservationErrorCode.ALREADY_CANCELLED);
+		}
+		if (!reservation.isEnded(LocalDateTime.now())) {
+			throw new BusinessException(ReservationErrorCode.ALREADY_ENDED);
+		}
+		reservation.cancel();
 	}
 }
