@@ -1,4 +1,4 @@
-package com.studyhub.reservation.dto;
+package com.studyhub.reservation.dto.response;
 
 import com.studyhub.reservation.domain.Reservation;
 

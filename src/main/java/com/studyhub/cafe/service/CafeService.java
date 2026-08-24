@@ -11,6 +11,7 @@ import com.studyhub.cafe.domain.Seat;
 import com.studyhub.cafe.dto.request.CafeRegisterRequest;
 import com.studyhub.cafe.dto.request.CafeSearchRequest;
 import com.studyhub.cafe.dto.request.CafeSearchResponse;
+import com.studyhub.cafe.dto.response.CafeRegisterResponse;
 import com.studyhub.cafe.port.OwnerValidator;
 import com.studyhub.cafe.repository.CafeRepository;
 import com.studyhub.common.exception.BusinessException;
@@ -26,12 +27,14 @@ public class CafeService {
 	private final CafeRepository cafeRepository;
 
 	@Transactional
-	public Long registerCafe(CafeRegisterRequest request, Long memberId) {
+	public CafeRegisterResponse registerCafe(CafeRegisterRequest request, Long memberId) {
 		validateOwner(memberId);
 		Cafe cafe = Cafe.from(request, memberId);
 		addSeats(cafe, request.getSeatCount());
 		addImages(cafe, request.getImageUrls());
-		return cafeRepository.save(cafe).getId();
+
+		Cafe saveCafe = cafeRepository.save(cafe);
+		return CafeRegisterResponse.from(saveCafe);
 	}
 
 	private void validateOwner(Long memberId) {

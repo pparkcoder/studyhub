@@ -1,5 +1,7 @@
 package com.studyhub.reservation.controller;
 
+import java.net.URI;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -10,7 +12,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.studyhub.reservation.dto.ReservationCreateRequest;
+import com.studyhub.reservation.dto.request.ReservationCreateRequest;
+import com.studyhub.reservation.dto.response.ReservationCreateResponse;
 import com.studyhub.reservation.service.ReservationService;
 
 import jakarta.validation.Valid;
@@ -25,11 +28,14 @@ public class ReservationController {
 
 	@PostMapping
 	@PreAuthorize("hasRole('MEMBER')")
-	public ResponseEntity<Long> reserve(
+	public ResponseEntity<ReservationCreateResponse> reserve(
 		@AuthenticationPrincipal String memberId,
 		@RequestBody @Valid ReservationCreateRequest request
 	) {
-		return ResponseEntity.ok(reservationService.reserve(Long.valueOf(memberId), request));
+		ReservationCreateResponse response = reservationService.reserve(Long.valueOf(memberId), request);
+		return ResponseEntity
+			.created(URI.create("/reservation/" + response.getReservationId()))
+			.body(response);
 	}
 
 	@DeleteMapping("/{reservationId}")

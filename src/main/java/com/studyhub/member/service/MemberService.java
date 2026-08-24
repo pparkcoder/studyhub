@@ -10,6 +10,7 @@ import com.studyhub.common.exception.BusinessException;
 import com.studyhub.common.exception.MemberErrorCode;
 import com.studyhub.member.domain.Member;
 import com.studyhub.member.dto.request.SignUpRequest;
+import com.studyhub.member.dto.response.SignUpResponse;
 import com.studyhub.member.repository.MemberRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -32,13 +33,13 @@ public class MemberService {
 	}
 
 	@Transactional
-	public Long signup(SignUpRequest signUpRequest) {
+	public SignUpResponse signup(SignUpRequest signUpRequest) {
 		if (memberRepository.findByUsername(signUpRequest.getUsername()).isPresent()) {
 			throw new BusinessException(MemberErrorCode.DUPLICATE_USERNAME);
 		}
 		String password = passwordEncoder.encode(signUpRequest.getPassword());
 		Member member = Member.from(signUpRequest, password);
 		Member saveMember = memberRepository.save(member);
-		return saveMember.getId();
+		return SignUpResponse.from(saveMember);
 	}
 }

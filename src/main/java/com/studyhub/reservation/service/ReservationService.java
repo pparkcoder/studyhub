@@ -9,7 +9,8 @@ import com.studyhub.common.exception.BusinessException;
 import com.studyhub.common.exception.ReservationErrorCode;
 import com.studyhub.reservation.domain.Reservation;
 import com.studyhub.reservation.domain.ReservationDuration;
-import com.studyhub.reservation.dto.ReservationCreateRequest;
+import com.studyhub.reservation.dto.request.ReservationCreateRequest;
+import com.studyhub.reservation.dto.response.ReservationCreateResponse;
 import com.studyhub.reservation.port.MemberValidator;
 import com.studyhub.reservation.port.SeatLockPort;
 import com.studyhub.reservation.port.SeatValidator;
@@ -27,7 +28,7 @@ public class ReservationService {
 	private final ReservationRepository reservationRepository;
 
 	@Transactional
-	public Long reserve(Long memberId, ReservationCreateRequest request) {
+	public ReservationCreateResponse reserve(Long memberId, ReservationCreateRequest request) {
 		Long cafeId = request.getCafeId();
 		Long seatId = request.getSeatId();
 		LocalDateTime startTime = request.getStartTime();
@@ -49,7 +50,8 @@ public class ReservationService {
 		}
 
 		Reservation reserve = Reservation.reserve(memberId, cafeId, seatId, startTime, duration);
-		return reservationRepository.save(reserve).getId();
+		Reservation saveReservation = reservationRepository.save(reserve);
+		return ReservationCreateResponse.from(saveReservation);
 	}
 
 	private void validateMember(Long memberId) {
