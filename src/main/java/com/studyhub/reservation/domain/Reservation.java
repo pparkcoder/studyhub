@@ -53,6 +53,7 @@ public class Reservation {
 		ReservationDuration duration) {
 		return Reservation.builder()
 			.memberId(memberId)
+			.duration(duration)
 			.cafeId(cafeId)
 			.seatId(seatId)
 			.startTime(startTime)
@@ -74,7 +75,7 @@ public class Reservation {
 	}
 
 	public boolean isEnded(LocalDateTime now) {
-		return this.endTime.isAfter(now);
+		return this.endTime.isBefore(now);
 	}
 
 }
