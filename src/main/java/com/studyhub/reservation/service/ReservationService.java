@@ -1,16 +1,19 @@
 package com.studyhub.reservation.service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.studyhub.cafe.service.CafeInfoPortImpl;
 import com.studyhub.common.exception.BusinessException;
 import com.studyhub.common.exception.ReservationErrorCode;
 import com.studyhub.reservation.domain.Reservation;
 import com.studyhub.reservation.domain.ReservationDuration;
 import com.studyhub.reservation.dto.request.ReservationCreateRequest;
 import com.studyhub.reservation.dto.response.ReservationCreateResponse;
+import com.studyhub.reservation.dto.response.ReservationResponse;
 import com.studyhub.reservation.port.MemberValidator;
 import com.studyhub.reservation.port.SeatLockPort;
 import com.studyhub.reservation.port.SeatValidator;
@@ -26,6 +29,7 @@ public class ReservationService {
 	private final SeatValidator seatValidator;
 	private final SeatLockPort seatLockPort;
 	private final ReservationRepository reservationRepository;
+	private final CafeInfoPortImpl cafeInfoPort;
 
 	@Transactional
 	public ReservationCreateResponse reserve(Long memberId, ReservationCreateRequest request) {
@@ -92,5 +96,16 @@ public class ReservationService {
 			throw new BusinessException(ReservationErrorCode.ALREADY_ENDED);
 		}
 		reservation.cancel();
+	}
+
+	@Transactional(readOnly = true)
+	public List<ReservationResponse> findMyReservations(Long memberId) {
+		LocalDateTime now = LocalDateTime.now();
+		LocalDateTime startOfDay = now.toLocalDate().atStartOfDay();
+		LocalDateTime endOfDay = startOfDay.plusDays(1);
+		return reservationRepository.findTodayReservations(memberId, startOfDay, endOfDay)
+			.stream()
+			.map(r -> ReservationResponse.of(r, cafeInfoPort.getCafeInfo(r.getCafeId(), r.getSeatId()), now))
+			.toList();
 	}
 }

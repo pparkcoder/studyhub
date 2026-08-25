@@ -1,6 +1,7 @@
 package com.studyhub.reservation.repository;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -20,4 +21,15 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
 	boolean existsOverlapping(@Param("seatId") Long seatId,
 		@Param("startTime") LocalDateTime startTime,
 		@Param("endTime") LocalDateTime endTime);
+
+	@Query("""
+			select r from Reservation r
+			where r.memberId = :memberId
+			and r.startTime >= :startOfDay
+			and r.endTime < :endOfDay
+			order by r.startTime asc
+		""")
+	List<Reservation> findTodayReservations(@Param("memberId") Long memberId,
+		@Param("startOfDay") LocalDateTime startTime,
+		@Param("endOfDay") LocalDateTime endOfDay);
 }
