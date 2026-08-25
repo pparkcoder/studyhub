@@ -14,5 +14,5 @@ public interface SeatRepository extends JpaRepository<Seat, Long> {
 
 	@Lock(LockModeType.PESSIMISTIC_WRITE)
 	@Query("select s from Seat s where s.id = :seatId")
-	Optional<Seat> findByIdWithPessimisticLock(Long cafeId);
+	Optional<Seat> findByIdWithPessimisticLock(Long seatId);
 }

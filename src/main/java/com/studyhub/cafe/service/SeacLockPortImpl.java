@@ -16,7 +16,7 @@ public class SeacLockPortImpl implements SeatLockPort {
 	private final SeatRepository seatRepository;
 
 	@Override
-	public void lock(long seatId) {
+	public void lock(Long seatId) {
 		seatRepository.findByIdWithPessimisticLock(seatId)
 			.orElseThrow(() -> new BusinessException(CafeErrorCode.SEAT_NOT_FOUND));
 	}
