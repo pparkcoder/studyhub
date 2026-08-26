@@ -1,5 +1,8 @@
 package com.studyhub.reservation.port;
 
+import java.util.List;
+import java.util.Map;
+
 public interface CafeInfoPort {
-	CafeInfo getCafeInfo(Long cafeId, Long seatId);
+	Map<Long, CafeInfo> getCafeInfo(List<Long> seatIds);
 }

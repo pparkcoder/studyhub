@@ -2,6 +2,7 @@ package com.studyhub.reservation.service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,6 +15,7 @@ import com.studyhub.reservation.domain.ReservationDuration;
 import com.studyhub.reservation.dto.request.ReservationCreateRequest;
 import com.studyhub.reservation.dto.response.ReservationCreateResponse;
 import com.studyhub.reservation.dto.response.ReservationResponse;
+import com.studyhub.reservation.port.CafeInfo;
 import com.studyhub.reservation.port.MemberValidator;
 import com.studyhub.reservation.port.SeatLockPort;
 import com.studyhub.reservation.port.SeatValidator;
@@ -103,18 +105,28 @@ public class ReservationService {
 		LocalDateTime now = LocalDateTime.now();
 		LocalDateTime startOfDay = now.toLocalDate().atStartOfDay();
 		LocalDateTime endOfDay = startOfDay.plusDays(1);
-		return reservationRepository.findTodayReservations(memberId, startOfDay, endOfDay)
-			.stream()
-			.map(r -> ReservationResponse.of(r, cafeInfoPort.getCafeInfo(r.getCafeId(), r.getSeatId()), now))
-			.toList();
+		List<Reservation> todayReservations = reservationRepository.findTodayReservations(memberId, startOfDay,
+			endOfDay);
+		return toResponse(todayReservations, now);
 	}
 
 	@Transactional(readOnly = true)
 	public List<ReservationResponse> findMyReservationsHistory(Long memberId) {
 		LocalDateTime now = LocalDateTime.now();
-		return reservationRepository.findAllReservations(memberId)
+		List<Reservation> allReservations = reservationRepository.findAllReservations(memberId);
+		return toResponse(allReservations, now);
+	}
+
+	private List<ReservationResponse> toResponse(List<Reservation> reservations, LocalDateTime now) {
+		List<Long> seatIds = reservations
 			.stream()
-			.map(r -> ReservationResponse.of(r, cafeInfoPort.getCafeInfo(r.getCafeId(), r.getSeatId()), now))
+			.map(Reservation::getSeatId)
+			.distinct()
+			.toList();
+		Map<Long, CafeInfo> cafeInfo = cafeInfoPort.getCafeInfo(seatIds);
+		return reservations
+			.stream()
+			.map(r -> ReservationResponse.of(r, cafeInfo.get(r.getSeatId()), now))
 			.toList();
 	}
 }
