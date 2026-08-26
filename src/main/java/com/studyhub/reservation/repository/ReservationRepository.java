@@ -32,4 +32,11 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
 	List<Reservation> findTodayReservations(@Param("memberId") Long memberId,
 		@Param("startOfDay") LocalDateTime startTime,
 		@Param("endOfDay") LocalDateTime endOfDay);
+
+	@Query("""
+			select r from Reservation r
+			where r.memberId = :memberId
+			order by r.startTime asc
+		""")
+	List<Reservation> findAllReservations(@Param("memberId") Long memberId);
 }

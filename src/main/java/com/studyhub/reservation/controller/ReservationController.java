@@ -50,8 +50,16 @@ public class ReservationController {
 	}
 
 	@GetMapping("/my")
+	@PreAuthorize(("hasRole('MEMBER')"))
 	public ResponseEntity<List<ReservationResponse>> findMyReservations(
 		@AuthenticationPrincipal String memberId) {
 		return ResponseEntity.ok(reservationService.findMyReservations(Long.valueOf(memberId)));
+	}
+
+	@GetMapping("/my/history")
+	@PreAuthorize(("hasRole('MEMBER')"))
+	public ResponseEntity<List<ReservationResponse>> findMyReservationsHistory(
+		@AuthenticationPrincipal String memberId) {
+		return ResponseEntity.ok(reservationService.findMyReservationsHistory(Long.valueOf(memberId)));
 	}
 }

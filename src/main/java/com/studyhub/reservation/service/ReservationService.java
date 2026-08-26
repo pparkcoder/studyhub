@@ -108,4 +108,13 @@ public class ReservationService {
 			.map(r -> ReservationResponse.of(r, cafeInfoPort.getCafeInfo(r.getCafeId(), r.getSeatId()), now))
 			.toList();
 	}
+
+	@Transactional(readOnly = true)
+	public List<ReservationResponse> findMyReservationsHistory(Long memberId) {
+		LocalDateTime now = LocalDateTime.now();
+		return reservationRepository.findAllReservations(memberId)
+			.stream()
+			.map(r -> ReservationResponse.of(r, cafeInfoPort.getCafeInfo(r.getCafeId(), r.getSeatId()), now))
+			.toList();
+	}
 }
