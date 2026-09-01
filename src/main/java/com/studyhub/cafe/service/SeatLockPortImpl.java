@@ -11,7 +11,7 @@ import lombok.RequiredArgsConstructor;
 
 @Component
 @RequiredArgsConstructor
-public class SeacLockPortImpl implements SeatLockPort {
+public class SeatLockPortImpl implements SeatLockPort {
 
 	private final SeatRepository seatRepository;
 
