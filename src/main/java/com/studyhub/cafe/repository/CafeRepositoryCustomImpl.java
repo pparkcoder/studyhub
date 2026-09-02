@@ -15,7 +15,7 @@ import com.studyhub.cafe.dto.request.CafeSearchRequest;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-public class CafeRepositoryImpl implements CafeRepositoryCustom {
+public class CafeRepositoryCustomImpl implements CafeRepositoryCustom {
 
 	private final JPAQueryFactory queryFactory;
 
