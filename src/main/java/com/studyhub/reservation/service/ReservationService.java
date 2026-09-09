@@ -16,8 +16,8 @@ import com.studyhub.reservation.dto.request.ReservationCreateRequest;
 import com.studyhub.reservation.dto.response.ReservationCreateResponse;
 import com.studyhub.reservation.dto.response.ReservationResponse;
 import com.studyhub.reservation.port.CafeInfo;
+import com.studyhub.reservation.port.CafeLockPort;
 import com.studyhub.reservation.port.MemberValidator;
-import com.studyhub.reservation.port.SeatLockPort;
 import com.studyhub.reservation.port.SeatValidator;
 import com.studyhub.reservation.repository.ReservationRepository;
 
@@ -29,7 +29,7 @@ public class ReservationService {
 
 	private final MemberValidator memberValidator;
 	private final SeatValidator seatValidator;
-	private final SeatLockPort seatLockPort;
+	private final CafeLockPort cafeLockPort;
 	private final ReservationRepository reservationRepository;
 	private final CafeInfoPortImpl cafeInfoPort;
 
@@ -43,21 +43,28 @@ public class ReservationService {
 
 		validateMember(memberId);
 		validateSeat(cafeId, seatId);
-		LocalDateTime now = LocalDateTime.now();
-		if (startTime.isBefore(now) || !startTime.toLocalDate().equals(now.toLocalDate())) {
-			throw new BusinessException(ReservationErrorCode.INVALID_START_TIME);
+		validateStartTime(startTime);
+
+		cafeLockPort.lock(cafeId);
+
+		LocalDateTime endTime = duration.calculateEndTime(startTime);
+
+		// 같은 카페에 시간이 겹치는 내 예약이 있는지
+		boolean existsOverlappingByMember = reservationRepository.existsOverlappingByMember(memberId, cafeId, startTime,
+			endTime);
+		if (existsOverlappingByMember) {
+			throw new BusinessException(ReservationErrorCode.ALREADY_RESERVED_IN_CAFE);
 		}
 
-		seatLockPort.lock(seatId);
-		LocalDateTime endTime = duration.calculateEndTime(startTime);
+		// 해당 좌석의 시간이 겹치는 예약이 있는지
 		boolean existsOverlapping = reservationRepository.existsOverlapping(seatId, startTime, endTime);
 		if (existsOverlapping) {
 			throw new BusinessException(ReservationErrorCode.ALREADY_RESERVED);
 		}
 
 		Reservation reserve = Reservation.reserve(memberId, cafeId, seatId, startTime, duration);
-		Reservation saveReservation = reservationRepository.save(reserve);
-		return ReservationCreateResponse.from(saveReservation);
+		Reservation savedReservation = reservationRepository.save(reserve);
+		return ReservationCreateResponse.from(savedReservation);
 	}
 
 	private void validateMember(Long memberId) {
@@ -80,6 +87,13 @@ public class ReservationService {
 		};
 		if (errorCode != null) {
 			throw new BusinessException(errorCode);
+		}
+	}
+
+	private void validateStartTime(LocalDateTime startTime) {
+		LocalDateTime now = LocalDateTime.now();
+		if (startTime.isBefore(now) || !startTime.toLocalDate().equals(now.toLocalDate())) {
+			throw new BusinessException(ReservationErrorCode.INVALID_START_TIME);
 		}
 	}
 

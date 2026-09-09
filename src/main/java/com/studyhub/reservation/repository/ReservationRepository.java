@@ -23,6 +23,20 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
 		@Param("endTime") LocalDateTime endTime);
 
 	@Query("""
+			select count(r) > 0 from Reservation r
+			where r.memberId = :memberId
+			and r.cafeId = :cafeId
+			and r.status = com.studyhub.reservation.domain.ReservationStatus.RESERVED
+			and r.startTime < :endTime
+			and r.endTime > :startTime
+		""")
+	boolean existsOverlappingByMember(@Param("memberId") Long memberId,
+		@Param("cafeId") Long cafeId,
+		@Param("startTime") LocalDateTime startTime,
+		@Param("endTime") LocalDateTime endTime
+	);
+
+	@Query("""
 			select r from Reservation r
 			where r.memberId = :memberId
 			and r.startTime >= :startOfDay
