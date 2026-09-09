@@ -105,10 +105,10 @@ public class ReservationService {
 		if (!reservation.isOwnedBy(memberId)) {
 			throw new BusinessException(ReservationErrorCode.NOT_RESERVATION_OWNER);
 		}
-		if (!reservation.isCancelled()) {
+		if (reservation.isCancelled()) {
 			throw new BusinessException(ReservationErrorCode.ALREADY_CANCELLED);
 		}
-		if (!reservation.isEnded(LocalDateTime.now())) {
+		if (reservation.isEnded(LocalDateTime.now())) {
 			throw new BusinessException(ReservationErrorCode.ALREADY_ENDED);
 		}
 		reservation.cancel();
