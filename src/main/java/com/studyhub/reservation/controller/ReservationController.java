@@ -8,6 +8,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.studyhub.reservation.dto.request.ReservationCreateRequest;
+import com.studyhub.reservation.dto.request.ReservationMoveRequest;
 import com.studyhub.reservation.dto.response.ReservationCreateResponse;
 import com.studyhub.reservation.dto.response.ReservationResponse;
 import com.studyhub.reservation.service.ReservationService;
@@ -40,8 +42,21 @@ public class ReservationController {
 			.body(response);
 	}
 
+	@PatchMapping("/{reservationId}/seat")
+	@PreAuthorize("hasRole('MEMBER')")
+	public ResponseEntity<ReservationCreateResponse> moveSeat(
+		@AuthenticationPrincipal String memberId,
+		@PathVariable Long reservationId,
+		@RequestBody @Valid ReservationMoveRequest request) {
+		ReservationCreateResponse response = reservationService.moveSeat(Long.valueOf(memberId),
+			reservationId, request);
+		return ResponseEntity
+			.created(URI.create("/reservation/" + response.getReservationId()))
+			.body(response);
+	}
+
 	@DeleteMapping("/{reservationId}")
-	@PreAuthorize(("hasRole('MEMBER')"))
+	@PreAuthorize("hasRole('MEMBER')")
 	public ResponseEntity<Void> cancel(
 		@AuthenticationPrincipal String memberId,
 		@PathVariable Long reservationId) {
@@ -50,14 +65,14 @@ public class ReservationController {
 	}
 
 	@GetMapping("/my")
-	@PreAuthorize(("hasRole('MEMBER')"))
+	@PreAuthorize("hasRole('MEMBER')")
 	public ResponseEntity<List<ReservationResponse>> findMyReservations(
 		@AuthenticationPrincipal String memberId) {
 		return ResponseEntity.ok(reservationService.findMyReservations(Long.valueOf(memberId)));
 	}
 
 	@GetMapping("/my/history")
-	@PreAuthorize(("hasRole('MEMBER')"))
+	@PreAuthorize("hasRole('MEMBER')")
 	public ResponseEntity<List<ReservationResponse>> findMyReservationsHistory(
 		@AuthenticationPrincipal String memberId) {
 		return ResponseEntity.ok(reservationService.findMyReservationsHistory(Long.valueOf(memberId)));

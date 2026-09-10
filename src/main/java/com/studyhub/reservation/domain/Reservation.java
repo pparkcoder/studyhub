@@ -27,6 +27,7 @@ public class Reservation {
 	private Long memberId;
 	private Long cafeId;
 	private Long seatId;
+	private Long previousSeatId;
 
 	private LocalDateTime startTime;
 	private LocalDateTime endTime;
@@ -38,10 +39,12 @@ public class Reservation {
 	private ReservationStatus status;
 
 	@Builder(access = AccessLevel.PRIVATE)
-	private Reservation(Long memberId, Long cafeId, Long seatId, LocalDateTime startTime, LocalDateTime endTime,
+	private Reservation(Long memberId, Long cafeId, Long previousSeatId, Long seatId, LocalDateTime startTime,
+		LocalDateTime endTime,
 		ReservationDuration duration, ReservationStatus status) {
 		this.memberId = memberId;
 		this.cafeId = cafeId;
+		this.previousSeatId = previousSeatId;
 		this.seatId = seatId;
 		this.startTime = startTime;
 		this.endTime = endTime;
@@ -62,6 +65,21 @@ public class Reservation {
 			.build();
 	}
 
+	public static Reservation moveSeat(Long memberId, Long cafeId, Long previousSeatId, Long seatId,
+		LocalDateTime startTime,
+		LocalDateTime endTime, ReservationDuration duration) {
+		return Reservation.builder()
+			.memberId(memberId)
+			.duration(duration)
+			.cafeId(cafeId)
+			.previousSeatId(previousSeatId)
+			.seatId(seatId)
+			.startTime(startTime)
+			.endTime(endTime)
+			.status(ReservationStatus.RESERVED)
+			.build();
+	}
+
 	public void cancel() {
 		this.status = ReservationStatus.CANCELLED;
 	}
@@ -76,6 +94,10 @@ public class Reservation {
 
 	public boolean isEnded(LocalDateTime now) {
 		return this.endTime.isBefore(now);
+	}
+
+	public LocalDateTime resolveMoveStartTime(LocalDateTime now) {
+		return startTime.isAfter(now) ? startTime : now;
 	}
 
 }
