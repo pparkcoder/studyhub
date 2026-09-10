@@ -18,7 +18,8 @@ public enum ReservationErrorCode implements ErrorCode {
 	NOT_RESERVATION_OWNER(HttpStatus.FORBIDDEN, "RESERVATION_009", "본인의 예약만 취소할 수 있습니다."),
 	ALREADY_CANCELLED(HttpStatus.CONFLICT, "RESERVATION_010", "이미 취소된 예약입니다."),
 	ALREADY_ENDED(HttpStatus.CONFLICT, "RESERVATION_011", "이미 종료된 좌석입니다."),
-	ALREADY_RESERVED_IN_CAFE(HttpStatus.CONFLICT, "RESERVATION_012", "이용 중인 좌석이 있어 새로운 예약이 불가능합니다.");
+	ALREADY_RESERVED_IN_CAFE(HttpStatus.CONFLICT, "RESERVATION_012", "이용 중인 좌석이 있어 새로운 예약이 불가능합니다."),
+	SAME_SEAT_MOVE(HttpStatus.BAD_REQUEST, "RESERVATION_013", "동일한 좌석으로 이동할 수 없습니다.");
 
 	private final HttpStatus httpStatus;
 	private final String code;
