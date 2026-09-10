@@ -7,7 +7,6 @@ import java.util.Map;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.studyhub.cafe.service.CafeInfoPortImpl;
 import com.studyhub.common.exception.BusinessException;
 import com.studyhub.common.exception.ReservationErrorCode;
 import com.studyhub.reservation.domain.Reservation;
@@ -17,6 +16,7 @@ import com.studyhub.reservation.dto.request.ReservationMoveRequest;
 import com.studyhub.reservation.dto.response.ReservationCreateResponse;
 import com.studyhub.reservation.dto.response.ReservationResponse;
 import com.studyhub.reservation.port.CafeInfo;
+import com.studyhub.reservation.port.CafeInfoPort;
 import com.studyhub.reservation.port.CafeLockPort;
 import com.studyhub.reservation.port.MemberValidator;
 import com.studyhub.reservation.port.SeatValidator;
@@ -32,7 +32,7 @@ public class ReservationService {
 	private final SeatValidator seatValidator;
 	private final CafeLockPort cafeLockPort;
 	private final ReservationRepository reservationRepository;
-	private final CafeInfoPortImpl cafeInfoPort;
+	private final CafeInfoPort cafeInfoPort;
 
 	@Transactional
 	public ReservationCreateResponse reserve(Long memberId, ReservationCreateRequest request) {
