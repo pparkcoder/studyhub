@@ -15,8 +15,8 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
 			select count(r) > 0 from Reservation r
 			where r.seatId = :seatId
 			and r.status = com.studyhub.reservation.domain.ReservationStatus.RESERVED
-			and r.startTime > :startTime
-			and r.endTime < :endTime
+			and r.startTime < :endTime
+			and r.endTime > :startTime
 		""")
 	boolean existsOverlapping(@Param("seatId") Long seatId,
 		@Param("startTime") LocalDateTime startTime,
@@ -29,7 +29,7 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
 			and r.status = com.studyhub.reservation.domain.ReservationStatus.RESERVED
 			and r.endTime > :now
 		""")
-	boolean existsOverlappingByMember(@Param("memberId") Long memberId,
+	boolean existsActiveByMember(@Param("memberId") Long memberId,
 		@Param("cafeId") Long cafeId,
 		@Param("now") LocalDateTime now
 	);
@@ -38,7 +38,7 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
 			select r from Reservation r
 			where r.memberId = :memberId
 			and r.startTime >= :startOfDay
-			and r.endTime < :endOfDay
+			and r.startTime < :endOfDay
 			order by r.startTime asc
 		""")
 	List<Reservation> findTodayReservations(@Param("memberId") Long memberId,
@@ -48,7 +48,7 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
 	@Query("""
 			select r from Reservation r
 			where r.memberId = :memberId
-			order by r.startTime asc
+			order by r.startTime desc
 		""")
 	List<Reservation> findAllReservations(@Param("memberId") Long memberId);
 }
