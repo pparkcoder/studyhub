@@ -43,15 +43,14 @@ public class ReservationService {
 
 		validateMember(memberId);
 		validateSeat(cafeId, seatId);
-		validateStartTime(startTime);
 
+		LocalDateTime now = LocalDateTime.now();
+		validateStartTime(now, startTime);
 		cafeLockPort.lock(cafeId);
-
 		LocalDateTime endTime = duration.calculateEndTime(startTime);
 
 		// 같은 카페에 시간이 겹치는 내 예약이 있는지
-		boolean existsOverlappingByMember = reservationRepository.existsOverlappingByMember(memberId, cafeId, startTime,
-			endTime);
+		boolean existsOverlappingByMember = reservationRepository.existsOverlappingByMember(memberId, cafeId, now);
 		if (existsOverlappingByMember) {
 			throw new BusinessException(ReservationErrorCode.ALREADY_RESERVED_IN_CAFE);
 		}
@@ -90,8 +89,7 @@ public class ReservationService {
 		}
 	}
 
-	private void validateStartTime(LocalDateTime startTime) {
-		LocalDateTime now = LocalDateTime.now();
+	private void validateStartTime(LocalDateTime now, LocalDateTime startTime) {
 		if (startTime.isBefore(now) || !startTime.toLocalDate().equals(now.toLocalDate())) {
 			throw new BusinessException(ReservationErrorCode.INVALID_START_TIME);
 		}
