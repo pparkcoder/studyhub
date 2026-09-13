@@ -1,4 +1,4 @@
-package com.studyhub.cafe.service;
+package com.studyhub.cafe.adapter;
 
 import org.springframework.stereotype.Component;
 

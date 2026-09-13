@@ -1,4 +1,4 @@
-package com.studyhub.member.service;
+package com.studyhub.member.adapter;
 
 import org.springframework.stereotype.Component;
 

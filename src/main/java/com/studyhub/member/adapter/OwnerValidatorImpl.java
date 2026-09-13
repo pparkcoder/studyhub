@@ -1,4 +1,4 @@
-package com.studyhub.member.service;
+package com.studyhub.member.adapter;
 
 import org.springframework.stereotype.Component;
 
@@ -7,6 +7,7 @@ import com.studyhub.cafe.port.OwnerValidator;
 import com.studyhub.member.domain.Member;
 import com.studyhub.member.domain.MemberStatus;
 import com.studyhub.member.domain.Role;
+import com.studyhub.member.service.MemberService;
 
 import lombok.RequiredArgsConstructor;
 

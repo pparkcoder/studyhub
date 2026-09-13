@@ -1,4 +1,4 @@
-package com.studyhub.cafe.service;
+package com.studyhub.cafe.adapter;
 
 import java.util.List;
 import java.util.Map;
@@ -24,7 +24,7 @@ public class CafeInfoPortImpl implements CafeInfoPort {
 		if (seatIds.isEmpty()) {
 			return Map.of();
 		}
-		
+
 		return seatRepository.findAllWithCafeByIdIn(seatIds)
 			.stream()
 			.collect(Collectors.toMap(
