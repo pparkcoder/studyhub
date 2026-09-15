@@ -11,6 +11,7 @@ import com.studyhub.auth.dto.request.ReIssueRequest;
 import com.studyhub.auth.dto.response.LoginResponse;
 import com.studyhub.common.exception.AuthErrorCode;
 import com.studyhub.common.exception.BusinessException;
+import com.studyhub.common.exception.MemberErrorCode;
 import com.studyhub.common.security.JwtProvider;
 import com.studyhub.common.util.TokenHashUtil;
 import com.studyhub.member.domain.Member;
@@ -38,6 +39,14 @@ public class AuthService {
 			throw new BusinessException(AuthErrorCode.LOGIN_FAILED);
 		}
 		return createToken(member);
+	}
+
+	@Transactional
+	public void logout(Long memberId) {
+		Member member = memberService.findById(memberId)
+			.orElseThrow(() -> new BusinessException(MemberErrorCode.MEMBER_NOT_FOUND));
+
+		member.clearRefreshToken();
 	}
 
 	@Transactional

@@ -86,9 +86,14 @@ public class Member extends BaseTimeEntity {
 
 	public void withdraw() {
 		this.status = MemberStatus.WITHDRAWN;
+		this.password = null;
 	}
 
 	public void changePassword(String password) {
 		this.password = password;
+	}
+
+	public boolean isWithdrawn() {
+		return this.status == MemberStatus.WITHDRAWN;
 	}
 }

@@ -51,7 +51,7 @@ public class ReservationService {
 		LocalDateTime endTime = duration.calculateEndTime(startTime);
 
 		// 같은 카페에 시간이 겹치는 내 예약이 있는지
-		boolean existsOverlappingByMember = reservationRepository.existsActiveByMember(memberId, cafeId, now);
+		boolean existsOverlappingByMember = reservationRepository.existsActiveByMemberAndCafe(memberId, cafeId, now);
 		if (existsOverlappingByMember) {
 			throw new BusinessException(ReservationErrorCode.ALREADY_RESERVED_IN_CAFE);
 		}

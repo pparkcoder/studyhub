@@ -1,6 +1,7 @@
 package com.studyhub.auth.controller;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,7 +27,13 @@ public class AuthController {
 		return ResponseEntity.ok(authService.login(request));
 	}
 
-	@PostMapping("/token/refresh")
+	@PostMapping("/logout")
+	public ResponseEntity<Void> logout(@AuthenticationPrincipal String memberId) {
+		authService.logout(Long.valueOf(memberId));
+		return ResponseEntity.noContent().build();
+	}
+
+	@PostMapping("/reissue")
 	public ResponseEntity<LoginResponse> refreshToken(@RequestBody @Valid ReIssueRequest request) {
 		return ResponseEntity.ok(authService.refresh(request));
 	}

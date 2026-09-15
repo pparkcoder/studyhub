@@ -29,8 +29,18 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
 			and r.status = com.studyhub.reservation.domain.ReservationStatus.RESERVED
 			and r.endTime > :now
 		""")
-	boolean existsActiveByMember(@Param("memberId") Long memberId,
+	boolean existsActiveByMemberAndCafe(@Param("memberId") Long memberId,
 		@Param("cafeId") Long cafeId,
+		@Param("now") LocalDateTime now
+	);
+
+	@Query("""
+			select count(r) > 0 from Reservation r
+			where r.memberId = :memberId
+			and r.status = com.studyhub.reservation.domain.ReservationStatus.RESERVED
+			and r.endTime > :now
+		""")
+	boolean existsActiveByMember(@Param("memberId") Long memberId,
 		@Param("now") LocalDateTime now
 	);
 
