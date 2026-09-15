@@ -12,12 +12,19 @@ import com.tngtech.archunit.lang.ArchRule;
 public class ModuleDependencyTest {
 
 	@ArchTest
-	static final ArchRule reservation은_cafe와_member를_참조하지_않는다 =
+	static final ArchRule reservation은_cafe를_참조하지_않는다 =
+		noClasses()
+			.that().resideInAPackage("..reservation..")
+			.should().dependOnClassesThat().resideInAPackage("..cafe..");
+
+	@ArchTest
+	static final ArchRule reservation은_member의_port만_참조한다 =
 		noClasses()
 			.that().resideInAPackage("..reservation..")
 			.should().dependOnClassesThat(
-				resideInAPackage("..cafe..")
-					.or(resideInAPackage("..member..")));
+				resideInAPackage("..member..")
+					.and(not(resideInAPackage("..member.port..")))
+			);
 
 	@ArchTest
 	static final ArchRule cafe는_reservation의_port만_참조한다 =
