@@ -34,6 +34,10 @@ public class AuthService {
 		Member member = memberService.findByUsername(username)
 			.orElseThrow(() -> new BusinessException(AuthErrorCode.LOGIN_FAILED));
 
+		if (member.isWithdrawn()) {
+			throw new BusinessException(MemberErrorCode.ALREADY_WITHDRAWN);
+		}
+
 		boolean passwordMatches = passwordEncoder.matches(request.getPassword(), member.getPassword());
 		if (!passwordMatches) {
 			throw new BusinessException(AuthErrorCode.LOGIN_FAILED);
