@@ -44,6 +44,8 @@ dependencies {
     annotationProcessor 'jakarta.persistence:jakarta.persistence-api'
     // ArchUnit
     testImplementation 'com.tngtech.archunit:archunit-junit5:1.3.0'
+    // Redis
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 }
 
 def querydslDir = "$buildDir/generated/querydsl"

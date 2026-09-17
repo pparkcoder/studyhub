@@ -4,6 +4,7 @@ import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
+import java.util.UUID;
 
 import javax.crypto.SecretKey;
 
@@ -55,6 +56,7 @@ public class JwtProvider {
 		Date expiry = new Date(now.getTime() + expirationMillis);
 
 		return Jwts.builder()
+			.id(UUID.randomUUID().toString())
 			.subject(memberId)
 			.claim("role", role)
 			.issuedAt(now)
@@ -93,5 +95,14 @@ public class JwtProvider {
 		return expiration.toInstant()
 			.atZone(ZoneId.systemDefault())
 			.toLocalDateTime();
+	}
+
+	public String getJwtId(String token) {
+		return parseClaims(token).getId();
+	}
+
+	public long getRemainingMillis(String token) {
+		Date expiration = parseClaims(token).getExpiration();
+		return expiration.getTime() - System.currentTimeMillis();
 	}
 }
