@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.studyhub.cafe.dto.request.CafeRegisterRequest;
 import com.studyhub.cafe.dto.request.CafeSearchRequest;
-import com.studyhub.cafe.dto.request.CafeSearchResponse;
 import com.studyhub.cafe.dto.response.CafeRegisterResponse;
+import com.studyhub.cafe.dto.response.CafeSearchResponse;
 import com.studyhub.cafe.service.CafeService;
 
 import jakarta.validation.Valid;

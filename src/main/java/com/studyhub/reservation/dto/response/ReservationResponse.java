@@ -6,10 +6,8 @@ import com.studyhub.reservation.domain.Reservation;
 import com.studyhub.reservation.port.CafeInfo;
 
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 
 @Getter
-@RequiredArgsConstructor
 public class ReservationResponse {
 
 	private Long reservationId;

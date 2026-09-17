@@ -1,4 +1,4 @@
-package com.studyhub.cafe.dto.request;
+package com.studyhub.cafe.dto.response;
 
 import com.studyhub.cafe.domain.Cafe;
 
