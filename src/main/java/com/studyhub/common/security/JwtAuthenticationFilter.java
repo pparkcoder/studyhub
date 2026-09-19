@@ -20,15 +20,15 @@ import lombok.RequiredArgsConstructor;
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
 	private static final String AUTHORIZATION_HEADER = "Authorization";
-	private static final String BEARER_PREFIX = "Bearer ";
 	private final JwtProvider jwtProvider;
+	private final TokenBlacklist tokenBlacklist;
 
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
 		FilterChain filterChain) throws ServletException, IOException {
 
 		String token = resolveToken(request);
-		if (token != null && jwtProvider.validateToken(token)) {
+		if (token != null && jwtProvider.validateToken(token) && !isBlacklisted(token)) {
 			String memberId = jwtProvider.getMemberId(token);
 			String role = jwtProvider.getRole(token);
 
@@ -48,13 +48,13 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 		filterChain.doFilter(request, response);
 	}
 
+	private boolean isBlacklisted(String token) {
+		String jti = jwtProvider.getJti(token);
+		return tokenBlacklist.containsBlacklist(jti);
+	}
+
 	private String resolveToken(HttpServletRequest request) {
-		String bearerToken = request.getHeader(AUTHORIZATION_HEADER);
-
-		if (bearerToken != null && bearerToken.startsWith(BEARER_PREFIX)) {
-			return bearerToken.substring(BEARER_PREFIX.length());
-		}
-
-		return null;
+		String header = request.getHeader(AUTHORIZATION_HEADER);
+		return jwtProvider.resolveToken(header);
 	}
 }

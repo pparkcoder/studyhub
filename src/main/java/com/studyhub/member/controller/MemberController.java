@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -30,8 +31,9 @@ public class MemberController {
 
 	@PostMapping("/withdraw")
 	public ResponseEntity<Void> withdraw(@AuthenticationPrincipal String memberId,
-		@Valid @RequestBody WithdrawRequest request) {
-		memberService.withdraw(Long.valueOf(memberId), request);
+		@Valid @RequestBody WithdrawRequest request,
+		@RequestHeader("Authorization") String header) {
+		memberService.withdraw(Long.valueOf(memberId), request, header);
 		return ResponseEntity.noContent().build();
 	}
 

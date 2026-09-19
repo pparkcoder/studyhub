@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.studyhub.common.exception.BusinessException;
 import com.studyhub.common.exception.MemberErrorCode;
+import com.studyhub.common.security.TokenInvalidator;
 import com.studyhub.member.domain.Member;
 import com.studyhub.member.dto.request.SignUpRequest;
 import com.studyhub.member.dto.request.WithdrawRequest;
@@ -24,6 +25,7 @@ public class MemberService {
 	private final MemberRepository memberRepository;
 	private final PasswordEncoder passwordEncoder;
 	private final ReservationQueryPort reservationQueryPort;
+	private final TokenInvalidator tokenInvalidator;
 
 	@Transactional(readOnly = true)
 	public Optional<Member> findByUsername(String username) {
@@ -47,7 +49,7 @@ public class MemberService {
 	}
 
 	@Transactional
-	public void withdraw(Long memberId, WithdrawRequest request) {
+	public void withdraw(Long memberId, WithdrawRequest request, String header) {
 		Member member = memberRepository.findById(memberId)
 			.orElseThrow(() -> new BusinessException(MemberErrorCode.MEMBER_NOT_FOUND));
 
@@ -66,5 +68,6 @@ public class MemberService {
 
 		member.withdraw();
 		member.clearRefreshToken();
+		tokenInvalidator.invalidate(header);
 	}
 }

@@ -13,6 +13,7 @@ import com.studyhub.common.exception.AuthErrorCode;
 import com.studyhub.common.exception.BusinessException;
 import com.studyhub.common.exception.MemberErrorCode;
 import com.studyhub.common.security.JwtProvider;
+import com.studyhub.common.security.TokenInvalidator;
 import com.studyhub.common.util.TokenHashUtil;
 import com.studyhub.member.domain.Member;
 import com.studyhub.member.service.MemberService;
@@ -27,6 +28,7 @@ public class AuthService {
 	private final PasswordEncoder passwordEncoder;
 	private final JwtProvider jwtProvider;
 	private final TokenHashUtil tokenHashUtil;
+	private final TokenInvalidator tokenInvalidator;
 
 	@Transactional
 	public LoginResponse login(LoginRequest request) {
@@ -46,11 +48,12 @@ public class AuthService {
 	}
 
 	@Transactional
-	public void logout(Long memberId) {
+	public void logout(Long memberId, String header) {
 		Member member = memberService.findById(memberId)
 			.orElseThrow(() -> new BusinessException(MemberErrorCode.MEMBER_NOT_FOUND));
 
 		member.clearRefreshToken();
+		tokenInvalidator.invalidate(header);
 	}
 
 	@Transactional
