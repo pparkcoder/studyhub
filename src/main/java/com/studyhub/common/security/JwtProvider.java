@@ -19,6 +19,7 @@ import io.jsonwebtoken.security.Keys;
 @Component
 public class JwtProvider {
 
+	private static final String BEARER_PREFIX = "Bearer ";
 	private final SecretKey secretKey;
 	private final long accessTokenExpiration;
 	private final long refreshTokenExpiration;
@@ -97,12 +98,20 @@ public class JwtProvider {
 			.toLocalDateTime();
 	}
 
-	public String getJwtId(String token) {
+	public String getJti(String token) {
 		return parseClaims(token).getId();
 	}
 
 	public long getRemainingMillis(String token) {
 		Date expiration = parseClaims(token).getExpiration();
 		return expiration.getTime() - System.currentTimeMillis();
+	}
+
+	public String resolveToken(String header) {
+		if (header != null && header.startsWith(BEARER_PREFIX)) {
+			return header.substring(BEARER_PREFIX.length());
+		}
+
+		return null;
 	}
 }
