@@ -1,7 +1,5 @@
 package com.studyhub.member.domain;
 
-import java.time.LocalDateTime;
-
 import com.studyhub.common.entity.BaseTimeEntity;
 import com.studyhub.member.dto.request.SignUpRequest;
 
@@ -48,12 +46,6 @@ public class Member extends BaseTimeEntity {
 	@Column(nullable = false)
 	private MemberStatus status;
 
-	@Column(name = "refresh_token_hash")
-	private String refreshTokenHash;
-
-	@Column(name = "refresh_token_expired_at")
-	private LocalDateTime refreshTokenExpiredAt;
-
 	@Builder(access = AccessLevel.PRIVATE)
 	private Member(String username, String nickname, String email, String password, Role role) {
 		this.username = username;
@@ -72,16 +64,6 @@ public class Member extends BaseTimeEntity {
 			.password(password)
 			.role(request.getRole())
 			.build();
-	}
-
-	public void updateRefreshToken(String refreshTokenHash, LocalDateTime expiredAt) {
-		this.refreshTokenHash = refreshTokenHash;
-		this.refreshTokenExpiredAt = expiredAt;
-	}
-
-	public void clearRefreshToken() {
-		this.refreshTokenHash = null;
-		this.refreshTokenExpiredAt = null;
 	}
 
 	public void withdraw() {
