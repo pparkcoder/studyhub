@@ -10,11 +10,13 @@ public class TokenInvalidator {
 
 	private final JwtProvider jwtProvider;
 	private final TokenBlacklist tokenBlacklist;
+	private final RefreshTokenStore refreshTokenStore;
 
-	public void invalidate(String header) {
+	public void invalidate(Long memberId, String header) {
 		String token = jwtProvider.resolveToken(header);
 		String jti = jwtProvider.getJti(token);
 		long ttlMillis = jwtProvider.getRemainingMillis(token);
 		tokenBlacklist.addBlacklist(jti, ttlMillis);
+		refreshTokenStore.delete(memberId);
 	}
 }

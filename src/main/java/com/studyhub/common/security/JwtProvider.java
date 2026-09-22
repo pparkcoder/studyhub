@@ -15,8 +15,10 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
+import lombok.Getter;
 
 @Component
+@Getter
 public class JwtProvider {
 
 	private static final String BEARER_PREFIX = "Bearer ";

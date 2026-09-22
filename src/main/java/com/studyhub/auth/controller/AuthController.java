@@ -35,7 +35,7 @@ public class AuthController {
 		return ResponseEntity.noContent().build();
 	}
 
-	@PostMapping("/reissue")
+	@PostMapping("/refresh")
 	public ResponseEntity<LoginResponse> refreshToken(@RequestBody @Valid ReIssueRequest request) {
 		return ResponseEntity.ok(authService.refresh(request));
 	}

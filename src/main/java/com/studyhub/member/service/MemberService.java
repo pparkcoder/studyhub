@@ -67,7 +67,6 @@ public class MemberService {
 		}
 
 		member.withdraw();
-		member.clearRefreshToken();
-		tokenInvalidator.invalidate(header);
+		tokenInvalidator.invalidate(memberId, header);
 	}
 }
