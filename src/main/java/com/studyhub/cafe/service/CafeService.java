@@ -2,6 +2,7 @@ package com.studyhub.cafe.service;
 
 import java.util.List;
 
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -73,6 +74,7 @@ public class CafeService {
 		return result.stream().map(CafeSearchResponse::from).toList();
 	}
 
+	@Cacheable(value = "cafe", key = "#cafeId")
 	@Transactional(readOnly = true)
 	public CafeDetailResponse searchDetail(Long cafeId) {
 		Cafe cafe = cafeRepository.findById(cafeId)

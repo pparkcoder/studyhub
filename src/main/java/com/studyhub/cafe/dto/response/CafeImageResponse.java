@@ -3,8 +3,10 @@ package com.studyhub.cafe.dto.response;
 import com.studyhub.cafe.domain.CafeImage;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
+@NoArgsConstructor
 public class CafeImageResponse {
 
 	private Long id;

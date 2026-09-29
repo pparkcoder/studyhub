@@ -4,8 +4,10 @@ import com.studyhub.cafe.domain.Seat;
 import com.studyhub.cafe.domain.SeatStatus;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
+@NoArgsConstructor
 public class SeatResponse {
 
 	private Long id;

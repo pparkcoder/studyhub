@@ -5,13 +5,15 @@ import java.util.List;
 import com.studyhub.cafe.domain.Cafe;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
+@NoArgsConstructor
 public class CafeDetailResponse {
 
-	private final CafeSearchResponse cafe;
-	private final List<CafeImageResponse> images;
-	private final List<SeatResponse> seats;
+	private CafeSearchResponse cafe;
+	private List<CafeImageResponse> images;
+	private List<SeatResponse> seats;
 
 	private CafeDetailResponse(CafeSearchResponse cafe, List<CafeImageResponse> images, List<SeatResponse> seats) {
 		this.cafe = cafe;
