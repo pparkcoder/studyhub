@@ -10,6 +10,7 @@ import com.studyhub.cafe.domain.CafeImage;
 import com.studyhub.cafe.domain.Seat;
 import com.studyhub.cafe.dto.request.CafeRegisterRequest;
 import com.studyhub.cafe.dto.request.CafeSearchRequest;
+import com.studyhub.cafe.dto.response.CafeDetailResponse;
 import com.studyhub.cafe.dto.response.CafeRegisterResponse;
 import com.studyhub.cafe.dto.response.CafeSearchResponse;
 import com.studyhub.cafe.port.OwnerValidator;
@@ -70,5 +71,12 @@ public class CafeService {
 	public List<CafeSearchResponse> search(CafeSearchRequest request) {
 		List<Cafe> result = cafeRepository.search(request);
 		return result.stream().map(CafeSearchResponse::from).toList();
+	}
+
+	@Transactional(readOnly = true)
+	public CafeDetailResponse searchDetail(Long cafeId) {
+		Cafe cafe = cafeRepository.findById(cafeId)
+			.orElseThrow(() -> new BusinessException(CafeErrorCode.CAFE_NOT_FOUND));
+		return CafeDetailResponse.from(cafe);
 	}
 }

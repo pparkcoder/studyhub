@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.studyhub.cafe.dto.request.CafeRegisterRequest;
 import com.studyhub.cafe.dto.request.CafeSearchRequest;
+import com.studyhub.cafe.dto.response.CafeDetailResponse;
 import com.studyhub.cafe.dto.response.CafeRegisterResponse;
 import com.studyhub.cafe.dto.response.CafeSearchResponse;
 import com.studyhub.cafe.service.CafeService;
@@ -39,8 +41,13 @@ public class CafeController {
 	}
 
 	@GetMapping
-	public ResponseEntity<List<CafeSearchResponse>> search(@ModelAttribute CafeSearchRequest request) {
+	public ResponseEntity<List<CafeSearchResponse>> searchCafes(@ModelAttribute CafeSearchRequest request) {
 		return ResponseEntity.ok(cafeService.search(request));
+	}
+
+	@GetMapping("/{cafeId}")
+	public ResponseEntity<CafeDetailResponse> searchCafeDetail(@PathVariable Long cafeId) {
+		return ResponseEntity.ok(cafeService.searchDetail(cafeId));
 	}
 
 }
