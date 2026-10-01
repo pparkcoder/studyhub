@@ -62,7 +62,7 @@ public class MemberService {
 			throw new BusinessException(MemberErrorCode.PASSWORD_MISMATCH);
 		}
 
-		if (reservationQueryPort.hasActiveReservation(memberId)) {
+		if (reservationQueryPort.hasActiveReservationByMemberId(memberId)) {
 			throw new BusinessException(MemberErrorCode.ACTIVE_RESERVATION_EXISTS);
 		}
 

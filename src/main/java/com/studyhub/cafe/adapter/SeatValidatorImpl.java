@@ -26,6 +26,9 @@ public class SeatValidatorImpl implements SeatValidator {
 		if (!seat.getCafe().getId().equals(cafeId)) {
 			return SeatValidationResult.CAFE_MISMATCH;
 		}
+		if (seat.getCafe().isDeleted()) {
+			return SeatValidationResult.CAFE_DELETED;
+		}
 		if (seat.getStatus() == SeatStatus.DISABLED) {
 			return SeatValidationResult.DISABLED;
 		}

@@ -16,8 +16,14 @@ public class ReservationQueryPortImpl implements ReservationQueryPort {
 	private final ReservationRepository reservationRepository;
 
 	@Override
-	public boolean hasActiveReservation(Long memberId) {
+	public boolean hasActiveReservationByMemberId(Long memberId) {
 		LocalDateTime now = LocalDateTime.now();
 		return reservationRepository.existsActiveByMember(memberId, now);
+	}
+
+	@Override
+	public boolean hasActiveReservationByCafeId(Long cafeId) {
+		LocalDateTime now = LocalDateTime.now();
+		return reservationRepository.existsActiveByCafe(cafeId, now);
 	}
 }

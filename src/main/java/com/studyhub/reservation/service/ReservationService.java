@@ -138,6 +138,7 @@ public class ReservationService {
 			case NOT_FOUND -> ReservationErrorCode.SEAT_NOT_FOUND;
 			case CAFE_MISMATCH -> ReservationErrorCode.SEAT_CAFE_MISMATCH;
 			case DISABLED -> ReservationErrorCode.SEAT_DISABLED;
+			case CAFE_DELETED -> ReservationErrorCode.CAFE_DELETED;
 			case VALID -> null;
 		};
 		if (errorCode != null) {

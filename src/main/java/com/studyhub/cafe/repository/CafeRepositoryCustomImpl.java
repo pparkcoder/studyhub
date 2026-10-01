@@ -10,6 +10,7 @@ import org.springframework.util.StringUtils;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.studyhub.cafe.domain.Cafe;
+import com.studyhub.cafe.domain.CafeStatus;
 import com.studyhub.cafe.dto.request.CafeSearchRequest;
 
 import lombok.RequiredArgsConstructor;
@@ -22,6 +23,7 @@ public class CafeRepositoryCustomImpl implements CafeRepositoryCustom {
 	@Override
 	public List<Cafe> search(CafeSearchRequest request) {
 		BooleanBuilder builder = new BooleanBuilder();
+		builder.and(cafe.status.eq(CafeStatus.ACTIVE));
 		builder.and(StringUtils.hasText(request.getRegion()) ? cafe.region.eq(request.getRegion()) : null);
 		builder.and(StringUtils.hasText(request.getKeyword()) ? cafe.name.contains(request.getKeyword()) : null);
 
