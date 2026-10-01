@@ -10,6 +10,8 @@ import com.studyhub.common.entity.BaseTimeEntity;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -62,6 +64,10 @@ public class Cafe extends BaseTimeEntity {
 	@OrderBy("sortOrder ASC")
 	private List<CafeImage> images = new ArrayList<>();
 
+	@Enumerated(EnumType.STRING)
+	@Column(name = "status", nullable = false)
+	private CafeStatus status;
+
 	@Builder(access = AccessLevel.PRIVATE)
 	private Cafe(String name, String address, String region, Double latitude, Double longitude, LocalTime openTime,
 		LocalTime closeTime, Long ownerId) {
@@ -73,6 +79,7 @@ public class Cafe extends BaseTimeEntity {
 		this.openTime = openTime;
 		this.closeTime = closeTime;
 		this.ownerId = ownerId;
+		this.status = CafeStatus.ACTIVE;
 	}
 
 	public static Cafe from(CafeRegisterRequest request, Long onwerId) {
@@ -96,6 +103,18 @@ public class Cafe extends BaseTimeEntity {
 	public void addImage(CafeImage image) {
 		this.images.add(image);
 		image.assignCafe(this);
+	}
+
+	public boolean isOwnedBy(Long memberId) {
+		return ownerId.equals(memberId);
+	}
+
+	public void delete() {
+		this.status = CafeStatus.DELETED;
+	}
+
+	public boolean isDeleted() {
+		return status == CafeStatus.DELETED;
 	}
 
 }
