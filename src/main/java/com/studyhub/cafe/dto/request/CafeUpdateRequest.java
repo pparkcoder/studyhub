@@ -18,13 +18,13 @@ public class CafeUpdateRequest {
 	@Size(max = 100)
 	private String address;
 
-	@NotNull
+	@NotBlank
 	private String region;
 
 	@NotNull
 	private Double latitude;
 
-	@NotBlank
+	@NotNull
 	private Double longitude;
 
 	@NotNull
