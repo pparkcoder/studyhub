@@ -12,6 +12,7 @@ import com.studyhub.cafe.domain.CafeImage;
 import com.studyhub.cafe.domain.Seat;
 import com.studyhub.cafe.dto.request.CafeRegisterRequest;
 import com.studyhub.cafe.dto.request.CafeSearchRequest;
+import com.studyhub.cafe.dto.request.CafeUpdateRequest;
 import com.studyhub.cafe.dto.response.CafeDetailResponse;
 import com.studyhub.cafe.dto.response.CafeRegisterResponse;
 import com.studyhub.cafe.dto.response.CafeSearchResponse;
@@ -19,7 +20,6 @@ import com.studyhub.cafe.port.OwnerValidator;
 import com.studyhub.cafe.repository.CafeRepository;
 import com.studyhub.common.exception.BusinessException;
 import com.studyhub.common.exception.CafeErrorCode;
-import com.studyhub.member.port.ReservationQueryPort;
 
 import lombok.RequiredArgsConstructor;
 
@@ -29,7 +29,6 @@ public class CafeService {
 
 	private final OwnerValidator ownerValidator;
 	private final CafeRepository cafeRepository;
-	private final ReservationQueryPort reservationQueryPort;
 
 	@Transactional
 	public CafeRegisterResponse registerCafe(CafeRegisterRequest request, Long memberId) {
@@ -63,6 +62,17 @@ public class CafeService {
 	public CafeDetailResponse searchDetail(Long cafeId) {
 		Cafe cafe = validateCafe(cafeId);
 		return CafeDetailResponse.from(cafe);
+	}
+
+	@CacheEvict(value = "cafe", key = "#cafeId")
+	@Transactional
+	public void update(CafeUpdateRequest request, Long cafeId, Long memberId) {
+		validateOwner(memberId);
+		Cafe cafe = validateCafe(cafeId);
+		if (!cafe.isOwnedBy(memberId)) {
+			throw new BusinessException(CafeErrorCode.NOT_CAFE_OWNER);
+		}
+		cafe.update(request);
 	}
 
 	private void validateOwner(Long memberId) {

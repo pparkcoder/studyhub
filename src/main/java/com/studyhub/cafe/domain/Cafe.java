@@ -4,7 +4,10 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.hibernate.annotations.Comment;
+
 import com.studyhub.cafe.dto.request.CafeRegisterRequest;
+import com.studyhub.cafe.dto.request.CafeUpdateRequest;
 import com.studyhub.common.entity.BaseTimeEntity;
 
 import jakarta.persistence.CascadeType;
@@ -42,11 +45,13 @@ public class Cafe extends BaseTimeEntity {
 	@Column(length = 20, nullable = false)
 	private String region;
 
+	@Comment("위도")
 	@Column(nullable = false)
-	private Double latitude; // 위도
+	private Double latitude;
 
+	@Comment("경도")
 	@Column(nullable = false)
-	private Double longitude; // 경도
+	private Double longitude;
 
 	@Column(nullable = false)
 	private LocalTime openTime;
@@ -115,6 +120,16 @@ public class Cafe extends BaseTimeEntity {
 
 	public boolean isDeleted() {
 		return status == CafeStatus.DELETED;
+	}
+
+	public void update(CafeUpdateRequest request) {
+		this.name = request.getName();
+		this.address = request.getAddress();
+		this.region = request.getRegion();
+		this.latitude = request.getLatitude();
+		this.longitude = request.getLongitude();
+		this.openTime = request.getOpenTime();
+		this.closeTime = request.getCloseTime();
 	}
 
 }
