@@ -52,4 +52,9 @@ public class CafeImage extends BaseTimeEntity {
 	void assignCafe(Cafe cafe) {
 		this.cafe = cafe;
 	}
+
+	public void updateImage(String imageUrl, Integer sortOrder) {
+		this.imageUrl = imageUrl;
+		this.sortOrder = sortOrder;
+	}
 }

@@ -15,15 +15,18 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.studyhub.cafe.dto.request.CafeImageRegisterRequest;
 import com.studyhub.cafe.dto.request.CafeRegisterRequest;
 import com.studyhub.cafe.dto.request.CafeSearchRequest;
 import com.studyhub.cafe.dto.request.CafeUpdateRequest;
 import com.studyhub.cafe.dto.response.CafeDetailResponse;
+import com.studyhub.cafe.dto.response.CafeImageResponse;
 import com.studyhub.cafe.dto.response.CafeRegisterResponse;
 import com.studyhub.cafe.dto.response.CafeSearchResponse;
 import com.studyhub.cafe.service.CafeService;
 
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -64,6 +67,13 @@ public class CafeController {
 		@AuthenticationPrincipal String memberId, @PathVariable Long cafeId) {
 		cafeService.update(request, cafeId, Long.valueOf(memberId));
 		return ResponseEntity.noContent().build();
+	}
+
+	@PutMapping("/{cafeId}/images")
+	public ResponseEntity<List<CafeImageResponse>> registerCafeImages(
+		@NotEmpty @RequestBody @Valid List<CafeImageRegisterRequest> requests,
+		@AuthenticationPrincipal String memberId, @PathVariable Long cafeId) {
+		return ResponseEntity.ok(cafeService.registerCafeImages(requests, cafeId, Long.valueOf(memberId)));
 	}
 
 }

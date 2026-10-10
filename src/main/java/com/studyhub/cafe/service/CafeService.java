@@ -1,6 +1,13 @@
 package com.studyhub.cafe.service;
 
+import java.util.Comparator;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
@@ -10,10 +17,12 @@ import org.springframework.transaction.annotation.Transactional;
 import com.studyhub.cafe.domain.Cafe;
 import com.studyhub.cafe.domain.CafeImage;
 import com.studyhub.cafe.domain.Seat;
+import com.studyhub.cafe.dto.request.CafeImageRegisterRequest;
 import com.studyhub.cafe.dto.request.CafeRegisterRequest;
 import com.studyhub.cafe.dto.request.CafeSearchRequest;
 import com.studyhub.cafe.dto.request.CafeUpdateRequest;
 import com.studyhub.cafe.dto.response.CafeDetailResponse;
+import com.studyhub.cafe.dto.response.CafeImageResponse;
 import com.studyhub.cafe.dto.response.CafeRegisterResponse;
 import com.studyhub.cafe.dto.response.CafeSearchResponse;
 import com.studyhub.cafe.port.OwnerValidator;
@@ -44,6 +53,7 @@ public class CafeService {
 	@CacheEvict(value = "cafe", key = "#cafeId")
 	@Transactional
 	public void deleteCafe(Long cafeId, Long memberId) {
+		validateOwner(memberId);
 		Cafe cafe = validateCafe(cafeId);
 		if (!cafe.isOwnedBy(memberId)) {
 			throw new BusinessException(CafeErrorCode.NOT_CAFE_OWNER);
@@ -73,6 +83,56 @@ public class CafeService {
 			throw new BusinessException(CafeErrorCode.NOT_CAFE_OWNER);
 		}
 		cafe.update(request);
+	}
+
+	@CacheEvict(value = "cafe", key = "#cafeId")
+	@Transactional
+	public List<CafeImageResponse> registerCafeImages(List<CafeImageRegisterRequest> requests, Long cafeId,
+		Long memberId) {
+		validateOwner(memberId);
+		Cafe cafe = validateCafe(cafeId);
+		if (!cafe.isOwnedBy(memberId)) {
+			throw new BusinessException(CafeErrorCode.NOT_CAFE_OWNER);
+		}
+		validateSortOrders(requests);
+
+		Set<Long> existIds = cafe.getImages()
+			.stream()
+			.map(CafeImage::getId)
+			.collect(Collectors.toSet());
+
+		Set<Long> requestIds = requests.stream()
+			.map(CafeImageRegisterRequest::getId)
+			.filter(Objects::nonNull)
+			.collect(Collectors.toSet());
+
+		for (Long requestId : requestIds) {
+			if (!existIds.contains(requestId)) {
+				String message = String.format("ID : %s 해당 카페에 존재하지 않는 이미지 입니다.", requestId);
+				throw new BusinessException(CafeErrorCode.IMAGE_NOT_FOUND, message);
+			}
+		}
+		cafe.deleteImage(requestIds);
+
+		Map<Long, CafeImage> cafeImageById = cafe.getImages()
+			.stream()
+			.collect(Collectors.toMap(CafeImage::getId, Function.identity()));
+
+		for (CafeImageRegisterRequest request : requests) {
+			if (request.getId() == null) { // 추가
+				CafeImage cafeImage = CafeImage.of(request.getImageUrl(), request.getSortOrder());
+				cafe.addImage(cafeImage);
+			} else { // 수정
+				CafeImage cafeImage = cafeImageById.get(request.getId());
+				cafeImage.updateImage(request.getImageUrl(), request.getSortOrder());
+			}
+		}
+		cafeRepository.flush();
+		return cafe.getImages()
+			.stream()
+			.sorted(Comparator.comparing(CafeImage::getSortOrder))
+			.map(CafeImageResponse::from)
+			.toList();
 	}
 
 	private void validateOwner(Long memberId) {
@@ -110,6 +170,16 @@ public class CafeService {
 		for (int i = 0; i < imageUrls.size(); ++i) {
 			CafeImage cafeImage = CafeImage.of(imageUrls.get(i), i);
 			cafe.addImage(cafeImage);
+		}
+	}
+
+	private void validateSortOrders(List<CafeImageRegisterRequest> requests) {
+		Set<Integer> sortOrders = new HashSet<>();
+		for (CafeImageRegisterRequest request : requests) {
+			Integer sortOrder = request.getSortOrder();
+			if (!sortOrders.add(sortOrder)) {
+				throw new BusinessException(CafeErrorCode.DUPLICATE_SORT_ORDER);
+			}
 		}
 	}
 }

@@ -20,7 +20,8 @@ public class GlobalExceptionHandler {
 	@ExceptionHandler(BusinessException.class)
 	public ResponseEntity<ErrorResponse> handleBusinessException(BusinessException e) {
 		ErrorCode errorCode = e.getErrorCode();
-		return ResponseEntity.status(errorCode.getStatus()).body(ErrorResponse.of(errorCode));
+		return ResponseEntity.status(errorCode.getStatus())
+			.body(new ErrorResponse(errorCode.getCode(), e.getMessage()));
 	}
 
 	// @Valid 검증 실패

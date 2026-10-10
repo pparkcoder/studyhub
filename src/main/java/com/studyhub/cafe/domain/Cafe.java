@@ -3,6 +3,8 @@ package com.studyhub.cafe.domain;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.Set;
 
 import org.hibernate.annotations.Comment;
 
@@ -110,6 +112,10 @@ public class Cafe extends BaseTimeEntity {
 		image.assignCafe(this);
 	}
 
+	public void deleteImage(Set<Long> imageIds) {
+		images.removeIf(image -> !imageIds.contains(image.getId()));
+	}
+
 	public boolean isOwnedBy(Long memberId) {
 		return ownerId.equals(memberId);
 	}
@@ -130,6 +136,11 @@ public class Cafe extends BaseTimeEntity {
 		this.longitude = request.getLongitude();
 		this.openTime = request.getOpenTime();
 		this.closeTime = request.getCloseTime();
+	}
+
+	public boolean hasImageWithSortOrder(Integer sortOrder) {
+		return images.stream()
+			.anyMatch(image -> Objects.equals(image.getSortOrder(), sortOrder));
 	}
 
 }
