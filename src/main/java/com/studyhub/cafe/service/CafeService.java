@@ -53,11 +53,7 @@ public class CafeService {
 	@CacheEvict(value = "cafe", key = "#cafeId")
 	@Transactional
 	public void deleteCafe(Long cafeId, Long memberId) {
-		validateOwner(memberId);
-		Cafe cafe = validateCafe(cafeId);
-		if (!cafe.isOwnedBy(memberId)) {
-			throw new BusinessException(CafeErrorCode.NOT_CAFE_OWNER);
-		}
+		Cafe cafe = getOwnedCafe(cafeId, memberId);
 		cafe.delete();
 	}
 
@@ -77,11 +73,7 @@ public class CafeService {
 	@CacheEvict(value = "cafe", key = "#cafeId")
 	@Transactional
 	public void update(CafeUpdateRequest request, Long cafeId, Long memberId) {
-		validateOwner(memberId);
-		Cafe cafe = validateCafe(cafeId);
-		if (!cafe.isOwnedBy(memberId)) {
-			throw new BusinessException(CafeErrorCode.NOT_CAFE_OWNER);
-		}
+		Cafe cafe = getOwnedCafe(cafeId, memberId);
 		cafe.update(request);
 	}
 
@@ -89,17 +81,12 @@ public class CafeService {
 	@Transactional
 	public List<CafeImageResponse> registerCafeImages(List<CafeImageRegisterRequest> requests, Long cafeId,
 		Long memberId) {
-		validateOwner(memberId);
-		Cafe cafe = validateCafe(cafeId);
-		if (!cafe.isOwnedBy(memberId)) {
-			throw new BusinessException(CafeErrorCode.NOT_CAFE_OWNER);
-		}
+		Cafe cafe = getOwnedCafe(cafeId, memberId);
 		validateSortOrders(requests);
 
-		Set<Long> existIds = cafe.getImages()
+		Map<Long, CafeImage> cafeImageById = cafe.getImages()
 			.stream()
-			.map(CafeImage::getId)
-			.collect(Collectors.toSet());
+			.collect(Collectors.toMap(CafeImage::getId, Function.identity()));
 
 		Set<Long> requestIds = requests.stream()
 			.map(CafeImageRegisterRequest::getId)
@@ -107,16 +94,12 @@ public class CafeService {
 			.collect(Collectors.toSet());
 
 		for (Long requestId : requestIds) {
-			if (!existIds.contains(requestId)) {
+			if (!cafeImageById.containsKey(requestId)) {
 				String message = String.format("ID : %s 해당 카페에 존재하지 않는 이미지 입니다.", requestId);
 				throw new BusinessException(CafeErrorCode.IMAGE_NOT_FOUND, message);
 			}
 		}
 		cafe.deleteImage(requestIds);
-
-		Map<Long, CafeImage> cafeImageById = cafe.getImages()
-			.stream()
-			.collect(Collectors.toMap(CafeImage::getId, Function.identity()));
 
 		for (CafeImageRegisterRequest request : requests) {
 			if (request.getId() == null) { // 추가
@@ -145,6 +128,15 @@ public class CafeService {
 		if (errorCode != null) {
 			throw new BusinessException(errorCode);
 		}
+	}
+
+	private Cafe getOwnedCafe(Long cafeId, Long memberId) {
+		validateOwner(memberId);
+		Cafe cafe = validateCafe(cafeId);
+		if (!cafe.isOwnedBy(memberId)) {
+			throw new BusinessException(CafeErrorCode.NOT_CAFE_OWNER);
+		}
+		return cafe;
 	}
 
 	private Cafe validateCafe(Long cafeId) {
