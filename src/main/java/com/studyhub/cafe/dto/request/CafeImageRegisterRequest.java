@@ -8,7 +8,6 @@ import lombok.Getter;
 @Getter
 public class CafeImageRegisterRequest {
 
-	@NotNull
 	private Long id;
 
 	@NotBlank
