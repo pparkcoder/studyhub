@@ -28,6 +28,7 @@ public class Reservation {
 	private Long cafeId;
 	private Long seatId;
 	private Long previousSeatId;
+	private String seatNumber;
 
 	private LocalDateTime startTime;
 	private LocalDateTime endTime;
@@ -40,8 +41,7 @@ public class Reservation {
 
 	@Builder(access = AccessLevel.PRIVATE)
 	private Reservation(Long memberId, Long cafeId, Long previousSeatId, Long seatId, LocalDateTime startTime,
-		LocalDateTime endTime,
-		ReservationDuration duration, ReservationStatus status) {
+		LocalDateTime endTime, ReservationDuration duration, ReservationStatus status, String seatNumber) {
 		this.memberId = memberId;
 		this.cafeId = cafeId;
 		this.previousSeatId = previousSeatId;
@@ -50,10 +50,11 @@ public class Reservation {
 		this.endTime = endTime;
 		this.duration = duration;
 		this.status = status;
+		this.seatNumber = seatNumber;
 	}
 
 	public static Reservation reserve(Long memberId, Long cafeId, Long seatId, LocalDateTime startTime,
-		ReservationDuration duration) {
+		ReservationDuration duration, String seatNumber) {
 		return Reservation.builder()
 			.memberId(memberId)
 			.duration(duration)
@@ -62,12 +63,12 @@ public class Reservation {
 			.startTime(startTime)
 			.endTime(duration.calculateEndTime(startTime))
 			.status(ReservationStatus.RESERVED)
+			.seatNumber(seatNumber)
 			.build();
 	}
 
 	public static Reservation moveSeat(Long memberId, Long cafeId, Long previousSeatId, Long seatId,
-		LocalDateTime startTime,
-		LocalDateTime endTime, ReservationDuration duration) {
+		LocalDateTime startTime, LocalDateTime endTime, ReservationDuration duration, String seatNumber) {
 		return Reservation.builder()
 			.memberId(memberId)
 			.duration(duration)
@@ -77,6 +78,7 @@ public class Reservation {
 			.startTime(startTime)
 			.endTime(endTime)
 			.status(ReservationStatus.RESERVED)
+			.seatNumber(seatNumber)
 			.build();
 	}
 

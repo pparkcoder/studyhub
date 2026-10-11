@@ -62,7 +62,8 @@ public class ReservationService {
 			throw new BusinessException(ReservationErrorCode.ALREADY_RESERVED);
 		}
 
-		Reservation reserve = Reservation.reserve(memberId, cafeId, seatId, startTime, duration);
+		Reservation reserve = Reservation.reserve(memberId, cafeId, seatId, startTime, duration,
+			request.getSeatNumber());
 		Reservation savedReservation = reservationRepository.save(reserve);
 		return ReservationCreateResponse.from(savedReservation);
 	}
@@ -94,7 +95,7 @@ public class ReservationService {
 		}
 		reservation.cancel();
 		Reservation reserve = Reservation.moveSeat(memberId, cafeId, seatId, newSeatId, newStartTime, endTime,
-			reservation.getDuration());
+			reservation.getDuration(), request.getSeatNumber());
 		Reservation savedReservation = reservationRepository.save(reserve);
 		return ReservationCreateResponse.from(savedReservation);
 	}

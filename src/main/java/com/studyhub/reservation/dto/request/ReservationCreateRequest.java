@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import com.studyhub.reservation.domain.ReservationDuration;
 
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.Getter;
 
 @Getter
@@ -15,6 +16,10 @@ public class ReservationCreateRequest {
 
 	@NotNull(message = "좌석 ID는 필수입니다.")
 	private Long seatId;
+
+	@NotNull(message = "좌석 번호는 필수입니다.")
+	@Size(max = 10)
+	private String seatNumber;
 
 	@NotNull(message = "예약 시작 시간은 필수입니다.")
 	private LocalDateTime startTime;
