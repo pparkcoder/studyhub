@@ -3,6 +3,7 @@ package com.studyhub.cafe.controller;
 import java.net.URI;
 import java.util.List;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -19,10 +20,12 @@ import com.studyhub.cafe.dto.request.CafeImageRegisterRequest;
 import com.studyhub.cafe.dto.request.CafeRegisterRequest;
 import com.studyhub.cafe.dto.request.CafeSearchRequest;
 import com.studyhub.cafe.dto.request.CafeUpdateRequest;
+import com.studyhub.cafe.dto.request.SeatCreateRequest;
 import com.studyhub.cafe.dto.response.CafeDetailResponse;
 import com.studyhub.cafe.dto.response.CafeImageResponse;
 import com.studyhub.cafe.dto.response.CafeRegisterResponse;
 import com.studyhub.cafe.dto.response.CafeSearchResponse;
+import com.studyhub.cafe.dto.response.SeatResponse;
 import com.studyhub.cafe.service.CafeService;
 
 import jakarta.validation.Valid;
@@ -76,4 +79,10 @@ public class CafeController {
 		return ResponseEntity.ok(cafeService.registerCafeImages(requests, cafeId, Long.valueOf(memberId)));
 	}
 
+	@PostMapping("/{cafeId}/seats")
+	public ResponseEntity<List<SeatResponse>> registerSeats(@RequestBody @Valid SeatCreateRequest request,
+		@AuthenticationPrincipal String memberId, @PathVariable Long cafeId) {
+		return ResponseEntity.status(HttpStatus.CREATED)
+			.body(cafeService.registerSeats(request, cafeId, Long.valueOf(memberId)));
+	}
 }

@@ -1,5 +1,6 @@
 package com.studyhub.cafe.service;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
@@ -21,10 +22,12 @@ import com.studyhub.cafe.dto.request.CafeImageRegisterRequest;
 import com.studyhub.cafe.dto.request.CafeRegisterRequest;
 import com.studyhub.cafe.dto.request.CafeSearchRequest;
 import com.studyhub.cafe.dto.request.CafeUpdateRequest;
+import com.studyhub.cafe.dto.request.SeatCreateRequest;
 import com.studyhub.cafe.dto.response.CafeDetailResponse;
 import com.studyhub.cafe.dto.response.CafeImageResponse;
 import com.studyhub.cafe.dto.response.CafeRegisterResponse;
 import com.studyhub.cafe.dto.response.CafeSearchResponse;
+import com.studyhub.cafe.dto.response.SeatResponse;
 import com.studyhub.cafe.port.OwnerValidator;
 import com.studyhub.cafe.repository.CafeRepository;
 import com.studyhub.common.exception.BusinessException;
@@ -43,7 +46,9 @@ public class CafeService {
 	public CafeRegisterResponse registerCafe(CafeRegisterRequest request, Long memberId) {
 		validateOwner(memberId);
 		Cafe cafe = Cafe.from(request, memberId);
-		addSeats(cafe, request.getSeatCount());
+		int lastSeatNumber = 0;
+		int newLastSeatNumber = lastSeatNumber + request.getSeatCount();
+		addSeats(cafe, lastSeatNumber, newLastSeatNumber);
 		addImages(cafe, request.getImageUrls());
 
 		Cafe saveCafe = cafeRepository.save(cafe);
@@ -118,6 +123,20 @@ public class CafeService {
 			.toList();
 	}
 
+	@CacheEvict(value = "cafe", key = "#cafeId")
+	@Transactional
+	public List<SeatResponse> registerSeats(SeatCreateRequest request, Long cafeId, Long memberId) {
+		Cafe cafe = getOwnedCafe(cafeId, memberId);
+		int lastSeatNumber = findLastSeatNumber(cafe);
+		int newLastSeatNumber = lastSeatNumber + request.getSeatCount();
+		List<Seat> seats = addSeats(cafe, lastSeatNumber, newLastSeatNumber);
+		cafeRepository.flush();
+		return seats.stream()
+			.map(SeatResponse::from)
+			.toList();
+
+	}
+
 	private void validateOwner(Long memberId) {
 		CafeErrorCode errorCode = switch (ownerValidator.validate(memberId)) {
 			case NOT_FOUND -> CafeErrorCode.OWNER_NOT_FOUND;
@@ -148,11 +167,14 @@ public class CafeService {
 		return cafe;
 	}
 
-	private void addSeats(Cafe cafe, int seatCount) {
-		for (int i = 1; i <= seatCount; ++i) {
+	private List<Seat> addSeats(Cafe cafe, int startSeatCount, int endSeatCount) {
+		List<Seat> result = new ArrayList<>();
+		for (int i = startSeatCount + 1; i <= endSeatCount; ++i) {
 			Seat seat = Seat.of("A" + i);
 			cafe.addSeat(seat);
+			result.add(seat);
 		}
+		return result;
 	}
 
 	private void addImages(Cafe cafe, List<String> imageUrls) {
@@ -173,5 +195,12 @@ public class CafeService {
 				throw new BusinessException(CafeErrorCode.DUPLICATE_SORT_ORDER);
 			}
 		}
+	}
+
+	private int findLastSeatNumber(Cafe cafe) {
+		return cafe.getSeats().stream()
+			.mapToInt(seat -> Integer.parseInt(seat.getSeatNumber().substring(1)))
+			.max()
+			.orElse(0);
 	}
 }

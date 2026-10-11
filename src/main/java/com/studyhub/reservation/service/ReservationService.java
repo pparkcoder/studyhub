@@ -95,7 +95,7 @@ public class ReservationService {
 		}
 		reservation.cancel();
 		Reservation reserve = Reservation.moveSeat(memberId, cafeId, seatId, newSeatId, newStartTime, endTime,
-			reservation.getDuration(), request.getSeatNumber());
+			reservation.getDuration(), request.getSeatNumber(), reservation.getSeatNumber());
 		Reservation savedReservation = reservationRepository.save(reserve);
 		return ReservationCreateResponse.from(savedReservation);
 	}
