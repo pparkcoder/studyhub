@@ -23,6 +23,7 @@ import com.studyhub.cafe.dto.request.CafeRegisterRequest;
 import com.studyhub.cafe.dto.request.CafeSearchRequest;
 import com.studyhub.cafe.dto.request.CafeUpdateRequest;
 import com.studyhub.cafe.dto.request.SeatCreateRequest;
+import com.studyhub.cafe.dto.request.SeatUpdateRequest;
 import com.studyhub.cafe.dto.response.CafeDetailResponse;
 import com.studyhub.cafe.dto.response.CafeImageResponse;
 import com.studyhub.cafe.dto.response.CafeRegisterResponse;
@@ -137,6 +138,17 @@ public class CafeService {
 
 	}
 
+	@CacheEvict(value = "cafe", key = "#cafeId")
+	@Transactional
+	public void updateSeat(SeatUpdateRequest request, Long cafeId, Long memberId, Long seatId) {
+		Cafe cafe = getOwnedCafe(cafeId, memberId);
+		Seat seat = findSeatById(cafe, seatId);
+		switch (request.getStatus()) {
+			case AVAILABLE -> seat.enable();
+			case DISABLED -> seat.disable();
+		}
+	}
+
 	private void validateOwner(Long memberId) {
 		CafeErrorCode errorCode = switch (ownerValidator.validate(memberId)) {
 			case NOT_FOUND -> CafeErrorCode.OWNER_NOT_FOUND;
@@ -202,5 +214,12 @@ public class CafeService {
 			.mapToInt(seat -> Integer.parseInt(seat.getSeatNumber().substring(1)))
 			.max()
 			.orElse(0);
+	}
+
+	private Seat findSeatById(Cafe cafe, Long seatId) {
+		return cafe.getSeats().stream()
+			.filter(seat -> seat.getId().equals(seatId))
+			.findFirst()
+			.orElseThrow(() -> new BusinessException(CafeErrorCode.SEAT_NOT_FOUND));
 	}
 }

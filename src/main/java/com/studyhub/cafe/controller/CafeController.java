@@ -9,6 +9,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -21,6 +22,7 @@ import com.studyhub.cafe.dto.request.CafeRegisterRequest;
 import com.studyhub.cafe.dto.request.CafeSearchRequest;
 import com.studyhub.cafe.dto.request.CafeUpdateRequest;
 import com.studyhub.cafe.dto.request.SeatCreateRequest;
+import com.studyhub.cafe.dto.request.SeatUpdateRequest;
 import com.studyhub.cafe.dto.response.CafeDetailResponse;
 import com.studyhub.cafe.dto.response.CafeImageResponse;
 import com.studyhub.cafe.dto.response.CafeRegisterResponse;
@@ -84,5 +86,12 @@ public class CafeController {
 		@AuthenticationPrincipal String memberId, @PathVariable Long cafeId) {
 		return ResponseEntity.status(HttpStatus.CREATED)
 			.body(cafeService.registerSeats(request, cafeId, Long.valueOf(memberId)));
+	}
+
+	@PatchMapping("/{cafeId}/seats/{seatId}")
+	public ResponseEntity<Void> updateSeat(@RequestBody @Valid SeatUpdateRequest request,
+		@AuthenticationPrincipal String memberId, @PathVariable Long cafeId, @PathVariable Long seatId) {
+		cafeService.updateSeat(request, cafeId, Long.valueOf(memberId), seatId);
+		return ResponseEntity.noContent().build();
 	}
 }
