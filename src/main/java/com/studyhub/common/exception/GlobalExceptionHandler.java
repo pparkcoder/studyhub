@@ -3,6 +3,7 @@ package com.studyhub.common.exception;
 import org.springframework.context.MessageSourceResolvable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -51,6 +52,13 @@ public class GlobalExceptionHandler {
 			.map(MessageSourceResolvable::getDefaultMessage)
 			.orElse("잘못된 요청입니다.");
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorResponse("VALIDATION_ERROR", message));
+	}
+
+	// 요청 본문을 객체로 변환하지 못한 경우 (enum에 없는 값, 타입 불일치, 잘못된 JSON, 본문 없음)
+	@ExceptionHandler(HttpMessageNotReadableException.class)
+	public ResponseEntity<ErrorResponse> handleHttpMessageNotReadableException(HttpMessageNotReadableException e) {
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+			.body(new ErrorResponse("VALIDATION_ERROR", "요청 본문의 형식이 올바르지 않습니다."));
 	}
 
 }
