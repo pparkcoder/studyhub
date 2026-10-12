@@ -31,7 +31,7 @@ public class ReservationResponse {
 		return new ReservationResponse(
 			reservation.getId(),
 			cafeInfo.getCafeName(),
-			cafeInfo.getSeatNumber(),
+			reservation.getSeatNumber(),
 			reservation.getStartTime(),
 			reservation.getEndTime(),
 			resolveStatus(reservation, now)

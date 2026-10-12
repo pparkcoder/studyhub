@@ -71,8 +71,8 @@ public class Reservation {
 	}
 
 	public static Reservation moveSeat(Long memberId, Long cafeId, Long previousSeatId, Long seatId,
-		LocalDateTime startTime, LocalDateTime endTime, ReservationDuration duration, String seatNumber,
-		String previousSeatNumber) {
+		LocalDateTime startTime, LocalDateTime endTime, ReservationDuration duration, String previousSeatNumber,
+		String seatNumber) {
 		return Reservation.builder()
 			.memberId(memberId)
 			.duration(duration)

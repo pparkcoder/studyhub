@@ -61,9 +61,9 @@ public class ReservationService {
 		if (existsOverlapping) {
 			throw new BusinessException(ReservationErrorCode.ALREADY_RESERVED);
 		}
-
+		CafeInfo cafeInfo = cafeInfoPort.getCafeInfoBySeatId(seatId);
 		Reservation reserve = Reservation.reserve(memberId, cafeId, seatId, startTime, duration,
-			request.getSeatNumber());
+			cafeInfo.getSeatNumber());
 		Reservation savedReservation = reservationRepository.save(reserve);
 		return ReservationCreateResponse.from(savedReservation);
 	}
@@ -94,8 +94,9 @@ public class ReservationService {
 			throw new BusinessException(ReservationErrorCode.ALREADY_RESERVED);
 		}
 		reservation.cancel();
+		CafeInfo cafeInfo = cafeInfoPort.getCafeInfoBySeatId(newSeatId);
 		Reservation reserve = Reservation.moveSeat(memberId, cafeId, seatId, newSeatId, newStartTime, endTime,
-			reservation.getDuration(), request.getSeatNumber(), reservation.getSeatNumber());
+			reservation.getDuration(), reservation.getSeatNumber(), cafeInfo.getSeatNumber());
 		Reservation savedReservation = reservationRepository.save(reserve);
 		return ReservationCreateResponse.from(savedReservation);
 	}
@@ -175,7 +176,7 @@ public class ReservationService {
 			.map(Reservation::getSeatId)
 			.distinct()
 			.toList();
-		Map<Long, CafeInfo> cafeInfo = cafeInfoPort.getCafeInfo(seatIds);
+		Map<Long, CafeInfo> cafeInfo = cafeInfoPort.getCafeInfoBySeatIds(seatIds);
 		return reservations
 			.stream()
 			.map(r -> ReservationResponse.of(r, cafeInfo.get(r.getSeatId()), now))
