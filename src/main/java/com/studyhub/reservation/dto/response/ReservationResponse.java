@@ -3,7 +3,6 @@ package com.studyhub.reservation.dto.response;
 import java.time.LocalDateTime;
 
 import com.studyhub.reservation.domain.Reservation;
-import com.studyhub.reservation.port.CafeInfo;
 
 import lombok.Getter;
 
@@ -27,10 +26,10 @@ public class ReservationResponse {
 		this.status = status;
 	}
 
-	public static ReservationResponse of(Reservation reservation, CafeInfo cafeInfo, LocalDateTime now) {
+	public static ReservationResponse of(Reservation reservation, String cafeName, LocalDateTime now) {
 		return new ReservationResponse(
 			reservation.getId(),
-			cafeInfo.getCafeName(),
+			cafeName,
 			reservation.getSeatNumber(),
 			reservation.getStartTime(),
 			reservation.getEndTime(),

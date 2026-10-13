@@ -171,15 +171,15 @@ public class ReservationService {
 	}
 
 	private List<ReservationResponse> toResponse(List<Reservation> reservations, LocalDateTime now) {
-		List<Long> seatIds = reservations
+		List<Long> cafeIds = reservations
 			.stream()
-			.map(Reservation::getSeatId)
+			.map(Reservation::getCafeId)
 			.distinct()
 			.toList();
-		Map<Long, CafeInfo> cafeInfo = cafeInfoPort.getCafeInfoBySeatIds(seatIds);
+		Map<Long, String> cafeName = cafeInfoPort.getCafeNameByCafeId(cafeIds);
 		return reservations
 			.stream()
-			.map(r -> ReservationResponse.of(r, cafeInfo.get(r.getSeatId()), now))
+			.map(r -> ReservationResponse.of(r, cafeName.get(r.getCafeId()), now))
 			.toList();
 	}
 }
