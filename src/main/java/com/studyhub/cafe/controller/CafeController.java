@@ -94,4 +94,11 @@ public class CafeController {
 		cafeService.updateSeat(request, cafeId, Long.valueOf(memberId), seatId);
 		return ResponseEntity.noContent().build();
 	}
+
+	@DeleteMapping("/{cafeId}/seats/{seatId}")
+	public ResponseEntity<Void> deleteSeat(@AuthenticationPrincipal String memberId, @PathVariable Long cafeId,
+		@PathVariable Long seatId) {
+		cafeService.deleteSeat(cafeId, Long.valueOf(memberId), seatId);
+		return ResponseEntity.noContent().build();
+	}
 }

@@ -143,4 +143,8 @@ public class Cafe extends BaseTimeEntity {
 			.anyMatch(image -> Objects.equals(image.getSortOrder(), sortOrder));
 	}
 
+	public void deleteSeat(Seat seat) {
+		seats.remove(seat);
+	}
+
 }

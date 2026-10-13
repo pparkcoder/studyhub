@@ -149,6 +149,14 @@ public class CafeService {
 		}
 	}
 
+	@CacheEvict(value = "cafe", key = "#cafeId")
+	@Transactional
+	public void deleteSeat(Long cafeId, Long memberId, Long seatId) {
+		Cafe cafe = getOwnedCafe(cafeId, memberId);
+		Seat seat = findSeatById(cafe, seatId);
+		cafe.deleteSeat(seat);
+	}
+
 	private void validateOwner(Long memberId) {
 		CafeErrorCode errorCode = switch (ownerValidator.validate(memberId)) {
 			case NOT_FOUND -> CafeErrorCode.OWNER_NOT_FOUND;
