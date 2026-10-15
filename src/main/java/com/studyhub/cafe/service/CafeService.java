@@ -1,5 +1,6 @@
 package com.studyhub.cafe.service;
 
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashSet;
@@ -65,8 +66,13 @@ public class CafeService {
 
 	@Transactional(readOnly = true)
 	public List<CafeSearchResponse> search(CafeSearchRequest request) {
-		List<Cafe> result = cafeRepository.search(request);
-		return result.stream().map(CafeSearchResponse::from).toList();
+		List<Cafe> result = cafeRepository.search(request.getRegion(), request.getKeyword());
+		boolean openNow = Boolean.TRUE.equals(request.getOpenNow());
+		LocalTime now = LocalTime.now();
+		return result.stream()
+			.map(CafeSearchResponse::from)
+			.filter(cafe -> !openNow || isOpenAt(cafe, now))
+			.toList();
 	}
 
 	@Cacheable(value = "cafe", key = "#cafeId")
@@ -229,5 +235,9 @@ public class CafeService {
 			.filter(seat -> seat.getId().equals(seatId))
 			.findFirst()
 			.orElseThrow(() -> new BusinessException(CafeErrorCode.SEAT_NOT_FOUND));
+	}
+
+	private boolean isOpenAt(CafeSearchResponse response, LocalTime now) {
+		return !now.isBefore(response.getOpenTime()) && !now.isAfter(response.getCloseTime());
 	}
 }
