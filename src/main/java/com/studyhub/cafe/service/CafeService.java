@@ -16,6 +16,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.studyhub.cafe.cache.CafeSearchCacheVersion;
 import com.studyhub.cafe.domain.Cafe;
 import com.studyhub.cafe.domain.CafeImage;
 import com.studyhub.cafe.domain.Seat;
@@ -43,6 +44,7 @@ public class CafeService {
 
 	private final OwnerValidator ownerValidator;
 	private final CafeRepository cafeRepository;
+	private final CafeSearchCacheVersion cacheVersion;
 
 	@Transactional
 	public CafeRegisterResponse registerCafe(CafeRegisterRequest request, Long memberId) {
@@ -54,6 +56,7 @@ public class CafeService {
 		addImages(cafe, request.getImageUrls());
 
 		Cafe saveCafe = cafeRepository.save(cafe);
+		cacheVersion.increaseAfterCommit();
 		return CafeRegisterResponse.from(saveCafe);
 	}
 
@@ -62,6 +65,7 @@ public class CafeService {
 	public void deleteCafe(Long cafeId, Long memberId) {
 		Cafe cafe = getOwnedCafe(cafeId, memberId);
 		cafe.delete();
+		cacheVersion.increaseAfterCommit();
 	}
 
 	@Transactional(readOnly = true)
@@ -87,6 +91,7 @@ public class CafeService {
 	public void update(CafeUpdateRequest request, Long cafeId, Long memberId) {
 		Cafe cafe = getOwnedCafe(cafeId, memberId);
 		cafe.update(request);
+		cacheVersion.increaseAfterCommit();
 	}
 
 	@CacheEvict(value = "cafe", key = "#cafeId")
@@ -123,6 +128,7 @@ public class CafeService {
 			}
 		}
 		cafeRepository.flush();
+		cacheVersion.increaseAfterCommit();
 		return cafe.getImages()
 			.stream()
 			.sorted(Comparator.comparing(CafeImage::getSortOrder))
@@ -138,6 +144,7 @@ public class CafeService {
 		int newLastSeatNumber = lastSeatNumber + request.getSeatCount();
 		List<Seat> seats = addSeats(cafe, lastSeatNumber, newLastSeatNumber);
 		cafeRepository.flush();
+		cacheVersion.increaseAfterCommit();
 		return seats.stream()
 			.map(SeatResponse::from)
 			.toList();
@@ -161,6 +168,7 @@ public class CafeService {
 		Cafe cafe = getOwnedCafe(cafeId, memberId);
 		Seat seat = findSeatById(cafe, seatId);
 		cafe.deleteSeat(seat);
+		cacheVersion.increaseAfterCommit();
 	}
 
 	private void validateOwner(Long memberId) {
