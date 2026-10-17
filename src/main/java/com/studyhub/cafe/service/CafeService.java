@@ -16,6 +16,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.studyhub.cafe.cache.CafeSearchCache;
 import com.studyhub.cafe.cache.CafeSearchCacheVersion;
 import com.studyhub.cafe.domain.Cafe;
 import com.studyhub.cafe.domain.CafeImage;
@@ -45,6 +46,7 @@ public class CafeService {
 	private final OwnerValidator ownerValidator;
 	private final CafeRepository cafeRepository;
 	private final CafeSearchCacheVersion cacheVersion;
+	private final CafeSearchCache cafeSearchCache;
 
 	@Transactional
 	public CafeRegisterResponse registerCafe(CafeRegisterRequest request, Long memberId) {
@@ -70,11 +72,19 @@ public class CafeService {
 
 	@Transactional(readOnly = true)
 	public List<CafeSearchResponse> search(CafeSearchRequest request) {
-		List<Cafe> result = cafeRepository.search(request.getRegion(), request.getKeyword());
+		String cacheKey = cafeSearchCache.makeKey(request.getRegion(), request.getKeyword());
+		List<CafeSearchResponse> response = cafeSearchCache.get(cacheKey)
+			.orElseGet(() -> {
+				List<CafeSearchResponse> result = cafeRepository.search(request.getRegion(), request.getKeyword())
+					.stream()
+					.map(CafeSearchResponse::from)
+					.toList();
+				cafeSearchCache.put(cacheKey, result);
+				return result;
+			});
 		boolean openNow = Boolean.TRUE.equals(request.getOpenNow());
 		LocalTime now = LocalTime.now();
-		return result.stream()
-			.map(CafeSearchResponse::from)
+		return response.stream()
 			.filter(cafe -> !openNow || isOpenAt(cafe, now))
 			.toList();
 	}
