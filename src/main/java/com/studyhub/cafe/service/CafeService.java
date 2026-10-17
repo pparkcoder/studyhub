@@ -7,6 +7,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -72,14 +73,15 @@ public class CafeService {
 
 	@Transactional(readOnly = true)
 	public List<CafeSearchResponse> search(CafeSearchRequest request) {
-		String cacheKey = cafeSearchCache.makeKey(request.getRegion(), request.getKeyword());
-		List<CafeSearchResponse> response = cafeSearchCache.get(cacheKey)
+		Optional<String> cacheKey = cafeSearchCache.makeKey(request.getRegion(), request.getKeyword());
+		List<CafeSearchResponse> response = cacheKey
+			.flatMap(cafeSearchCache::get)
 			.orElseGet(() -> {
 				List<CafeSearchResponse> result = cafeRepository.search(request.getRegion(), request.getKeyword())
 					.stream()
 					.map(CafeSearchResponse::from)
 					.toList();
-				cafeSearchCache.put(cacheKey, result);
+				cacheKey.ifPresent(key -> cafeSearchCache.put(key, result));
 				return result;
 			});
 		boolean openNow = Boolean.TRUE.equals(request.getOpenNow());

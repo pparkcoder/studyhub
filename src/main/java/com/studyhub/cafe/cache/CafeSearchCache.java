@@ -43,14 +43,19 @@ public class CafeSearchCache {
 			return Optional.of(objectMapper.readValue(json, new TypeReference<List<CafeSearchResponse>>() {
 			}));
 		} catch (Exception e) {
-			log.warn("검색 캐시 조 실패. key = {}", key, e);
+			log.warn("검색 캐시 조회 실패. key = {}", key, e);
 			return Optional.empty();
 		}
 	}
 
-	public String makeKey(String region, String keyword) {
-		long version = cacheVersion.getVersion();
-		return KEY_PREFIX + version + ":" + normalize(region) + ":" + normalize(keyword);
+	public Optional<String> makeKey(String region, String keyword) {
+		try {
+			long version = cacheVersion.getVersion();
+			return Optional.of(KEY_PREFIX + version + ":" + normalize(region) + ":" + normalize(keyword));
+		} catch (Exception e) {
+			log.warn("검색 캐시 버전 조회 실패", e);
+			return Optional.empty();
+		}
 	}
 
 	private String normalize(String value) {
