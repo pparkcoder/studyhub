@@ -2,7 +2,7 @@ package com.studyhub.ai.search.port;
 
 import java.time.LocalTime;
 
-public record CafeSearchResult(
+public record CafeAiSearchResult(
 	Long id,
 	String name,
 	String address,

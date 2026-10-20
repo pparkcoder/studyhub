@@ -1,5 +1,5 @@
 package com.studyhub.ai.search.port;
 
-public interface SearchConditionExtractor {
-	SearchCondition extract(String query);
+public interface AiSearchConditionExtractor {
+	AiSearchCondition extract(String query);
 }
