@@ -34,11 +34,11 @@ public class SecurityConfig {
 			.formLogin(AbstractHttpConfigurer::disable)
 			.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 			.authorizeHttpRequests(auth -> auth
+				.requestMatchers("/ai-search/**").authenticated()
 				.requestMatchers("/auth/logout").authenticated()
 				.requestMatchers("/auth/**").permitAll()
 				.requestMatchers("/member/signup").permitAll()
 				.requestMatchers(HttpMethod.GET, "/cafe/**").permitAll()
-				.requestMatchers(HttpMethod.POST, "/cafe").hasRole("OWNER")
 				.anyRequest().authenticated()
 			)
 			.exceptionHandling(handling -> handling

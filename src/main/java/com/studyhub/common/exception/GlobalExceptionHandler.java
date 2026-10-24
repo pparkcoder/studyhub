@@ -4,6 +4,7 @@ import org.springframework.context.MessageSourceResolvable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -34,6 +35,13 @@ public class GlobalExceptionHandler {
 			.map(FieldError::getDefaultMessage)
 			.orElse("잘못된 요청입니다.");
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorResponse("VALIDATION_ERROR", message));
+	}
+
+	// @PreAuthorize 권한 검증 실패 (Exception 핸들러에 잡혀 500이 되지 않도록 403으로 변환)
+	@ExceptionHandler(AccessDeniedException.class)
+	public ResponseEntity<ErrorResponse> handleAccessDeniedException(AccessDeniedException e) {
+		return ResponseEntity.status(HttpStatus.FORBIDDEN)
+			.body(new ErrorResponse("ACCESS_DENIED", "접근 권한이 없습니다."));
 	}
 
 	@ExceptionHandler(Exception.class)

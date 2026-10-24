@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -41,6 +42,7 @@ public class CafeController {
 
 	private final CafeService cafeService;
 
+	@PreAuthorize("hasRole('OWNER')")
 	@PostMapping
 	public ResponseEntity<CafeRegisterResponse> registerCafe(@RequestBody @Valid CafeRegisterRequest request,
 		@AuthenticationPrincipal String memberId) {
@@ -61,12 +63,14 @@ public class CafeController {
 		return ResponseEntity.ok(cafeService.searchDetail(cafeId));
 	}
 
+	@PreAuthorize("hasRole('OWNER')")
 	@DeleteMapping("/{cafeId}")
 	public ResponseEntity<Void> deleteCafe(@AuthenticationPrincipal String memberId, @PathVariable Long cafeId) {
 		cafeService.deleteCafe(cafeId, Long.valueOf(memberId));
 		return ResponseEntity.noContent().build();
 	}
 
+	@PreAuthorize("hasRole('OWNER')")
 	@PutMapping("/{cafeId}")
 	public ResponseEntity<Void> updateCafe(@RequestBody @Valid CafeUpdateRequest request,
 		@AuthenticationPrincipal String memberId, @PathVariable Long cafeId) {
@@ -74,6 +78,7 @@ public class CafeController {
 		return ResponseEntity.noContent().build();
 	}
 
+	@PreAuthorize("hasRole('OWNER')")
 	@PutMapping("/{cafeId}/images")
 	public ResponseEntity<List<CafeImageResponse>> registerCafeImages(
 		@NotEmpty @RequestBody @Valid List<CafeImageRegisterRequest> requests,
@@ -81,6 +86,7 @@ public class CafeController {
 		return ResponseEntity.ok(cafeService.registerCafeImages(requests, cafeId, Long.valueOf(memberId)));
 	}
 
+	@PreAuthorize("hasRole('OWNER')")
 	@PostMapping("/{cafeId}/seats")
 	public ResponseEntity<List<SeatResponse>> registerSeats(@RequestBody @Valid SeatCreateRequest request,
 		@AuthenticationPrincipal String memberId, @PathVariable Long cafeId) {
@@ -88,6 +94,7 @@ public class CafeController {
 			.body(cafeService.registerSeats(request, cafeId, Long.valueOf(memberId)));
 	}
 
+	@PreAuthorize("hasRole('OWNER')")
 	@PatchMapping("/{cafeId}/seats/{seatId}")
 	public ResponseEntity<Void> updateSeat(@RequestBody @Valid SeatUpdateRequest request,
 		@AuthenticationPrincipal String memberId, @PathVariable Long cafeId, @PathVariable Long seatId) {
@@ -95,6 +102,7 @@ public class CafeController {
 		return ResponseEntity.noContent().build();
 	}
 
+	@PreAuthorize("hasRole('OWNER')")
 	@DeleteMapping("/{cafeId}/seats/{seatId}")
 	public ResponseEntity<Void> deleteSeat(@AuthenticationPrincipal String memberId, @PathVariable Long cafeId,
 		@PathVariable Long seatId) {
