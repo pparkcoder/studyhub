@@ -1,14 +1,19 @@
 package com.studyhub.ai.search.adapter;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.stereotype.Component;
 
+import com.anthropic.errors.UnauthorizedException;
 import com.studyhub.ai.search.port.AiSearchCondition;
 import com.studyhub.ai.search.port.AiSearchConditionExtractor;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Component
+@Slf4j
 public class AiSearchConditionExtractorImpl implements AiSearchConditionExtractor {
 
 	private static final String SYSTEM_PROMPT = """
@@ -31,13 +36,22 @@ public class AiSearchConditionExtractorImpl implements AiSearchConditionExtracto
 	}
 
 	@Override
-	public AiSearchCondition extract(String query, List<String> regions) {
-		return chatClient.prompt()
-			.system(system -> system
-				.text(SYSTEM_PROMPT)
-				.param("regions", String.join(", ", regions)))
-			.user(query)
-			.call()
-			.entity(AiSearchCondition.class);
+	public Optional<AiSearchCondition> extract(String query, List<String> regions) {
+		try {
+			AiSearchCondition condition = chatClient.prompt()
+				.system(system -> system
+					.text(SYSTEM_PROMPT)
+					.param("regions", String.join(", ", regions)))
+				.user(query)
+				.call()
+				.entity(AiSearchCondition.class);
+			return Optional.ofNullable(condition);
+		} catch (UnauthorizedException e) {
+			log.error("Anthropic API 인증 실패. API 키 설정을 확인하세요.", e);
+			return Optional.empty();
+		} catch (RuntimeException e) {
+			log.warn("AI 검색 조건 추출 실패. query = {}", query, e);
+			return Optional.empty();
+		}
 	}
 }

@@ -1,7 +1,8 @@
 package com.studyhub.ai.search.port;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface AiSearchConditionExtractor {
-	AiSearchCondition extract(String query, List<String> regions);
+	Optional<AiSearchCondition> extract(String query, List<String> regions);
 }
