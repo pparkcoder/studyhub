@@ -19,7 +19,7 @@ public interface CafeRepository extends JpaRepository<Cafe, Long>, CafeRepositor
 	@Query("select c from Cafe c where c.id = :cafeId")
 	Optional<Cafe> findByIdWithPessimisticLock(Long cafeId);
 
-	@Query("select distinct c.region from Cafe c where c.status = :status")
+	@Query("select distinct c.region from Cafe c where c.status = :status order by c.region")
 	List<String> findDistinctRegionByStatus(@Param("status") CafeStatus status);
 
 }

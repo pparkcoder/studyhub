@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
+import com.studyhub.ai.search.cache.AiSearchConditionCache;
 import com.studyhub.ai.search.dto.request.AiSearchRequest;
 import com.studyhub.ai.search.dto.response.AiSearchResponse;
 import com.studyhub.ai.search.port.AiSearchCondition;
@@ -22,12 +23,17 @@ public class AiSearchService {
 	private final CafeRegionPort cafeRegionPort;
 	private final CafeAiSearchPort cafeAiSearchPort;
 	private final AiSearchConditionExtractor aiSearchConditionExtractor;
+	private final AiSearchConditionCache aiSearchConditionCache;
 	private static final List<String> OPEN_NOW_WORDS = List.of("지금", "영업 중", "영업중", "열려", "열린", "운영 중", " 운영중");
 
 	public AiSearchResponse search(AiSearchRequest request) {
 		String query = request.getQuery();
 		List<String> activeRegions = cafeRegionPort.findActiveRegions();
-		Optional<AiSearchCondition> extracted = aiSearchConditionExtractor.extract(query, activeRegions);
+
+		String cacheKey = aiSearchConditionCache.makeKey(query, activeRegions);
+		Optional<AiSearchCondition> extracted = aiSearchConditionCache.get(cacheKey)
+			.or(() -> extractByAiAndCache(query, activeRegions, cacheKey));
+
 		boolean aiUsed = extracted.isPresent();
 		AiSearchCondition aiSearchCondition = extracted.orElseGet(() -> extractByRule(query, activeRegions));
 		AiSearchCondition condition = validate(aiSearchCondition, activeRegions);
@@ -37,6 +43,12 @@ public class AiSearchService {
 		}
 		List<CafeAiSearchResult> response = cafeAiSearchPort.search(condition);
 		return AiSearchResponse.of(condition, response, aiUsed);
+	}
+
+	private Optional<AiSearchCondition> extractByAiAndCache(String query, List<String> regions, String cacheKey) {
+		Optional<AiSearchCondition> extracted = aiSearchConditionExtractor.extract(query, regions);
+		extracted.ifPresent(condition -> aiSearchConditionCache.put(cacheKey, condition));
+		return extracted;
 	}
 
 	// AI 추출 실패 시 규칙 추출
