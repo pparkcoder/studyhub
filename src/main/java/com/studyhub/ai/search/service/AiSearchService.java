@@ -51,12 +51,18 @@ public class AiSearchService {
 
 	private String findRegionByRule(String query, List<String> regions) {
 		for (String region : regions) {
-			String lastWord = region.substring(region.lastIndexOf('.') + 1);
-			if (query.contains(lastWord)) {
+			String lastWord = region.substring(region.lastIndexOf(' ') + 1);
+			if (query.contains(normalizeRegion(lastWord))) {
 				return region;
 			}
 		}
 		return null;
+	}
+
+	private String normalizeRegion(String region) {
+		String lastWord = region.substring(region.lastIndexOf(' ') + 1);
+		String baseName = lastWord.replaceAll("(구|시|군|동)$", "");
+		return baseName.length() >= 2 ? baseName : lastWord;
 	}
 
 	private boolean containsAny(String query) {
