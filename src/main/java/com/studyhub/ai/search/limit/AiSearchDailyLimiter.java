@@ -1,8 +1,8 @@
 package com.studyhub.ai.search.limit;
 
-import java.time.Duration;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -26,11 +26,13 @@ public class AiSearchDailyLimiter {
 	private int dayLimit;
 
 	public boolean isExceeded(Long memberId) {
-		String key = makeKey(memberId);
+		LocalDate today = LocalDate.now(SEOUL);
+		String key = makeKey(memberId, today);
 		try {
 			Long count = redisTemplate.opsForValue().increment(key);
 			if (count != null && count == 1) {
-				redisTemplate.expire(key, Duration.ofDays(1));
+				ZonedDateTime nextDay = today.plusDays(1).atStartOfDay(SEOUL);
+				redisTemplate.expireAt(key, nextDay.toInstant());
 			}
 			return count != null && count > dayLimit;
 		} catch (Exception e) {
@@ -39,9 +41,8 @@ public class AiSearchDailyLimiter {
 		}
 	}
 
-	private String makeKey(Long memberId) {
-		String today = LocalDate.now(SEOUL).format(DATE_FORMATTER);
-		return KEY_PREFIX + ":" + memberId + ":" + today;
+	private String makeKey(Long memberId, LocalDate date) {
+		return KEY_PREFIX + ":" + memberId + ":" + date.format(DATE_FORMATTER);
 	}
 
 }
