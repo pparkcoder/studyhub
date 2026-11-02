@@ -4,6 +4,9 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.ai.chat.client.ChatClient;
+import org.springframework.ai.chat.client.ResponseEntity;
+import org.springframework.ai.chat.metadata.Usage;
+import org.springframework.ai.chat.model.ChatResponse;
 import org.springframework.stereotype.Component;
 
 import com.anthropic.errors.UnauthorizedException;
@@ -37,15 +40,17 @@ public class AiSearchConditionExtractorImpl implements AiSearchConditionExtracto
 
 	@Override
 	public Optional<AiSearchCondition> extract(String query, List<String> regions) {
+		long start = System.currentTimeMillis();
 		try {
-			AiSearchCondition condition = chatClient.prompt()
+			ResponseEntity<ChatResponse, AiSearchCondition> result = chatClient.prompt()
 				.system(system -> system
 					.text(SYSTEM_PROMPT)
 					.param("regions", String.join(", ", regions)))
 				.user(query)
 				.call()
-				.entity(AiSearchCondition.class);
-			return Optional.ofNullable(condition);
+				.responseEntity(AiSearchCondition.class);
+			logUsage(result.response(), System.currentTimeMillis() - start);
+			return Optional.ofNullable(result.entity());
 		} catch (UnauthorizedException e) {
 			log.error("Anthropic API 인증 실패. API 키 설정을 확인하세요.", e);
 			return Optional.empty();
@@ -53,5 +58,15 @@ public class AiSearchConditionExtractorImpl implements AiSearchConditionExtracto
 			log.warn("AI 검색 조건 추출 실패. query = {}", query, e);
 			return Optional.empty();
 		}
+	}
+
+	private void logUsage(ChatResponse response, long elapsedMs) {
+		if (response == null || response.getMetadata() == null || response.getMetadata().getUsage() == null) {
+			log.info("Claude 호출 완료. {}ms, 토큰 사용량 정보 없음", elapsedMs);
+			return;
+		}
+		Usage usage = response.getMetadata().getUsage();
+		log.info("Claude 호출 완료. {}ms, 입력 토큰={}, 출력 토큰={}, 전체 토큰={}",
+			elapsedMs, usage.getPromptTokens(), usage.getCompletionTokens(), usage.getTotalTokens());
 	}
 }
