@@ -19,17 +19,18 @@ spring:
       port: 6379
       timeout: 1s
       connect-timeout: 1s
-  ai:
-    anthropic:
-      api-key: ${ANTHROPIC_API_KEY}
-      timeout: 5s
-      max-retries: 0
-      chat:
-        model: claude-haiku-4-5
-        max-tokens: 256
-        temperature: 0
-    search:
-      daily-limit: 20
+
+ai:
+  anthropic:
+    api-key: ${ANTHROPIC_API_KEY}
+    timeout: 5s
+    max-retries: 0
+    chat:
+      model: claude-haiku-4-5
+      max-tokens: 256
+      temperature: 0
+  search:
+    daily-limit: 20
 
 logging:
   level:
