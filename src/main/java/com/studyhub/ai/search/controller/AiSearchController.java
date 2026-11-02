@@ -1,5 +1,6 @@
 package com.studyhub.ai.search.controller;
 
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,7 +21,8 @@ public class AiSearchController {
 	private final AiSearchService aiSearchService;
 
 	@PostMapping
-	public AiSearchResponse search(@RequestBody @Valid AiSearchRequest aiSearchRequest) {
-		return aiSearchService.search(aiSearchRequest);
+	public AiSearchResponse search(@AuthenticationPrincipal String memberId,
+		@RequestBody @Valid AiSearchRequest aiSearchRequest) {
+		return aiSearchService.search(Long.valueOf(memberId), aiSearchRequest);
 	}
 }

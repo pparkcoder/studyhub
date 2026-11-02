@@ -5,9 +5,9 @@ import org.springframework.http.HttpStatus;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
-public enum CommonErrorCode implements ErrorCode {
+public enum AiSearchErrorCode implements ErrorCode {
 
-	AI_SEARCH_LIMIT_EXCEEDED(HttpStatus.TOO_MANY_REQUESTS, "COMMON_001", "AI 호출 횟수를 초과하였습니다.(하루 최대 호출 횟수 : 20)");
+	AI_SEARCH_LIMIT_EXCEEDED(HttpStatus.TOO_MANY_REQUESTS, "AI_001", "AI 호출 횟수를 초과하였습니다.(하루 최대 호출 횟수 : 20)");
 
 	private final HttpStatus status;
 	private final String code;

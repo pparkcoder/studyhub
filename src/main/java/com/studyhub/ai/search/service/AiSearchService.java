@@ -8,11 +8,14 @@ import org.springframework.stereotype.Service;
 import com.studyhub.ai.search.cache.AiSearchConditionCache;
 import com.studyhub.ai.search.dto.request.AiSearchRequest;
 import com.studyhub.ai.search.dto.response.AiSearchResponse;
+import com.studyhub.ai.search.limit.AiSearchDailyLimiter;
 import com.studyhub.ai.search.port.AiSearchCondition;
 import com.studyhub.ai.search.port.AiSearchConditionExtractor;
 import com.studyhub.ai.search.port.CafeAiSearchPort;
 import com.studyhub.ai.search.port.CafeAiSearchResult;
 import com.studyhub.ai.search.port.CafeRegionPort;
+import com.studyhub.common.exception.AiSearchErrorCode;
+import com.studyhub.common.exception.BusinessException;
 
 import lombok.RequiredArgsConstructor;
 
@@ -24,15 +27,16 @@ public class AiSearchService {
 	private final CafeAiSearchPort cafeAiSearchPort;
 	private final AiSearchConditionExtractor aiSearchConditionExtractor;
 	private final AiSearchConditionCache aiSearchConditionCache;
+	private final AiSearchDailyLimiter aiSearchDailyLimiter;
 	private static final List<String> OPEN_NOW_WORDS = List.of("지금", "영업 중", "영업중", "열려", "열린", "운영 중", " 운영중");
 
-	public AiSearchResponse search(AiSearchRequest request) {
+	public AiSearchResponse search(Long memberId, AiSearchRequest request) {
 		String query = request.getQuery();
 		List<String> activeRegions = cafeRegionPort.findActiveRegions();
 
 		String cacheKey = aiSearchConditionCache.makeKey(query, activeRegions);
 		Optional<AiSearchCondition> extracted = aiSearchConditionCache.get(cacheKey)
-			.or(() -> extractByAiAndCache(query, activeRegions, cacheKey));
+			.or(() -> extractByAiAndCache(query, activeRegions, cacheKey, memberId));
 
 		boolean aiUsed = extracted.isPresent();
 		AiSearchCondition aiSearchCondition = extracted.orElseGet(() -> extractByRule(query, activeRegions));
@@ -41,11 +45,15 @@ public class AiSearchService {
 		if (condition.requestedRegion() != null && condition.region() == null) {
 			return AiSearchResponse.of(condition, List.of(), aiUsed);
 		}
-		List<CafeAiSearchResult> response = cafeAiSearchPort.search(condition);
-		return AiSearchResponse.of(condition, response, aiUsed);
+		List<CafeAiSearchResult> cafes = cafeAiSearchPort.search(condition);
+		return AiSearchResponse.of(condition, cafes, aiUsed);
 	}
 
-	private Optional<AiSearchCondition> extractByAiAndCache(String query, List<String> regions, String cacheKey) {
+	private Optional<AiSearchCondition> extractByAiAndCache(String query, List<String> regions, String cacheKey,
+		Long memberId) {
+		if (aiSearchDailyLimiter.isExceeded(memberId)) {
+			throw new BusinessException(AiSearchErrorCode.AI_SEARCH_LIMIT_EXCEEDED);
+		}
 		Optional<AiSearchCondition> extracted = aiSearchConditionExtractor.extract(query, regions);
 		extracted.ifPresent(condition -> aiSearchConditionCache.put(cacheKey, condition));
 		return extracted;
