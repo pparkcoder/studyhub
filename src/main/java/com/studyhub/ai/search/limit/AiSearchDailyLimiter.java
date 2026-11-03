@@ -22,7 +22,7 @@ public class AiSearchDailyLimiter {
 	private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.BASIC_ISO_DATE;
 	private final StringRedisTemplate redisTemplate;
 
-	@Value("${ai.search.daily-limit}")
+	@Value("${spring.ai.search.daily-limit}")
 	private int dayLimit;
 
 	public boolean isExceeded(Long memberId) {
