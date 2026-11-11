@@ -43,6 +43,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 			// 로그아웃한 토큰이 다시 쓰이지 않도록 블랙리스트를 확인하지 못하면 요청을 막음
 			log.error("토큰 블랙리스트 확인 실패로 요청을 차단합니다. uri={}", request.getRequestURI(), e);
 			makeErrorResponse(response, CommonErrorCode.SERVICE_UNAVAILABLE);
+			return;
 		}
 		// 토큰이 없거나 유효하지 않아도 체인은 계속 진행
 		// 최종적으로 막을지 말지는 SecurityConfig의 authorizeHttpRequests 규칙이 결정
@@ -51,7 +52,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
 	private void authenticate(HttpServletRequest request) {
 		String token = resolveToken(request);
-		if (token == null | jwtProvider.validateToken(token) || isBlacklisted(token)) {
+		if (token == null || !jwtProvider.validateToken(token) || isBlacklisted(token)) {
 			return;
 		}
 		String memberId = jwtProvider.getMemberId(token);
