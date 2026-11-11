@@ -1,6 +1,9 @@
 package com.studyhub.common.exception;
 
+import org.hibernate.QueryTimeoutException;
 import org.springframework.context.MessageSourceResolvable;
+import org.springframework.dao.DataAccessException;
+import org.springframework.data.redis.RedisConnectionFailureException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -69,4 +72,11 @@ public class GlobalExceptionHandler {
 			.body(new ErrorResponse("VALIDATION_ERROR", "요청 본문의 형식이 올바르지 않습니다."));
 	}
 
+	// Redis 예외 처리
+	@ExceptionHandler({RedisConnectionFailureException.class, QueryTimeoutException.class})
+	public ResponseEntity<ErrorResponse> handleRedisUnavailableException(DataAccessException e) {
+		log.error(e.getMessage(), e);
+		return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE)
+			.body(new ErrorResponse("CONNECTION_ERROR", "Redis 연결이 실패하였습니다."));
+	}
 }
