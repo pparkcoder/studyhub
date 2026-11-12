@@ -16,7 +16,9 @@ public enum CafeErrorCode implements ErrorCode {
 	NOT_CAFE_OWNER(HttpStatus.FORBIDDEN, "CAFE_007", "카페의 주인이 아닙니다."),
 	DUPLICATE_SORT_ORDER(HttpStatus.BAD_REQUEST, "CAFE_008", "이미 존재하는 sort order 입니다."),
 	DUPLICATE_IMAGE_ID(HttpStatus.BAD_REQUEST, "CAFE_009", "중복된 이미지 ID가 존재합니다."),
-	IMAGE_NOT_FOUND(HttpStatus.NOT_FOUND, "CAFE_010", "해당 카페에 존재하지 않는 이미지입니다.");
+	IMAGE_NOT_FOUND(HttpStatus.NOT_FOUND, "CAFE_010", "해당 카페에 존재하지 않는 이미지입니다."),
+	ADDRESS_NOT_FOUND(HttpStatus.BAD_REQUEST, "CAFE_011", "주소를 찾을 수 없습니다. 도로명 주소나 지번 주소를 정확히 입력해 주세요."),
+	ADDRESS_SEARCH_UNAVAILABLE(HttpStatus.SERVICE_UNAVAILABLE, "CAFE_012", "주소 확인을 일시적으로 할 수 없습니다. 잠시 후 다시 시도해 주세요.");
 
 	private final HttpStatus status;
 	private final String code;

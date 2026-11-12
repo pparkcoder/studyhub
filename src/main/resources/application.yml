@@ -48,3 +48,6 @@ jwt:
   # 3600000 : 1시간
   # 86400000 : 24시간
   # 604800000 : 7일
+
+kakao:
+  rest-api-key: ${KAKAO_REST_API_KEY}

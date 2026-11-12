@@ -54,6 +54,8 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-redis'
     // Spring AI
     implementation 'org.springframework.ai:spring-ai-starter-model-anthropic'
+    // RestClient
+    implementation 'org.springframework.boot:spring-boot-starter-restclient'
 }
 
 def querydslDir = "$buildDir/generated/querydsl"
