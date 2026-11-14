@@ -10,6 +10,7 @@ import org.hibernate.annotations.Comment;
 
 import com.studyhub.cafe.dto.request.CafeRegisterRequest;
 import com.studyhub.cafe.dto.request.CafeUpdateRequest;
+import com.studyhub.cafe.port.ResolvedAddress;
 import com.studyhub.common.entity.BaseTimeEntity;
 
 import jakarta.persistence.CascadeType;
@@ -47,6 +48,10 @@ public class Cafe extends BaseTimeEntity {
 	@Column(length = 20, nullable = false)
 	private String region;
 
+	@Comment("시/군/구 코드")
+	@Column(length = 5, nullable = false)
+	private String regionCode;
+
 	@Comment("위도")
 	@Column(nullable = false)
 	private Double latitude;
@@ -76,11 +81,13 @@ public class Cafe extends BaseTimeEntity {
 	private CafeStatus status;
 
 	@Builder(access = AccessLevel.PRIVATE)
-	private Cafe(String name, String address, String region, Double latitude, Double longitude, LocalTime openTime,
+	private Cafe(String name, String address, String region, String regionCode, Double latitude, Double longitude,
+		LocalTime openTime,
 		LocalTime closeTime, Long ownerId) {
 		this.name = name;
 		this.address = address;
 		this.region = region;
+		this.regionCode = regionCode;
 		this.latitude = latitude;
 		this.longitude = longitude;
 		this.openTime = openTime;
@@ -89,16 +96,17 @@ public class Cafe extends BaseTimeEntity {
 		this.status = CafeStatus.ACTIVE;
 	}
 
-	public static Cafe from(CafeRegisterRequest request, Long onwerId) {
+	public static Cafe of(CafeRegisterRequest request, ResolvedAddress resolvedAddress, Long ownerId) {
 		return Cafe.builder()
 			.name(request.getName())
 			.address(request.getAddress())
-			.region(request.getRegion())
-			.latitude(request.getLatitude())
-			.longitude(request.getLongitude())
+			.region(resolvedAddress.regionName())
+			.regionCode(resolvedAddress.sigunguCode())
+			.latitude(resolvedAddress.latitude())
+			.longitude(resolvedAddress.longitude())
 			.openTime(request.getOpenTime())
 			.closeTime(request.getCloseTime())
-			.ownerId(onwerId)
+			.ownerId(ownerId)
 			.build();
 	}
 
@@ -128,12 +136,13 @@ public class Cafe extends BaseTimeEntity {
 		return status == CafeStatus.DELETED;
 	}
 
-	public void update(CafeUpdateRequest request) {
+	public void update(CafeUpdateRequest request, ResolvedAddress resolvedAddress) {
 		this.name = request.getName();
 		this.address = request.getAddress();
-		this.region = request.getRegion();
-		this.latitude = request.getLatitude();
-		this.longitude = request.getLongitude();
+		this.region = resolvedAddress.regionName();
+		this.regionCode = resolvedAddress.sigunguCode();
+		this.latitude = resolvedAddress.latitude();
+		this.longitude = resolvedAddress.longitude();
 		this.openTime = request.getOpenTime();
 		this.closeTime = request.getCloseTime();
 	}

@@ -7,4 +7,11 @@ public record ResolvedAddress(
 	double latitude,
 	double longitude
 ) {
+
+	public String regionName() {
+		if (sigungu == null) {
+			return sido;
+		}
+		return sido + " " + sigungu;
+	}
 }

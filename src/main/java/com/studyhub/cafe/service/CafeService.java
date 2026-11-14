@@ -16,6 +16,7 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.support.TransactionTemplate;
 
 import com.studyhub.cafe.cache.CafeSearchCache;
 import com.studyhub.cafe.cache.CafeSearchCacheVersion;
@@ -33,7 +34,9 @@ import com.studyhub.cafe.dto.response.CafeImageResponse;
 import com.studyhub.cafe.dto.response.CafeRegisterResponse;
 import com.studyhub.cafe.dto.response.CafeSearchResponse;
 import com.studyhub.cafe.dto.response.SeatResponse;
+import com.studyhub.cafe.port.AddressResolver;
 import com.studyhub.cafe.port.OwnerValidator;
+import com.studyhub.cafe.port.ResolvedAddress;
 import com.studyhub.cafe.repository.CafeRepository;
 import com.studyhub.common.exception.BusinessException;
 import com.studyhub.common.exception.CafeErrorCode;
@@ -48,11 +51,13 @@ public class CafeService {
 	private final CafeRepository cafeRepository;
 	private final CafeSearchCacheVersion cacheVersion;
 	private final CafeSearchCache cafeSearchCache;
+	private final AddressResolver addressResolver;
+	private final TransactionTemplate transactionTemplate;
 
-	@Transactional
 	public CafeRegisterResponse registerCafe(CafeRegisterRequest request, Long memberId) {
 		validateOwner(memberId);
-		Cafe cafe = Cafe.from(request, memberId);
+		ResolvedAddress resolvedAddress = resolveAddress(request.getAddress());
+		Cafe cafe = Cafe.of(request, resolvedAddress, memberId);
 		int lastSeatNumber = 0;
 		int newLastSeatNumber = lastSeatNumber + request.getSeatCount();
 		addSeats(cafe, lastSeatNumber, newLastSeatNumber);
@@ -99,11 +104,15 @@ public class CafeService {
 	}
 
 	@CacheEvict(value = "cafe", key = "#cafeId")
-	@Transactional
 	public void update(CafeUpdateRequest request, Long cafeId, Long memberId) {
-		Cafe cafe = getOwnedCafe(cafeId, memberId);
-		cafe.update(request);
-		cacheVersion.increaseAfterCommit();
+		validateOwner(memberId);
+		ResolvedAddress resolvedAddress = resolveAddress(request.getAddress());
+
+		transactionTemplate.executeWithoutResult(status -> {
+			Cafe cafe = getOwnedCafe(cafeId, memberId);
+			cafe.update(request, resolvedAddress);
+			cacheVersion.increaseAfterCommit();
+		});
 	}
 
 	@CacheEvict(value = "cafe", key = "#cafeId")
@@ -259,5 +268,10 @@ public class CafeService {
 
 	private boolean isOpenAt(CafeSearchResponse response, LocalTime now) {
 		return !now.isBefore(response.getOpenTime()) && !now.isAfter(response.getCloseTime());
+	}
+
+	private ResolvedAddress resolveAddress(String address) {
+		return addressResolver.resolve(address)
+			.orElseThrow(() -> new BusinessException(CafeErrorCode.ADDRESS_NOT_FOUND));
 	}
 }

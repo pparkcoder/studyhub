@@ -18,15 +18,6 @@ public class CafeUpdateRequest {
 	@Size(max = 100)
 	private String address;
 
-	@NotBlank
-	private String region;
-
-	@NotNull
-	private Double latitude;
-
-	@NotNull
-	private Double longitude;
-
 	@NotNull
 	private LocalTime openTime;
 
