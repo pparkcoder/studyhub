@@ -1,0 +1,278 @@
+parkui-MacBookPro:studyhub parkjanghun$ k6 run -e START=1 -e COUNT=1000 perf/cafe-detail.js
+
+         /\      Grafana   /‾‾/
+    /\  /  \     |\  __   /  /
+   /  \/    \    | |/ /  /   ‾‾\
+  /          \   |   (  |  (‾)  |
+ / __________ \  |_|\_\  \_____/
+
+
+     execution: local
+        script: perf/cafe-detail.js
+        output: -
+
+     scenarios: (100.00%) 1 scenario, 1 max VUs, 10m30s max duration (incl. graceful stop):
+              * detail: 1000 iterations shared among 1 VUs (maxDuration: 10m0s, gracefulStop: 30s)
+
+
+
+  █ TOTAL RESULTS
+
+    checks_total.......: 1000    176.213224/s
+    checks_succeeded...: 100.00% 1000 out of 1000
+    checks_failed......: 0.00%   0 out of 1000
+
+    ✓ status is 200
+
+    HTTP
+    http_req_duration..............: avg=5.58ms med=4.83ms p(95)=8.39ms p(99)=20.63ms max=90.97ms
+      { expected_response:true }...: avg=5.58ms med=4.83ms p(95)=8.39ms p(99)=20.63ms max=90.97ms
+    http_req_failed................: 0.00%  0 out of 1000
+    http_reqs......................: 1000   176.213224/s
+
+    EXECUTION
+    iteration_duration.............: avg=5.66ms med=4.9ms  p(95)=8.56ms p(99)=20.72ms max=91.11ms
+    iterations.....................: 1000   176.213224/s
+    vus............................: 1      min=1         max=1
+    vus_max........................: 1      min=1         max=1
+
+    NETWORK
+    data_received..................: 2.3 MB 406 kB/s
+    data_sent......................: 78 kB  14 kB/s
+
+
+
+
+running (00m05.7s), 0/1 VUs, 1000 complete and 0 interrupted iterations
+detail ✓ [======================================] 1 VUs  00m05.7s/10m0s  1000/1000 shared iters
+parkui-MacBookPro:studyhub parkjanghun$ k6 run -e START=1 -e COUNT=1000 perf/cafe-detail.js
+
+         /\      Grafana   /‾‾/
+    /\  /  \     |\  __   /  /
+   /  \/    \    | |/ /  /   ‾‾\
+  /          \   |   (  |  (‾)  |
+ / __________ \  |_|\_\  \_____/
+
+
+     execution: local
+        script: perf/cafe-detail.js
+        output: -
+
+     scenarios: (100.00%) 1 scenario, 1 max VUs, 10m30s max duration (incl. graceful stop):
+              * detail: 1000 iterations shared among 1 VUs (maxDuration: 10m0s, gracefulStop: 30s)
+
+
+
+  █ TOTAL RESULTS
+
+    checks_total.......: 1000    956.153662/s
+    checks_succeeded...: 100.00% 1000 out of 1000
+    checks_failed......: 0.00%   0 out of 1000
+
+    ✓ status is 200
+
+    HTTP
+    http_req_duration..............: avg=995.34µs med=660µs    p(95)=1.68ms p(99)=4.86ms max=102.87ms
+      { expected_response:true }...: avg=995.34µs med=660µs    p(95)=1.68ms p(99)=4.86ms max=102.87ms
+    http_req_failed................: 0.00%  0 out of 1000
+    http_reqs......................: 1000   956.153662/s
+
+    EXECUTION
+    iteration_duration.............: avg=1.04ms   med=690.74µs p(95)=1.9ms  p(99)=5ms    max=109.01ms
+    iterations.....................: 1000   956.153662/s
+    vus............................: 1      min=1         max=1
+    vus_max........................: 1      min=1         max=1
+
+    NETWORK
+    data_received..................: 2.3 MB 2.2 MB/s
+    data_sent......................: 78 kB  75 kB/s
+
+
+
+
+running (00m01.0s), 0/1 VUs, 1000 complete and 0 interrupted iterations
+detail ✓ [======================================] 1 VUs  00m01.0s/10m0s  1000/1000 shared iters
+parkui-MacBookPro:studyhub parkjanghun$ k6 run -e START=1 -e COUNT=1000 perf/cafe-detail.js
+
+         /\      Grafana   /‾‾/
+    /\  /  \     |\  __   /  /
+   /  \/    \    | |/ /  /   ‾‾\
+  /          \   |   (  |  (‾)  |
+ / __________ \  |_|\_\  \_____/
+
+
+     execution: local
+        script: perf/cafe-detail.js
+        output: -
+
+     scenarios: (100.00%) 1 scenario, 1 max VUs, 10m30s max duration (incl. graceful stop):
+              * detail: 1000 iterations shared among 1 VUs (maxDuration: 10m0s, gracefulStop: 30s)
+
+
+
+  █ TOTAL RESULTS
+
+    checks_total.......: 1000    216.445813/s
+    checks_succeeded...: 100.00% 1000 out of 1000
+    checks_failed......: 0.00%   0 out of 1000
+
+    ✓ status is 200
+
+    HTTP
+    http_req_duration..............: avg=4.51ms med=3.73ms p(95)=7.06ms p(99)=10.67ms max=92.3ms
+      { expected_response:true }...: avg=4.51ms med=3.73ms p(95)=7.06ms p(99)=10.67ms max=92.3ms
+    http_req_failed................: 0.00%  0 out of 1000
+    http_reqs......................: 1000   216.445813/s
+
+    EXECUTION
+    iteration_duration.............: avg=4.61ms med=3.8ms  p(95)=7.13ms p(99)=13.07ms max=92.39ms
+    iterations.....................: 1000   216.445813/s
+    vus............................: 1      min=1         max=1
+    vus_max........................: 1      min=1         max=1
+
+    NETWORK
+    data_received..................: 2.3 MB 498 kB/s
+    data_sent......................: 78 kB  17 kB/s
+
+
+
+
+running (00m04.6s), 0/1 VUs, 1000 complete and 0 interrupted iterations
+detail ✓ [======================================] 1 VUs  00m04.6s/10m0s  1000/1000 shared iters
+parkui-MacBookPro:studyhub parkjanghun$ k6 run -e START=1 -e COUNT=1000 perf/cafe-detail.js
+
+         /\      Grafana   /‾‾/
+    /\  /  \     |\  __   /  /
+   /  \/    \    | |/ /  /   ‾‾\
+  /          \   |   (  |  (‾)  |
+ / __________ \  |_|\_\  \_____/
+
+
+     execution: local
+        script: perf/cafe-detail.js
+        output: -
+
+     scenarios: (100.00%) 1 scenario, 1 max VUs, 10m30s max duration (incl. graceful stop):
+              * detail: 1000 iterations shared among 1 VUs (maxDuration: 10m0s, gracefulStop: 30s)
+
+
+
+  █ TOTAL RESULTS
+
+    checks_total.......: 1000    1167.283381/s
+    checks_succeeded...: 100.00% 1000 out of 1000
+    checks_failed......: 0.00%   0 out of 1000
+
+    ✓ status is 200
+
+    HTTP
+    http_req_duration..............: avg=807.65µs med=686µs    p(95)=989µs  p(99)=2.45ms max=46.09ms
+      { expected_response:true }...: avg=807.65µs med=686µs    p(95)=989µs  p(99)=2.45ms max=46.09ms
+    http_req_failed................: 0.00%  0 out of 1000
+    http_reqs......................: 1000   1167.283381/s
+
+    EXECUTION
+    iteration_duration.............: avg=853.67µs med=714.66µs p(95)=1.04ms p(99)=2.56ms max=46.16ms
+    iterations.....................: 1000   1167.283381/s
+
+    NETWORK
+    data_received..................: 2.3 MB 2.7 MB/s
+    data_sent......................: 78 kB  91 kB/s
+
+
+
+
+running (00m00.9s), 0/1 VUs, 1000 complete and 0 interrupted iterations
+detail ✓ [======================================] 1 VUs  00m00.9s/10m0s  1000/1000 shared iters
+parkui-MacBookPro:studyhub parkjanghun$ k6 run -e START=1 -e COUNT=1000 perf/cafe-detail.js
+
+         /\      Grafana   /‾‾/
+    /\  /  \     |\  __   /  /
+   /  \/    \    | |/ /  /   ‾‾\
+  /          \   |   (  |  (‾)  |
+ / __________ \  |_|\_\  \_____/
+
+
+     execution: local
+        script: perf/cafe-detail.js
+        output: -
+
+     scenarios: (100.00%) 1 scenario, 1 max VUs, 10m30s max duration (incl. graceful stop):
+              * detail: 1000 iterations shared among 1 VUs (maxDuration: 10m0s, gracefulStop: 30s)
+
+
+
+  █ TOTAL RESULTS
+
+    checks_total.......: 1000    159.449377/s
+    checks_succeeded...: 100.00% 1000 out of 1000
+    checks_failed......: 0.00%   0 out of 1000
+
+    ✓ status is 200
+
+    HTTP
+    http_req_duration..............: avg=6.15ms med=4.25ms p(95)=12.33ms p(99)=18.37ms max=75.84ms
+      { expected_response:true }...: avg=6.15ms med=4.25ms p(95)=12.33ms p(99)=18.37ms max=75.84ms
+    http_req_failed................: 0.00%  0 out of 1000
+    http_reqs......................: 1000   159.449377/s
+
+    EXECUTION
+    iteration_duration.............: avg=6.26ms med=4.34ms p(95)=12.57ms p(99)=18.69ms max=75.94ms
+    iterations.....................: 1000   159.449377/s
+    vus............................: 1      min=1         max=1
+    vus_max........................: 1      min=1         max=1
+
+    NETWORK
+    data_received..................: 2.3 MB 367 kB/s
+    data_sent......................: 78 kB  12 kB/s
+
+
+
+
+running (00m06.3s), 0/1 VUs, 1000 complete and 0 interrupted iterations
+detail ✓ [======================================] 1 VUs  00m06.3s/10m0s  1000/1000 shared iters
+parkui-MacBookPro:studyhub parkjanghun$ k6 run -e START=1 -e COUNT=1000 perf/cafe-detail.js
+
+         /\      Grafana   /‾‾/
+    /\  /  \     |\  __   /  /
+   /  \/    \    | |/ /  /   ‾‾\
+  /          \   |   (  |  (‾)  |
+ / __________ \  |_|\_\  \_____/
+
+
+     execution: local
+        script: perf/cafe-detail.js
+        output: -
+
+     scenarios: (100.00%) 1 scenario, 1 max VUs, 10m30s max duration (incl. graceful stop):
+              * detail: 1000 iterations shared among 1 VUs (maxDuration: 10m0s, gracefulStop: 30s)
+
+
+
+  █ TOTAL RESULTS
+
+    checks_total.......: 1000    1189.797722/s
+    checks_succeeded...: 100.00% 1000 out of 1000
+    checks_failed......: 0.00%   0 out of 1000
+
+    ✓ status is 200
+
+    HTTP
+    http_req_duration..............: avg=788.41µs med=671µs    p(95)=1.02ms p(99)=1.99ms max=46.76ms
+      { expected_response:true }...: avg=788.41µs med=671µs    p(95)=1.02ms p(99)=1.99ms max=46.76ms
+    http_req_failed................: 0.00%  0 out of 1000
+    http_reqs......................: 1000   1189.797722/s
+
+    EXECUTION
+    iteration_duration.............: avg=837.26µs med=702.85µs p(95)=1.16ms p(99)=2.06ms max=46.83ms
+    iterations.....................: 1000   1189.797722/s
+
+    NETWORK
+    data_received..................: 2.3 MB 2.7 MB/s
+    data_sent......................: 78 kB  93 kB/s
+
+
+
+
+running (00m00.8s), 0/1 VUs, 1000 complete and 0 interrupted iterations
+detail ✓ [======================================] 1 VUs  00m00.8s/10m0s  1000/1000 shared iters
