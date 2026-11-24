@@ -1,0 +1,36 @@
+
+
+  █ THRESHOLDS 
+
+    http_req_duration{name:ai-search}
+    ✓ 'max>=0' max=1.62s
+
+
+  █ TOTAL RESULTS 
+
+    checks_total.......: 40      1.730729/s
+    checks_succeeded...: 100.00% 40 out of 40
+    checks_failed......: 0.00%   0 out of 40
+
+    ✓ status is 200
+    ✓ aiUsed is expected
+
+    HTTP
+    http_req_duration..............: avg=1.09s med=1.02s p(95)=1.58s p(99)=1.61s max=1.62s
+      { expected_response:true }...: avg=1.09s med=1.02s p(95)=1.58s p(99)=1.61s max=1.62s
+      { name:ai-search }...........: avg=1.14s med=1.11s p(95)=1.58s p(99)=1.61s max=1.62s
+    http_req_failed................: 0.00%  0 out of 21
+    http_reqs......................: 21     0.908633/s
+
+    EXECUTION
+    iteration_duration.............: avg=1.14s med=1.11s p(95)=1.58s p(99)=1.61s max=1.62s
+    iterations.....................: 20     0.865364/s
+    vus............................: 1      min=1       max=1
+    vus_max........................: 1      min=1       max=1
+
+    NETWORK
+    data_received..................: 3.7 MB 161 kB/s
+    data_sent......................: 9.4 kB 406 B/s
+
+
+
