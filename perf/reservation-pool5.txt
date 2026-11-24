@@ -1,0 +1,28 @@
+  █ THRESHOLDS
+
+    http_req_duration{name:reserve}
+    ✓ 'max>=0' max=2.4s
+
+
+  █ TOTAL RESULTS
+
+    CUSTOM
+    reservation_fail...............: 95     5.710703/s
+    reservation_success............: 5      0.300563/s
+
+    HTTP
+    http_req_duration..............: avg=716.58ms med=93.79ms p(95)=2.35s    p(99)=2.39s max=2.4s
+      { expected_response:true }...: avg=166.71ms med=93.83ms p(95)=509.31ms p(99)=1.5s  max=1.52s
+      { name:reserve }.............: avg=2.03s    med=2.1s    p(95)=2.39s    p(99)=2.39s max=2.4s
+    http_req_failed................: 65.00% 195 out of 300
+    http_reqs......................: 300    18.033798/s
+
+    EXECUTION
+    iteration_duration.............: avg=5.04s    med=5.1s    p(95)=5.39s    p(99)=5.4s  max=5.4s
+    iterations.....................: 100    6.011266/s
+    vus............................: 77     min=0          max=100
+    vus_max........................: 100    min=100        max=100
+
+    NETWORK
+    data_received..................: 149 kB 9.0 kB/s
+    data_sent......................: 93 kB  5.6 kB/s
