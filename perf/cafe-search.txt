@@ -1,0 +1,891 @@
+parkui-MacBookPro:studyhub parkjanghun$ k6 run perf/cafe-search.js | tee perf/results/search-miss-1.txt
+
+         /\      Grafana   /‾‾/
+    /\  /  \     |\  __   /  /
+   /  \/    \    | |/ /  /   ‾‾\
+  /          \   |   (  |  (‾)  |
+ / __________ \  |_|\_\  \_____/
+
+
+     execution: local
+        script: perf/cafe-search.js
+        output: -
+
+     scenarios: (100.00%) 1 scenario, 1 max VUs, 10m30s max duration (incl. graceful stop):
+              * search: 150 iterations shared among 1 VUs (maxDuration: 10m0s, gracefulStop: 30s)
+
+
+running (00m01.0s), 1/1 VUs, 2 complete and 0 interrupted iterations
+search   [   1% ] 1 VUs  00m01.0s/10m0s  002/150 shared iters
+
+running (00m02.0s), 1/1 VUs, 4 complete and 0 interrupted iterations
+search   [   3% ] 1 VUs  00m02.0s/10m0s  004/150 shared iters
+
+running (00m03.0s), 1/1 VUs, 6 complete and 0 interrupted iterations
+search   [   4% ] 1 VUs  00m03.0s/10m0s  006/150 shared iters
+
+running (00m04.0s), 1/1 VUs, 8 complete and 0 interrupted iterations
+search   [   5% ] 1 VUs  00m04.0s/10m0s  008/150 shared iters
+
+running (00m05.0s), 1/1 VUs, 10 complete and 0 interrupted iterations
+search   [   7% ] 1 VUs  00m05.0s/10m0s  010/150 shared iters
+
+running (00m06.0s), 1/1 VUs, 12 complete and 0 interrupted iterations
+search   [   8% ] 1 VUs  00m06.0s/10m0s  012/150 shared iters
+
+running (00m07.0s), 1/1 VUs, 14 complete and 0 interrupted iterations
+search   [   9% ] 1 VUs  00m07.0s/10m0s  014/150 shared iters
+
+running (00m08.0s), 1/1 VUs, 17 complete and 0 interrupted iterations
+search   [  11% ] 1 VUs  00m08.0s/10m0s  017/150 shared iters
+
+running (00m09.0s), 1/1 VUs, 19 complete and 0 interrupted iterations
+search   [  13% ] 1 VUs  00m09.0s/10m0s  019/150 shared iters
+
+running (00m10.0s), 1/1 VUs, 21 complete and 0 interrupted iterations
+search   [  14% ] 1 VUs  00m10.0s/10m0s  021/150 shared iters
+
+running (00m11.0s), 1/1 VUs, 23 complete and 0 interrupted iterations
+search   [  15% ] 1 VUs  00m11.0s/10m0s  023/150 shared iters
+
+running (00m12.0s), 1/1 VUs, 25 complete and 0 interrupted iterations
+search   [  17% ] 1 VUs  00m12.0s/10m0s  025/150 shared iters
+
+running (00m13.0s), 1/1 VUs, 27 complete and 0 interrupted iterations
+search   [  18% ] 1 VUs  00m13.0s/10m0s  027/150 shared iters
+
+running (00m14.0s), 1/1 VUs, 29 complete and 0 interrupted iterations
+search   [  19% ] 1 VUs  00m14.0s/10m0s  029/150 shared iters
+
+running (00m15.0s), 1/1 VUs, 32 complete and 0 interrupted iterations
+search   [  21% ] 1 VUs  00m15.0s/10m0s  032/150 shared iters
+
+running (00m16.0s), 1/1 VUs, 34 complete and 0 interrupted iterations
+search   [  23% ] 1 VUs  00m16.0s/10m0s  034/150 shared iters
+
+running (00m17.0s), 1/1 VUs, 36 complete and 0 interrupted iterations
+search   [  24% ] 1 VUs  00m17.0s/10m0s  036/150 shared iters
+
+running (00m18.0s), 1/1 VUs, 38 complete and 0 interrupted iterations
+search   [  25% ] 1 VUs  00m18.0s/10m0s  038/150 shared iters
+
+running (00m19.0s), 1/1 VUs, 40 complete and 0 interrupted iterations
+search   [  27% ] 1 VUs  00m19.0s/10m0s  040/150 shared iters
+
+running (00m20.0s), 1/1 VUs, 42 complete and 0 interrupted iterations
+search   [  28% ] 1 VUs  00m20.0s/10m0s  042/150 shared iters
+
+running (00m21.0s), 1/1 VUs, 45 complete and 0 interrupted iterations
+search   [  30% ] 1 VUs  00m21.0s/10m0s  045/150 shared iters
+
+running (00m22.0s), 1/1 VUs, 47 complete and 0 interrupted iterations
+search   [  31% ] 1 VUs  00m22.0s/10m0s  047/150 shared iters
+
+running (00m23.0s), 1/1 VUs, 49 complete and 0 interrupted iterations
+search   [  33% ] 1 VUs  00m23.0s/10m0s  049/150 shared iters
+
+running (00m24.0s), 1/1 VUs, 52 complete and 0 interrupted iterations
+search   [  35% ] 1 VUs  00m24.0s/10m0s  052/150 shared iters
+
+running (00m25.0s), 1/1 VUs, 54 complete and 0 interrupted iterations
+search   [  36% ] 1 VUs  00m25.0s/10m0s  054/150 shared iters
+
+running (00m26.0s), 1/1 VUs, 57 complete and 0 interrupted iterations
+search   [  38% ] 1 VUs  00m26.0s/10m0s  057/150 shared iters
+
+running (00m27.0s), 1/1 VUs, 59 complete and 0 interrupted iterations
+search   [  39% ] 1 VUs  00m27.0s/10m0s  059/150 shared iters
+
+running (00m28.0s), 1/1 VUs, 61 complete and 0 interrupted iterations
+search   [  41% ] 1 VUs  00m28.0s/10m0s  061/150 shared iters
+
+running (00m29.0s), 1/1 VUs, 64 complete and 0 interrupted iterations
+search   [  43% ] 1 VUs  00m29.0s/10m0s  064/150 shared iters
+
+running (00m30.0s), 1/1 VUs, 66 complete and 0 interrupted iterations
+search   [  44% ] 1 VUs  00m30.0s/10m0s  066/150 shared iters
+
+running (00m31.0s), 1/1 VUs, 68 complete and 0 interrupted iterations
+search   [  45% ] 1 VUs  00m31.0s/10m0s  068/150 shared iters
+
+running (00m32.0s), 1/1 VUs, 71 complete and 0 interrupted iterations
+search   [  47% ] 1 VUs  00m32.0s/10m0s  071/150 shared iters
+
+running (00m33.0s), 1/1 VUs, 73 complete and 0 interrupted iterations
+search   [  49% ] 1 VUs  00m33.0s/10m0s  073/150 shared iters
+
+running (00m34.0s), 1/1 VUs, 76 complete and 0 interrupted iterations
+search   [  51% ] 1 VUs  00m34.0s/10m0s  076/150 shared iters
+
+running (00m35.0s), 1/1 VUs, 78 complete and 0 interrupted iterations
+search   [  52% ] 1 VUs  00m35.0s/10m0s  078/150 shared iters
+
+running (00m36.0s), 1/1 VUs, 81 complete and 0 interrupted iterations
+search   [  54% ] 1 VUs  00m36.0s/10m0s  081/150 shared iters
+
+running (00m37.0s), 1/1 VUs, 83 complete and 0 interrupted iterations
+search   [  55% ] 1 VUs  00m37.0s/10m0s  083/150 shared iters
+
+running (00m38.0s), 1/1 VUs, 85 complete and 0 interrupted iterations
+search   [  57% ] 1 VUs  00m38.0s/10m0s  085/150 shared iters
+
+running (00m39.0s), 1/1 VUs, 87 complete and 0 interrupted iterations
+search   [  58% ] 1 VUs  00m39.0s/10m0s  087/150 shared iters
+
+running (00m40.0s), 1/1 VUs, 89 complete and 0 interrupted iterations
+search   [  59% ] 1 VUs  00m40.0s/10m0s  089/150 shared iters
+
+running (00m41.0s), 1/1 VUs, 91 complete and 0 interrupted iterations
+search   [  61% ] 1 VUs  00m41.0s/10m0s  091/150 shared iters
+
+running (00m42.0s), 1/1 VUs, 94 complete and 0 interrupted iterations
+search   [  63% ] 1 VUs  00m42.0s/10m0s  094/150 shared iters
+
+running (00m43.0s), 1/1 VUs, 96 complete and 0 interrupted iterations
+search   [  64% ] 1 VUs  00m43.0s/10m0s  096/150 shared iters
+
+running (00m44.0s), 1/1 VUs, 98 complete and 0 interrupted iterations
+search   [  65% ] 1 VUs  00m44.0s/10m0s  098/150 shared iters
+
+running (00m45.0s), 1/1 VUs, 101 complete and 0 interrupted iterations
+search   [  67% ] 1 VUs  00m45.0s/10m0s  101/150 shared iters
+
+running (00m46.0s), 1/1 VUs, 103 complete and 0 interrupted iterations
+search   [  69% ] 1 VUs  00m46.0s/10m0s  103/150 shared iters
+
+running (00m47.0s), 1/1 VUs, 105 complete and 0 interrupted iterations
+search   [  70% ] 1 VUs  00m47.0s/10m0s  105/150 shared iters
+
+running (00m48.0s), 1/1 VUs, 107 complete and 0 interrupted iterations
+search   [  71% ] 1 VUs  00m48.0s/10m0s  107/150 shared iters
+
+running (00m49.0s), 1/1 VUs, 109 complete and 0 interrupted iterations
+search   [  73% ] 1 VUs  00m49.0s/10m0s  109/150 shared iters
+
+running (00m50.0s), 1/1 VUs, 112 complete and 0 interrupted iterations
+search   [  75% ] 1 VUs  00m50.0s/10m0s  112/150 shared iters
+
+running (00m51.0s), 1/1 VUs, 114 complete and 0 interrupted iterations
+search   [  76% ] 1 VUs  00m51.0s/10m0s  114/150 shared iters
+
+running (00m52.0s), 1/1 VUs, 116 complete and 0 interrupted iterations
+search   [  77% ] 1 VUs  00m52.0s/10m0s  116/150 shared iters
+
+running (00m53.0s), 1/1 VUs, 118 complete and 0 interrupted iterations
+search   [  79% ] 1 VUs  00m53.0s/10m0s  118/150 shared iters
+
+running (00m54.0s), 1/1 VUs, 121 complete and 0 interrupted iterations
+search   [  81% ] 1 VUs  00m54.0s/10m0s  121/150 shared iters
+
+running (00m55.0s), 1/1 VUs, 123 complete and 0 interrupted iterations
+search   [  82% ] 1 VUs  00m55.0s/10m0s  123/150 shared iters
+
+running (00m56.0s), 1/1 VUs, 125 complete and 0 interrupted iterations
+search   [  83% ] 1 VUs  00m56.0s/10m0s  125/150 shared iters
+
+running (00m57.0s), 1/1 VUs, 127 complete and 0 interrupted iterations
+search   [  85% ] 1 VUs  00m57.0s/10m0s  127/150 shared iters
+
+running (00m58.0s), 1/1 VUs, 129 complete and 0 interrupted iterations
+search   [  86% ] 1 VUs  00m58.0s/10m0s  129/150 shared iters
+
+running (00m59.0s), 1/1 VUs, 132 complete and 0 interrupted iterations
+search   [  88% ] 1 VUs  00m59.0s/10m0s  132/150 shared iters
+
+running (01m00.0s), 1/1 VUs, 134 complete and 0 interrupted iterations
+search   [  89% ] 1 VUs  01m00.0s/10m0s  134/150 shared iters
+
+running (01m01.0s), 1/1 VUs, 136 complete and 0 interrupted iterations
+search   [  91% ] 1 VUs  01m01.0s/10m0s  136/150 shared iters
+
+running (01m02.0s), 1/1 VUs, 138 complete and 0 interrupted iterations
+search   [  92% ] 1 VUs  01m02.0s/10m0s  138/150 shared iters
+
+running (01m03.0s), 1/1 VUs, 140 complete and 0 interrupted iterations
+search   [  93% ] 1 VUs  01m03.0s/10m0s  140/150 shared iters
+
+running (01m04.0s), 1/1 VUs, 143 complete and 0 interrupted iterations
+search   [  95% ] 1 VUs  01m04.0s/10m0s  143/150 shared iters
+
+running (01m05.0s), 1/1 VUs, 145 complete and 0 interrupted iterations
+search   [  97% ] 1 VUs  01m05.0s/10m0s  145/150 shared iters
+
+running (01m06.0s), 1/1 VUs, 147 complete and 0 interrupted iterations
+search   [  98% ] 1 VUs  01m06.0s/10m0s  147/150 shared iters
+
+running (01m07.0s), 1/1 VUs, 149 complete and 0 interrupted iterations
+search   [  99% ] 1 VUs  01m07.0s/10m0s  149/150 shared iters
+
+
+  █ TOTAL RESULTS
+
+    checks_total.......: 300     4.470597/s
+    checks_succeeded...: 100.00% 300 out of 300
+    checks_failed......: 0.00%   0 out of 300
+
+    ✓ status is 200
+    ✓ result count is 1000
+
+    HTTP
+    http_req_duration..............: avg=444.71ms med=445.07ms p(95)=491.45ms p(99)=523.7ms  max=579.11ms
+      { expected_response:true }...: avg=444.71ms med=445.07ms p(95)=491.45ms p(99)=523.7ms  max=579.11ms
+    http_req_failed................: 0.00% 0 out of 150
+    http_reqs......................: 150   2.235298/s
+
+    EXECUTION
+    iteration_duration.............: avg=447.35ms med=447.39ms p(95)=495.5ms  p(99)=526.62ms max=581.5ms
+    iterations.....................: 150   2.235298/s
+    vus............................: 1     min=1        max=1
+    vus_max........................: 1     min=1        max=1
+
+    NETWORK
+    data_received..................: 35 MB 520 kB/s
+    data_sent......................: 24 kB 360 B/s
+
+
+
+
+running (01m07.1s), 0/1 VUs, 150 complete and 0 interrupted iterations
+search ✓ [ 100% ] 1 VUs  01m07.1s/10m0s  150/150 shared iters
+parkui-MacBookPro:studyhub parkjanghun$ k6 run perf/cafe-search.js | tee perf/results/search-hit-1.txt
+
+         /\      Grafana   /‾‾/
+    /\  /  \     |\  __   /  /
+   /  \/    \    | |/ /  /   ‾‾\
+  /          \   |   (  |  (‾)  |
+ / __________ \  |_|\_\  \_____/
+
+
+     execution: local
+        script: perf/cafe-search.js
+        output: -
+
+     scenarios: (100.00%) 1 scenario, 1 max VUs, 10m30s max duration (incl. graceful stop):
+              * search: 150 iterations shared among 1 VUs (maxDuration: 10m0s, gracefulStop: 30s)
+
+
+running (00m01.0s), 1/1 VUs, 53 complete and 0 interrupted iterations
+search   [  35% ] 1 VUs  00m01.0s/10m0s  053/150 shared iters
+
+running (00m02.0s), 1/1 VUs, 122 complete and 0 interrupted iterations
+search   [  81% ] 1 VUs  00m02.0s/10m0s  122/150 shared iters
+
+
+  █ TOTAL RESULTS
+
+    checks_total.......: 300     126.9737/s
+    checks_succeeded...: 100.00% 300 out of 300
+    checks_failed......: 0.00%   0 out of 300
+
+    ✓ status is 200
+    ✓ result count is 1000
+
+    HTTP
+    http_req_duration..............: avg=13.2ms  med=11.53ms p(95)=18.54ms p(99)=24.64ms max=147.61ms
+      { expected_response:true }...: avg=13.2ms  med=11.53ms p(95)=18.54ms p(99)=24.64ms max=147.61ms
+    http_req_failed................: 0.00% 0 out of 150
+    http_reqs......................: 150   63.48685/s
+
+    EXECUTION
+    iteration_duration.............: avg=15.73ms med=14.05ms p(95)=20.92ms p(99)=27.15ms max=162.8ms
+    iterations.....................: 150   63.48685/s
+    vus............................: 1     min=1        max=1
+    vus_max........................: 1     min=1        max=1
+
+    NETWORK
+    data_received..................: 35 MB 15 MB/s
+    data_sent......................: 24 kB 10 kB/s
+
+
+
+
+running (00m02.4s), 0/1 VUs, 150 complete and 0 interrupted iterations
+search ✓ [ 100% ] 1 VUs  00m02.4s/10m0s  150/150 shared iters
+parkui-MacBookPro:studyhub parkjanghun$ k6 run perf/cafe-search.js | tee perf/results/search-miss-1.txt
+
+         /\      Grafana   /‾‾/
+    /\  /  \     |\  __   /  /
+   /  \/    \    | |/ /  /   ‾‾\
+  /          \   |   (  |  (‾)  |
+ / __________ \  |_|\_\  \_____/
+
+
+     execution: local
+        script: perf/cafe-search.js
+        output: -
+
+     scenarios: (100.00%) 1 scenario, 1 max VUs, 10m30s max duration (incl. graceful stop):
+              * search: 150 iterations shared among 1 VUs (maxDuration: 10m0s, gracefulStop: 30s)
+
+
+running (00m01.0s), 1/1 VUs, 2 complete and 0 interrupted iterations
+search   [   1% ] 1 VUs  00m01.0s/10m0s  002/150 shared iters
+
+running (00m02.0s), 1/1 VUs, 4 complete and 0 interrupted iterations
+search   [   3% ] 1 VUs  00m02.0s/10m0s  004/150 shared iters
+
+running (00m03.0s), 1/1 VUs, 7 complete and 0 interrupted iterations
+search   [   5% ] 1 VUs  00m03.0s/10m0s  007/150 shared iters
+
+running (00m04.0s), 1/1 VUs, 9 complete and 0 interrupted iterations
+search   [   6% ] 1 VUs  00m04.0s/10m0s  009/150 shared iters
+
+running (00m05.0s), 1/1 VUs, 11 complete and 0 interrupted iterations
+search   [   7% ] 1 VUs  00m05.0s/10m0s  011/150 shared iters
+
+running (00m06.0s), 1/1 VUs, 14 complete and 0 interrupted iterations
+search   [   9% ] 1 VUs  00m06.0s/10m0s  014/150 shared iters
+
+running (00m07.0s), 1/1 VUs, 16 complete and 0 interrupted iterations
+search   [  11% ] 1 VUs  00m07.0s/10m0s  016/150 shared iters
+
+running (00m08.0s), 1/1 VUs, 18 complete and 0 interrupted iterations
+search   [  12% ] 1 VUs  00m08.0s/10m0s  018/150 shared iters
+
+running (00m09.0s), 1/1 VUs, 21 complete and 0 interrupted iterations
+search   [  14% ] 1 VUs  00m09.0s/10m0s  021/150 shared iters
+
+running (00m10.0s), 1/1 VUs, 23 complete and 0 interrupted iterations
+search   [  15% ] 1 VUs  00m10.0s/10m0s  023/150 shared iters
+
+running (00m11.0s), 1/1 VUs, 25 complete and 0 interrupted iterations
+search   [  17% ] 1 VUs  00m11.0s/10m0s  025/150 shared iters
+
+running (00m12.0s), 1/1 VUs, 28 complete and 0 interrupted iterations
+search   [  19% ] 1 VUs  00m12.0s/10m0s  028/150 shared iters
+
+running (00m13.0s), 1/1 VUs, 30 complete and 0 interrupted iterations
+search   [  20% ] 1 VUs  00m13.0s/10m0s  030/150 shared iters
+
+running (00m14.0s), 1/1 VUs, 32 complete and 0 interrupted iterations
+search   [  21% ] 1 VUs  00m14.0s/10m0s  032/150 shared iters
+
+running (00m15.0s), 1/1 VUs, 35 complete and 0 interrupted iterations
+search   [  23% ] 1 VUs  00m15.0s/10m0s  035/150 shared iters
+
+running (00m16.0s), 1/1 VUs, 37 complete and 0 interrupted iterations
+search   [  25% ] 1 VUs  00m16.0s/10m0s  037/150 shared iters
+
+running (00m17.0s), 1/1 VUs, 39 complete and 0 interrupted iterations
+search   [  26% ] 1 VUs  00m17.0s/10m0s  039/150 shared iters
+
+running (00m18.0s), 1/1 VUs, 42 complete and 0 interrupted iterations
+search   [  28% ] 1 VUs  00m18.0s/10m0s  042/150 shared iters
+
+running (00m19.0s), 1/1 VUs, 44 complete and 0 interrupted iterations
+search   [  29% ] 1 VUs  00m19.0s/10m0s  044/150 shared iters
+
+running (00m20.0s), 1/1 VUs, 46 complete and 0 interrupted iterations
+search   [  31% ] 1 VUs  00m20.0s/10m0s  046/150 shared iters
+
+running (00m21.0s), 1/1 VUs, 49 complete and 0 interrupted iterations
+search   [  33% ] 1 VUs  00m21.0s/10m0s  049/150 shared iters
+
+running (00m22.0s), 1/1 VUs, 51 complete and 0 interrupted iterations
+search   [  34% ] 1 VUs  00m22.0s/10m0s  051/150 shared iters
+
+running (00m23.0s), 1/1 VUs, 54 complete and 0 interrupted iterations
+search   [  36% ] 1 VUs  00m23.0s/10m0s  054/150 shared iters
+
+running (00m24.0s), 1/1 VUs, 56 complete and 0 interrupted iterations
+search   [  37% ] 1 VUs  00m24.0s/10m0s  056/150 shared iters
+
+running (00m25.0s), 1/1 VUs, 58 complete and 0 interrupted iterations
+search   [  39% ] 1 VUs  00m25.0s/10m0s  058/150 shared iters
+
+running (00m26.0s), 1/1 VUs, 61 complete and 0 interrupted iterations
+search   [  41% ] 1 VUs  00m26.0s/10m0s  061/150 shared iters
+
+running (00m27.0s), 1/1 VUs, 63 complete and 0 interrupted iterations
+search   [  42% ] 1 VUs  00m27.0s/10m0s  063/150 shared iters
+
+running (00m28.0s), 1/1 VUs, 65 complete and 0 interrupted iterations
+search   [  43% ] 1 VUs  00m28.0s/10m0s  065/150 shared iters
+
+running (00m29.0s), 1/1 VUs, 68 complete and 0 interrupted iterations
+search   [  45% ] 1 VUs  00m29.0s/10m0s  068/150 shared iters
+
+running (00m30.0s), 1/1 VUs, 70 complete and 0 interrupted iterations
+search   [  47% ] 1 VUs  00m30.0s/10m0s  070/150 shared iters
+
+running (00m31.0s), 1/1 VUs, 73 complete and 0 interrupted iterations
+search   [  49% ] 1 VUs  00m31.0s/10m0s  073/150 shared iters
+
+running (00m32.0s), 1/1 VUs, 75 complete and 0 interrupted iterations
+search   [  50% ] 1 VUs  00m32.0s/10m0s  075/150 shared iters
+
+running (00m33.0s), 1/1 VUs, 77 complete and 0 interrupted iterations
+search   [  51% ] 1 VUs  00m33.0s/10m0s  077/150 shared iters
+
+running (00m34.0s), 1/1 VUs, 80 complete and 0 interrupted iterations
+search   [  53% ] 1 VUs  00m34.0s/10m0s  080/150 shared iters
+
+running (00m35.0s), 1/1 VUs, 82 complete and 0 interrupted iterations
+search   [  55% ] 1 VUs  00m35.0s/10m0s  082/150 shared iters
+
+running (00m36.0s), 1/1 VUs, 85 complete and 0 interrupted iterations
+search   [  57% ] 1 VUs  00m36.0s/10m0s  085/150 shared iters
+
+running (00m37.0s), 1/1 VUs, 87 complete and 0 interrupted iterations
+search   [  58% ] 1 VUs  00m37.0s/10m0s  087/150 shared iters
+
+running (00m38.0s), 1/1 VUs, 90 complete and 0 interrupted iterations
+search   [  60% ] 1 VUs  00m38.0s/10m0s  090/150 shared iters
+
+running (00m39.0s), 1/1 VUs, 92 complete and 0 interrupted iterations
+search   [  61% ] 1 VUs  00m39.0s/10m0s  092/150 shared iters
+
+running (00m40.0s), 1/1 VUs, 94 complete and 0 interrupted iterations
+search   [  63% ] 1 VUs  00m40.0s/10m0s  094/150 shared iters
+
+running (00m41.0s), 1/1 VUs, 97 complete and 0 interrupted iterations
+search   [  65% ] 1 VUs  00m41.0s/10m0s  097/150 shared iters
+
+running (00m42.0s), 1/1 VUs, 99 complete and 0 interrupted iterations
+search   [  66% ] 1 VUs  00m42.0s/10m0s  099/150 shared iters
+
+running (00m43.0s), 1/1 VUs, 102 complete and 0 interrupted iterations
+search   [  68% ] 1 VUs  00m43.0s/10m0s  102/150 shared iters
+
+running (00m44.0s), 1/1 VUs, 104 complete and 0 interrupted iterations
+search   [  69% ] 1 VUs  00m44.0s/10m0s  104/150 shared iters
+
+running (00m45.0s), 1/1 VUs, 106 complete and 0 interrupted iterations
+search   [  71% ] 1 VUs  00m45.0s/10m0s  106/150 shared iters
+
+running (00m46.0s), 1/1 VUs, 109 complete and 0 interrupted iterations
+search   [  73% ] 1 VUs  00m46.0s/10m0s  109/150 shared iters
+
+running (00m47.0s), 1/1 VUs, 111 complete and 0 interrupted iterations
+search   [  74% ] 1 VUs  00m47.0s/10m0s  111/150 shared iters
+
+running (00m48.0s), 1/1 VUs, 114 complete and 0 interrupted iterations
+search   [  76% ] 1 VUs  00m48.0s/10m0s  114/150 shared iters
+
+running (00m49.0s), 1/1 VUs, 116 complete and 0 interrupted iterations
+search   [  77% ] 1 VUs  00m49.0s/10m0s  116/150 shared iters
+
+running (00m50.0s), 1/1 VUs, 118 complete and 0 interrupted iterations
+search   [  79% ] 1 VUs  00m50.0s/10m0s  118/150 shared iters
+
+running (00m51.0s), 1/1 VUs, 121 complete and 0 interrupted iterations
+search   [  81% ] 1 VUs  00m51.0s/10m0s  121/150 shared iters
+
+running (00m52.0s), 1/1 VUs, 123 complete and 0 interrupted iterations
+search   [  82% ] 1 VUs  00m52.0s/10m0s  123/150 shared iters
+
+running (00m53.0s), 1/1 VUs, 126 complete and 0 interrupted iterations
+search   [  84% ] 1 VUs  00m53.0s/10m0s  126/150 shared iters
+
+running (00m54.0s), 1/1 VUs, 128 complete and 0 interrupted iterations
+search   [  85% ] 1 VUs  00m54.0s/10m0s  128/150 shared iters
+
+running (00m55.0s), 1/1 VUs, 131 complete and 0 interrupted iterations
+search   [  87% ] 1 VUs  00m55.0s/10m0s  131/150 shared iters
+
+running (00m56.0s), 1/1 VUs, 133 complete and 0 interrupted iterations
+search   [  89% ] 1 VUs  00m56.0s/10m0s  133/150 shared iters
+
+running (00m57.0s), 1/1 VUs, 135 complete and 0 interrupted iterations
+search   [  90% ] 1 VUs  00m57.0s/10m0s  135/150 shared iters
+
+running (00m58.0s), 1/1 VUs, 138 complete and 0 interrupted iterations
+search   [  92% ] 1 VUs  00m58.0s/10m0s  138/150 shared iters
+
+running (00m59.0s), 1/1 VUs, 140 complete and 0 interrupted iterations
+search   [  93% ] 1 VUs  00m59.0s/10m0s  140/150 shared iters
+
+running (01m00.0s), 1/1 VUs, 143 complete and 0 interrupted iterations
+search   [  95% ] 1 VUs  01m00.0s/10m0s  143/150 shared iters
+
+running (01m01.0s), 1/1 VUs, 145 complete and 0 interrupted iterations
+search   [  97% ] 1 VUs  01m01.0s/10m0s  145/150 shared iters
+
+running (01m02.0s), 1/1 VUs, 147 complete and 0 interrupted iterations
+search   [  98% ] 1 VUs  01m02.0s/10m0s  147/150 shared iters
+
+
+  █ TOTAL RESULTS
+
+    checks_total.......: 300     4.769352/s
+    checks_succeeded...: 100.00% 300 out of 300
+    checks_failed......: 0.00%   0 out of 300
+
+    ✓ status is 200
+    ✓ result count is 1000
+
+    HTTP
+    http_req_duration..............: avg=416.8ms  med=416.93ms p(95)=434.72ms p(99)=444.16ms max=447.44ms
+      { expected_response:true }...: avg=416.8ms  med=416.93ms p(95)=434.72ms p(99)=444.16ms max=447.44ms
+    http_req_failed................: 0.00% 0 out of 150
+    http_reqs......................: 150   2.384676/s
+
+    EXECUTION
+    iteration_duration.............: avg=419.33ms med=419.41ms p(95)=437.45ms p(99)=446.4ms  max=449.71ms
+    iterations.....................: 150   2.384676/s
+    vus............................: 1     min=1        max=1
+    vus_max........................: 1     min=1        max=1
+
+    NETWORK
+    data_received..................: 35 MB 555 kB/s
+    data_sent......................: 24 kB 384 B/s
+
+
+
+
+running (01m02.9s), 0/1 VUs, 150 complete and 0 interrupted iterations
+search ✓ [ 100% ] 1 VUs  01m02.9s/10m0s  150/150 shared iters
+parkui-MacBookPro:studyhub parkjanghun$ k6 run perf/cafe-search.js | tee perf/results/search-hit-1.txt
+
+         /\      Grafana   /‾‾/
+    /\  /  \     |\  __   /  /
+   /  \/    \    | |/ /  /   ‾‾\
+  /          \   |   (  |  (‾)  |
+ / __________ \  |_|\_\  \_____/
+
+
+     execution: local
+        script: perf/cafe-search.js
+        output: -
+
+     scenarios: (100.00%) 1 scenario, 1 max VUs, 10m30s max duration (incl. graceful stop):
+              * search: 150 iterations shared among 1 VUs (maxDuration: 10m0s, gracefulStop: 30s)
+
+
+running (00m01.0s), 1/1 VUs, 70 complete and 0 interrupted iterations
+search   [  47% ] 1 VUs  00m01.0s/10m0s  070/150 shared iters
+
+running (00m02.0s), 1/1 VUs, 138 complete and 0 interrupted iterations
+search   [  92% ] 1 VUs  00m02.0s/10m0s  138/150 shared iters
+
+
+  █ TOTAL RESULTS
+
+    checks_total.......: 300     139.722176/s
+    checks_succeeded...: 100.00% 300 out of 300
+    checks_failed......: 0.00%   0 out of 300
+
+    ✓ status is 200
+    ✓ result count is 1000
+
+    HTTP
+    http_req_duration..............: avg=11.81ms med=11.15ms p(95)=16.39ms p(99)=17.62ms max=24.08ms
+      { expected_response:true }...: avg=11.81ms med=11.15ms p(95)=16.39ms p(99)=17.62ms max=24.08ms
+    http_req_failed................: 0.00% 0 out of 150
+    http_reqs......................: 150   69.861088/s
+
+    EXECUTION
+    iteration_duration.............: avg=14.3ms  med=13.62ms p(95)=18.75ms p(99)=20.17ms max=31.36ms
+    iterations.....................: 150   69.861088/s
+    vus............................: 1     min=1        max=1
+    vus_max........................: 1     min=1        max=1
+
+    NETWORK
+    data_received..................: 35 MB 16 MB/s
+    data_sent......................: 24 kB 11 kB/s
+
+
+
+
+running (00m02.1s), 0/1 VUs, 150 complete and 0 interrupted iterations
+search ✓ [ 100% ] 1 VUs  00m02.1s/10m0s  150/150 shared iters
+parkui-MacBookPro:studyhub parkjanghun$ k6 run perf/cafe-search.js | tee perf/results/search-miss-1.txt
+
+         /\      Grafana   /‾‾/
+    /\  /  \     |\  __   /  /
+   /  \/    \    | |/ /  /   ‾‾\
+  /          \   |   (  |  (‾)  |
+ / __________ \  |_|\_\  \_____/
+
+
+     execution: local
+        script: perf/cafe-search.js
+        output: -
+
+     scenarios: (100.00%) 1 scenario, 1 max VUs, 10m30s max duration (incl. graceful stop):
+              * search: 150 iterations shared among 1 VUs (maxDuration: 10m0s, gracefulStop: 30s)
+
+
+running (00m01.0s), 1/1 VUs, 2 complete and 0 interrupted iterations
+search   [   1% ] 1 VUs  00m01.0s/10m0s  002/150 shared iters
+
+running (00m02.0s), 1/1 VUs, 4 complete and 0 interrupted iterations
+search   [   3% ] 1 VUs  00m02.0s/10m0s  004/150 shared iters
+
+running (00m03.0s), 1/1 VUs, 6 complete and 0 interrupted iterations
+search   [   4% ] 1 VUs  00m03.0s/10m0s  006/150 shared iters
+
+running (00m04.0s), 1/1 VUs, 8 complete and 0 interrupted iterations
+search   [   5% ] 1 VUs  00m04.0s/10m0s  008/150 shared iters
+
+running (00m05.0s), 1/1 VUs, 10 complete and 0 interrupted iterations
+search   [   7% ] 1 VUs  00m05.0s/10m0s  010/150 shared iters
+
+running (00m06.0s), 1/1 VUs, 13 complete and 0 interrupted iterations
+search   [   9% ] 1 VUs  00m06.0s/10m0s  013/150 shared iters
+
+running (00m07.0s), 1/1 VUs, 15 complete and 0 interrupted iterations
+search   [  10% ] 1 VUs  00m07.0s/10m0s  015/150 shared iters
+
+running (00m08.0s), 1/1 VUs, 18 complete and 0 interrupted iterations
+search   [  12% ] 1 VUs  00m08.0s/10m0s  018/150 shared iters
+
+running (00m09.0s), 1/1 VUs, 20 complete and 0 interrupted iterations
+search   [  13% ] 1 VUs  00m09.0s/10m0s  020/150 shared iters
+
+running (00m10.0s), 1/1 VUs, 22 complete and 0 interrupted iterations
+search   [  15% ] 1 VUs  00m10.0s/10m0s  022/150 shared iters
+
+running (00m11.0s), 1/1 VUs, 24 complete and 0 interrupted iterations
+search   [  16% ] 1 VUs  00m11.0s/10m0s  024/150 shared iters
+
+running (00m12.0s), 1/1 VUs, 27 complete and 0 interrupted iterations
+search   [  18% ] 1 VUs  00m12.0s/10m0s  027/150 shared iters
+
+running (00m13.0s), 1/1 VUs, 29 complete and 0 interrupted iterations
+search   [  19% ] 1 VUs  00m13.0s/10m0s  029/150 shared iters
+
+running (00m14.0s), 1/1 VUs, 31 complete and 0 interrupted iterations
+search   [  21% ] 1 VUs  00m14.0s/10m0s  031/150 shared iters
+
+running (00m15.0s), 1/1 VUs, 34 complete and 0 interrupted iterations
+search   [  23% ] 1 VUs  00m15.0s/10m0s  034/150 shared iters
+
+running (00m16.0s), 1/1 VUs, 36 complete and 0 interrupted iterations
+search   [  24% ] 1 VUs  00m16.0s/10m0s  036/150 shared iters
+
+running (00m17.0s), 1/1 VUs, 39 complete and 0 interrupted iterations
+search   [  26% ] 1 VUs  00m17.0s/10m0s  039/150 shared iters
+
+running (00m18.0s), 1/1 VUs, 41 complete and 0 interrupted iterations
+search   [  27% ] 1 VUs  00m18.0s/10m0s  041/150 shared iters
+
+running (00m19.0s), 1/1 VUs, 44 complete and 0 interrupted iterations
+search   [  29% ] 1 VUs  00m19.0s/10m0s  044/150 shared iters
+
+running (00m20.0s), 1/1 VUs, 46 complete and 0 interrupted iterations
+search   [  31% ] 1 VUs  00m20.0s/10m0s  046/150 shared iters
+
+running (00m21.0s), 1/1 VUs, 48 complete and 0 interrupted iterations
+search   [  32% ] 1 VUs  00m21.0s/10m0s  048/150 shared iters
+
+running (00m22.0s), 1/1 VUs, 51 complete and 0 interrupted iterations
+search   [  34% ] 1 VUs  00m22.0s/10m0s  051/150 shared iters
+
+running (00m23.0s), 1/1 VUs, 53 complete and 0 interrupted iterations
+search   [  35% ] 1 VUs  00m23.0s/10m0s  053/150 shared iters
+
+running (00m24.0s), 1/1 VUs, 56 complete and 0 interrupted iterations
+search   [  37% ] 1 VUs  00m24.0s/10m0s  056/150 shared iters
+
+running (00m25.0s), 1/1 VUs, 58 complete and 0 interrupted iterations
+search   [  39% ] 1 VUs  00m25.0s/10m0s  058/150 shared iters
+
+running (00m26.0s), 1/1 VUs, 60 complete and 0 interrupted iterations
+search   [  40% ] 1 VUs  00m26.0s/10m0s  060/150 shared iters
+
+running (00m27.0s), 1/1 VUs, 63 complete and 0 interrupted iterations
+search   [  42% ] 1 VUs  00m27.0s/10m0s  063/150 shared iters
+
+running (00m28.0s), 1/1 VUs, 65 complete and 0 interrupted iterations
+search   [  43% ] 1 VUs  00m28.0s/10m0s  065/150 shared iters
+
+running (00m29.0s), 1/1 VUs, 67 complete and 0 interrupted iterations
+search   [  45% ] 1 VUs  00m29.0s/10m0s  067/150 shared iters
+
+running (00m30.0s), 1/1 VUs, 69 complete and 0 interrupted iterations
+search   [  46% ] 1 VUs  00m30.0s/10m0s  069/150 shared iters
+
+running (00m31.0s), 1/1 VUs, 71 complete and 0 interrupted iterations
+search   [  47% ] 1 VUs  00m31.0s/10m0s  071/150 shared iters
+
+running (00m32.0s), 1/1 VUs, 73 complete and 0 interrupted iterations
+search   [  49% ] 1 VUs  00m32.0s/10m0s  073/150 shared iters
+
+running (00m33.0s), 1/1 VUs, 75 complete and 0 interrupted iterations
+search   [  50% ] 1 VUs  00m33.0s/10m0s  075/150 shared iters
+
+running (00m34.0s), 1/1 VUs, 77 complete and 0 interrupted iterations
+search   [  51% ] 1 VUs  00m34.0s/10m0s  077/150 shared iters
+
+running (00m35.0s), 1/1 VUs, 79 complete and 0 interrupted iterations
+search   [  53% ] 1 VUs  00m35.0s/10m0s  079/150 shared iters
+
+running (00m36.0s), 1/1 VUs, 81 complete and 0 interrupted iterations
+search   [  54% ] 1 VUs  00m36.0s/10m0s  081/150 shared iters
+
+running (00m37.0s), 1/1 VUs, 83 complete and 0 interrupted iterations
+search   [  55% ] 1 VUs  00m37.0s/10m0s  083/150 shared iters
+
+running (00m38.0s), 1/1 VUs, 86 complete and 0 interrupted iterations
+search   [  57% ] 1 VUs  00m38.0s/10m0s  086/150 shared iters
+
+running (00m39.0s), 1/1 VUs, 88 complete and 0 interrupted iterations
+search   [  59% ] 1 VUs  00m39.0s/10m0s  088/150 shared iters
+
+running (00m40.0s), 1/1 VUs, 90 complete and 0 interrupted iterations
+search   [  60% ] 1 VUs  00m40.0s/10m0s  090/150 shared iters
+
+running (00m41.0s), 1/1 VUs, 92 complete and 0 interrupted iterations
+search   [  61% ] 1 VUs  00m41.0s/10m0s  092/150 shared iters
+
+running (00m42.0s), 1/1 VUs, 94 complete and 0 interrupted iterations
+search   [  63% ] 1 VUs  00m42.0s/10m0s  094/150 shared iters
+
+running (00m43.0s), 1/1 VUs, 96 complete and 0 interrupted iterations
+search   [  64% ] 1 VUs  00m43.0s/10m0s  096/150 shared iters
+
+running (00m44.0s), 1/1 VUs, 98 complete and 0 interrupted iterations
+search   [  65% ] 1 VUs  00m44.0s/10m0s  098/150 shared iters
+
+running (00m45.0s), 1/1 VUs, 101 complete and 0 interrupted iterations
+search   [  67% ] 1 VUs  00m45.0s/10m0s  101/150 shared iters
+
+running (00m46.0s), 1/1 VUs, 103 complete and 0 interrupted iterations
+search   [  69% ] 1 VUs  00m46.0s/10m0s  103/150 shared iters
+
+running (00m47.0s), 1/1 VUs, 105 complete and 0 interrupted iterations
+search   [  70% ] 1 VUs  00m47.0s/10m0s  105/150 shared iters
+
+running (00m48.0s), 1/1 VUs, 108 complete and 0 interrupted iterations
+search   [  72% ] 1 VUs  00m48.0s/10m0s  108/150 shared iters
+
+running (00m49.0s), 1/1 VUs, 110 complete and 0 interrupted iterations
+search   [  73% ] 1 VUs  00m49.0s/10m0s  110/150 shared iters
+
+running (00m50.0s), 1/1 VUs, 112 complete and 0 interrupted iterations
+search   [  75% ] 1 VUs  00m50.0s/10m0s  112/150 shared iters
+
+running (00m51.0s), 1/1 VUs, 115 complete and 0 interrupted iterations
+search   [  77% ] 1 VUs  00m51.0s/10m0s  115/150 shared iters
+
+running (00m52.0s), 1/1 VUs, 117 complete and 0 interrupted iterations
+search   [  78% ] 1 VUs  00m52.0s/10m0s  117/150 shared iters
+
+running (00m53.0s), 1/1 VUs, 119 complete and 0 interrupted iterations
+search   [  79% ] 1 VUs  00m53.0s/10m0s  119/150 shared iters
+
+running (00m54.0s), 1/1 VUs, 121 complete and 0 interrupted iterations
+search   [  81% ] 1 VUs  00m54.0s/10m0s  121/150 shared iters
+
+running (00m55.0s), 1/1 VUs, 124 complete and 0 interrupted iterations
+search   [  83% ] 1 VUs  00m55.0s/10m0s  124/150 shared iters
+
+running (00m56.0s), 1/1 VUs, 126 complete and 0 interrupted iterations
+search   [  84% ] 1 VUs  00m56.0s/10m0s  126/150 shared iters
+
+running (00m57.0s), 1/1 VUs, 128 complete and 0 interrupted iterations
+search   [  85% ] 1 VUs  00m57.0s/10m0s  128/150 shared iters
+
+running (00m58.0s), 1/1 VUs, 130 complete and 0 interrupted iterations
+search   [  87% ] 1 VUs  00m58.0s/10m0s  130/150 shared iters
+
+running (00m59.0s), 1/1 VUs, 132 complete and 0 interrupted iterations
+search   [  88% ] 1 VUs  00m59.0s/10m0s  132/150 shared iters
+
+running (01m00.0s), 1/1 VUs, 135 complete and 0 interrupted iterations
+search   [  90% ] 1 VUs  01m00.0s/10m0s  135/150 shared iters
+
+running (01m01.0s), 1/1 VUs, 137 complete and 0 interrupted iterations
+search   [  91% ] 1 VUs  01m01.0s/10m0s  137/150 shared iters
+
+running (01m02.0s), 1/1 VUs, 139 complete and 0 interrupted iterations
+search   [  93% ] 1 VUs  01m02.0s/10m0s  139/150 shared iters
+
+running (01m03.0s), 1/1 VUs, 141 complete and 0 interrupted iterations
+search   [  94% ] 1 VUs  01m03.0s/10m0s  141/150 shared iters
+
+running (01m04.0s), 1/1 VUs, 143 complete and 0 interrupted iterations
+search   [  95% ] 1 VUs  01m04.0s/10m0s  143/150 shared iters
+
+running (01m05.0s), 1/1 VUs, 145 complete and 0 interrupted iterations
+search   [  97% ] 1 VUs  01m05.0s/10m0s  145/150 shared iters
+
+running (01m06.0s), 1/1 VUs, 148 complete and 0 interrupted iterations
+search   [  99% ] 1 VUs  01m06.0s/10m0s  148/150 shared iters
+
+
+  █ TOTAL RESULTS
+
+    checks_total.......: 300     4.491314/s
+    checks_succeeded...: 100.00% 300 out of 300
+    checks_failed......: 0.00%   0 out of 300
+
+    ✓ status is 200
+    ✓ result count is 1000
+
+    HTTP
+    http_req_duration..............: avg=442.69ms med=434.92ms p(95)=487.86ms p(99)=537.44ms max=637.44ms
+      { expected_response:true }...: avg=442.69ms med=434.92ms p(95)=487.86ms p(99)=537.44ms max=637.44ms
+    http_req_failed................: 0.00% 0 out of 150
+    http_reqs......................: 150   2.245657/s
+
+    EXECUTION
+    iteration_duration.............: avg=445.28ms med=437.59ms p(95)=490.62ms p(99)=540.18ms max=640.33ms
+    iterations.....................: 150   2.245657/s
+    vus............................: 1     min=1        max=1
+    vus_max........................: 1     min=1        max=1
+
+    NETWORK
+    data_received..................: 35 MB 523 kB/s
+    data_sent......................: 24 kB 361 B/s
+
+
+
+
+running (01m06.8s), 0/1 VUs, 150 complete and 0 interrupted iterations
+search ✓ [ 100% ] 1 VUs  01m06.8s/10m0s  150/150 shared iters
+parkui-MacBookPro:studyhub parkjanghun$ k6 run perf/cafe-search.js | tee perf/results/search-hit-1.txt
+
+         /\      Grafana   /‾‾/
+    /\  /  \     |\  __   /  /
+   /  \/    \    | |/ /  /   ‾‾\
+  /          \   |   (  |  (‾)  |
+ / __________ \  |_|\_\  \_____/
+
+
+     execution: local
+        script: perf/cafe-search.js
+        output: -
+
+     scenarios: (100.00%) 1 scenario, 1 max VUs, 10m30s max duration (incl. graceful stop):
+              * search: 150 iterations shared among 1 VUs (maxDuration: 10m0s, gracefulStop: 30s)
+
+
+running (00m01.0s), 1/1 VUs, 64 complete and 0 interrupted iterations
+search   [  43% ] 1 VUs  00m01.0s/10m0s  064/150 shared iters
+
+running (00m02.0s), 1/1 VUs, 133 complete and 0 interrupted iterations
+search   [  89% ] 1 VUs  00m02.0s/10m0s  133/150 shared iters
+
+
+  █ TOTAL RESULTS
+
+    checks_total.......: 300     132.53143/s
+    checks_succeeded...: 100.00% 300 out of 300
+    checks_failed......: 0.00%   0 out of 300
+
+    ✓ status is 200
+    ✓ result count is 1000
+
+    HTTP
+    http_req_duration..............: avg=12.51ms med=11.54ms p(95)=16.8ms  p(99)=29.17ms max=46.22ms
+      { expected_response:true }...: avg=12.51ms med=11.54ms p(95)=16.8ms  p(99)=29.17ms max=46.22ms
+    http_req_failed................: 0.00% 0 out of 150
+    http_reqs......................: 150   66.265715/s
+
+    EXECUTION
+    iteration_duration.............: avg=15.07ms med=14.08ms p(95)=19.15ms p(99)=31.58ms max=60.54ms
+    iterations.....................: 150   66.265715/s
+    vus............................: 1     min=1        max=1
+    vus_max........................: 1     min=1        max=1
+
+    NETWORK
+    data_received..................: 35 MB 15 MB/s
+    data_sent......................: 24 kB 11 kB/s
+
+
+
+
+running (00m02.3s), 0/1 VUs, 150 complete and 0 interrupted iterations
+search ✓ [ 100% ] 1 VUs  00m02.3s/10m0s  150/150 shared iters
